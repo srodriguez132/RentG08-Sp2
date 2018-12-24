@@ -24,7 +24,6 @@ import utils.BD08;
  */
 public class Login extends HttpServlet {
     
-    
     private Connection con;
     private Statement set;
     private ResultSet rs;
