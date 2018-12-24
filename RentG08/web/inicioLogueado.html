@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="css/css1.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
 
-
+        <script src="javascript/sessionStorageCliente.js"></script>
+        <script src="javascript/cerrarSesion.js"></script>
 
     </head>
     <body>
@@ -20,9 +21,12 @@
         <nav id="menupricipal">
             <div>
                 <ul>
-                    <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Búsqueda</a></li>
-                    <li><a href="registro.html">Registrarse</a></li>
-                    <li><a href="inicioSesion.html">Iniciar Sesión</a></li>
+                    <li><a href="inicioSesion.html" id="cerrarsesion">Cerrar Sesion</a></li>
+                    <li id="pestanaActual"><a id="pestanaActualTexto" href="inicioLogueado.html">Búsqueda</a></li>
+                    <li><a href="consultaReservaUsuario.html">Consultar Reservas</a></li>
+                    <li  id="nombreSesion" >
+
+
 
                 </ul>
             </div>
@@ -52,7 +56,7 @@
                                         <option value ="donostia">Donostia</option>
                                         <option value ="bilbao">Bilbao</option>
                                     </select><br />
-                                    <button type="submit" id="btnBuscar" class="boton"><a id="enlaceBoton" href="reserva.html">Buscar coches</a></button>
+                                    <button type="button" id="buscar" class="boton"><a id="btnBuscar" href="reservaLogueada.html">Buscar coches</a>.</button>
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Búsqueda de Coches</div>

@@ -1,0 +1,211 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-nov-2018, 11:59:44
+    Author     : Sergio
+*/
+/*
+Fondo del documento. Obtenemos un fondo de gradiente azul.
+
+*/
+body{
+    background:whitesmoke;
+    /*background:#181907;*/
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    margin: 0;
+}
+
+.cabecera{
+	background: royalblue;
+	color: white;
+	height: 80px;
+}	
+	#main-header a {
+		color: royalblue;
+	}
+
+        #logo-header {
+	float: left;
+	padding: 15px 0 0 20px;
+	text-decoration: black;
+}
+	#logo-header:hover {
+		color: white;
+	}
+	
+	#logo-header .site-name {
+		display: block;
+
+		font-weight: 700;
+		font-size: 1.2em;
+	}
+	
+	#logo-header .site-desc {
+		display: block;
+		font-weight: 300;
+		font-size: 0.8em;
+		color: black;
+	}
+        
+	
+
+/*
+ * Navegación
+ */
+nav {
+	float: right;
+}
+	nav ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		padding-right: 20px;
+	}
+	
+		nav ul li {
+			display: inline-block;
+                       
+			line-height: 80px;
+		}
+                #pestanaActual {
+			 
+                        background: royalblue;
+			
+		}
+			nav ul li a {
+				display: block;
+                                font-size: 15px;
+                                font-weight:bold;
+				padding: 0 10px;
+                                color: black;
+/*				text-decoration: black;*/
+			}
+                        #pestanaActualTexto{
+				display: block;
+                                font-size: 15px;
+                                font-weight:bold;
+				padding: 0 10px;
+                                color: white;
+/*				text-decoration: black;*/
+			}
+                        #nombreSesion{
+/*                                display: block;
+*/                                font-size: 15px;
+                                font-weight:bold;
+				padding: 0 10px;
+                                color: royalblue;
+                                
+                        }
+                        
+			
+				nav ul li a:hover {
+					background: royalblue;
+				}
+
+.clear{
+    display:block;
+}
+
+.seccionpie {
+    position: static;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 660px;
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 40px;
+    padding:5px 0px;
+    clear: both;
+    background: royalblue;
+    text-align: center;
+    color: #fff;
+}
+
+#registropie{
+    position: static;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 950px;
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 40px;
+    padding:5px 0px;
+    clear: both;
+    background: royalblue;
+    text-align: center;
+    color: #fff;
+}
+#busquedapie{
+    position: static;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 950px;
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 40px;
+    padding:5px 0px;
+    clear: both;
+    background: royalblue;
+    text-align: center;
+    color: #fff;
+}
+#busquedapieUsuario{
+    position: static;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 800px;
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 40px;
+    padding:5px 0px;
+    clear: both;
+    background: royalblue;
+    text-align: center;
+    color: #fff;
+}
+
+#seccionpieconsulta{
+    position: static;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 950px;
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 40px;
+    padding:5px 0px;
+    clear: both;
+    background: royalblue;
+    text-align: center;
+    color: #fff;
+
+}
+
+
+ 
+/*.seccionpie {
+    float: left;
+    width: 270px;
+    padding: 80px;
+}*/
+/*.seccionpie h1 {
+    font: bold 20px Arial, sans-serif;
+}
+.seccionpie p {
+    margin-top: 200px;
+}
+.seccionpie a {
+    font: bold 16px Arial, sans-serif;
+    color: #666666;
+    text-decoration: none;
+}
+.seccionpie {
+    float: bottom;
+    width: 27.33%;
+    padding: 3%;
+}*/
+
+
