@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -21,7 +22,7 @@ import utils.BD08;
 
 /**
  *
- * @author Sergio
+ * @author Grupo 08
  */
 @WebServlet(name = "Registro", urlPatterns = {"/Registro"})
 public class Registro extends HttpServlet {
@@ -38,13 +39,13 @@ public class Registro extends HttpServlet {
         ServletContext contexto = cfg.getServletContext();
         
         String IP = contexto.getInitParameter("IP");
-        String database = contexto.getInitParameter("BD");
-        String URL = "jdbc:mysql://"+ IP + "/" + database;
+        String basedatos = contexto.getInitParameter("BDNombre");
+        String URL = "jdbc:mysql://"+ IP + "/" + basedatos;
     
-        String userName = contexto.getInitParameter("user");
-        String password = contexto.getInitParameter("pass");
+        String nombreUsuario = contexto.getInitParameter("usuario");
+        String contrasena = contexto.getInitParameter("contrasena");
         
-        con = BD08.getConexion(URL,userName,password);
+        con = BD08.getConexion(URL,nombreUsuario,contrasena);
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -84,8 +85,41 @@ public class Registro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        
+            String email = (String) request.getParameter("email");
+            String contra = (String) request.getParameter("contrasena");
+            String nombre = (String) request.getParameter("nombre");
+            String apellido = (String) request.getParameter("apellido");
+            String movil = (String) request.getParameter("movil");
+            String imagen = (String) request.getParameter("caja");
+        
+        try{
+            boolean existe;
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
+            
+            if(rs.next()){
+                existe=true;
+            }
+            else{
+                existe=false;
+                rs.close();
+                set.executeUpdate("INSERT INTO Clientes "
+                        + " VALUES ('" + email + contra + nombre + apellido + movil + "')");
+              
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Error" + e);
+        }
+        
     }
+    
+    
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
