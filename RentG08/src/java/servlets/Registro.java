@@ -7,7 +7,9 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.sql.Connection;
+import static java.sql.JDBCType.VARCHAR;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -85,36 +87,9 @@ public class Registro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+
         
-            String email = (String) request.getParameter("email");
-            String contra = (String) request.getParameter("contrasena");
-            String nombre = (String) request.getParameter("nombre");
-            String apellido = (String) request.getParameter("apellido");
-            String movil = (String) request.getParameter("movil");
-            String imagen = (String) request.getParameter("caja");
-        
-        try{
-            boolean existe;
-            set = con.createStatement();
-            rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
-            
-            if(rs.next()){
-                existe=true;
-            }
-            else{
-                existe=false;
-                rs.close();
-                set.executeUpdate("INSERT INTO Clientes "
-                        + " VALUES ('" + email + contra + nombre + apellido + movil + "')");
-              
-            }
-            
-        }
-        
-        catch(SQLException e){
-            System.out.println("Error" + e);
-        }
+           
         
     }
     
@@ -132,7 +107,42 @@ public class Registro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+         String email = (String) request.getParameter("email");
+            String contra = (String) request.getParameter("contrasena");
+            String nombre = (String) request.getParameter("nombre");
+            String apellido = (String) request.getParameter("apellido");
+            String movil = (String) request.getParameter("movil");
+            String imagen = (String) request.getParameter("caja");
+        
+        try{
+            boolean existe;
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
+            
+            if(rs.next()){
+                existe=true;
+                //AVERGIGUAR COMO MANDAR ALERTA 
+                rs.close();
+                set.close();
+                       
+            }
+            else{
+                existe=false;
+                rs.close();
+                set.executeUpdate("INSERT INTO Clientes (email)"
+                        + " VALUES ('"  + email + "')");
+                set.close();
+                request.getRequestDispatcher("inicioSesion.html").forward(request, response);
+    
+              
+            }
+            
+        }
+        
+        catch(SQLException e){
+            System.out.println("Error" + e);
+        }
     }
 
     /**
