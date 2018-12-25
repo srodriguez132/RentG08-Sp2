@@ -24,6 +24,10 @@
         <servlet-name>Registro</servlet-name>
         <servlet-class>servlets.Registro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginAdmin</servlet-name>
+        <servlet-class>servlets.LoginAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>Registro</servlet-name>
         <url-pattern>/Registrarse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginAdmin</servlet-name>
+        <url-pattern>/LoginAdmin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
