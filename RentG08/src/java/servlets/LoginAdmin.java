@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utils.BD08;
 
 /**
@@ -57,18 +58,7 @@ public class LoginAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-     try {
-         set = con.createStatement();
-         rs= set.executeQuery("select * from responsable");
-         while(rs.next()){
-            
-         }
-     } catch (SQLException ex) {
-         Logger.getLogger(LoginAdmin.class.getName()).log(Level.SEVERE, null, ex);
-     }
-   
-        
+        response.setContentType("text/html;charset=UTF-8");     
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -110,6 +100,40 @@ public class LoginAdmin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+         HttpSession s = request.getSession(true);
+        String email = request.getParameter("email");
+        String contra = request.getParameter("contrasena");
+
+        boolean existe = false;
+        String pass = null;
+        String mensaje = null;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM responsable where email ='" + email + "'");
+            if (rs.next()) {
+                existe = true;
+                pass = rs.getString("contraseña");
+            } else {
+                existe = false;
+            }
+            rs.close();
+            set.close();
+        } catch (SQLException ex1) {
+            System.out.println("No lee de la tabla Clientes. " + ex1);
+        }
+        if (existe == true) {
+            if (pass.equals(contra)) {
+                s.setAttribute("Email", email);
+                s.setAttribute("Contrasena", contra);
+                request.getRequestDispatcher("/inicioLogueado.html").forward(request, response);
+            } else {
+                mensaje = "La contrasena es incorrecta";
+                request.getRequestDispatcher("/inicioSesionAdmin.jsp?message=" + mensaje).forward(request, response);
+            }
+        } else {
+            mensaje = "El email es incorrecto";
+            request.getRequestDispatcher("/inicioSesionAdmin.jsp?message=" + mensaje).forward(request, response);
+        }
     }
 
     /**
