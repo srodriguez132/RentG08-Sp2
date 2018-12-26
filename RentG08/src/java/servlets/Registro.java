@@ -124,7 +124,8 @@ public class Registro extends HttpServlet {
             if(rs.next()){
                 existe=true;
                 //AVERGIGUAR COMO MANDAR ALERTA 
-                
+                String mensaje = "Email en uso. Seleccione otro.";
+                 request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
                 rs.close();
                 set.close();
                        

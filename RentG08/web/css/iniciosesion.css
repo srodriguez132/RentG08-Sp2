@@ -61,6 +61,31 @@ label{
     color: black;
     font-weight: bold
 }
+#email{
+    /*border: 1px solid #999; No usar esta línea y dejar box-shadow hace efecto de profundidad*/
+    border-radius:5px; /*probar con 10px se hacen ovalados los inputs*/
+    box-shadow: 2px 2px 3px 1px rgba(0,0,0,.8);
+    font:bold 12px Arial, Helvetica, sans-serif;
+    height: 24px;
+    line-height: 20px;
+    padding:0 2px;
+    /*Para separar los inputs*/
+   
+    width: 230px;
+}
+#contrasena{
+    /*border: 1px solid #999; No usar esta línea y dejar box-shadow hace efecto de profundidad*/
+    border-radius:5px; /*probar con 10px se hacen ovalados los inputs*/
+    box-shadow: 2px 2px 3px 1px rgba(0,0,0,.8);
+    font:bold 12px Arial, Helvetica, sans-serif;
+    height: 24px;
+    line-height: 20px;
+    padding:0 2px;
+    /*Para separar los inputs*/
+   
+    width: 230px;
+}
+
 input{
     /*border: 1px solid #999; No usar esta línea y dejar box-shadow hace efecto de profundidad*/
     border-radius:5px; /*probar con 10px se hacen ovalados los inputs*/
@@ -73,7 +98,7 @@ input{
    display: block;
     width: 230px;
 }
- 
+
 /*input#usuario{
     background:#ffc url(./images/loquito.jpg) no-repeat 0 2px; probar con #ddf.
                                                                 Para mover arriba-abajo la imagen 'jugar' con 2px, 5px 
@@ -97,6 +122,7 @@ input#contrasenia{
     color: white;
     width: 120px;
     height: 30px;
+    display:block;
 }
  
 /*Tip estas instrucciones animan al boton enviar

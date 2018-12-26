@@ -20,91 +20,91 @@ body{
 }
 
 .cabecera{
-	background: royalblue;
-	color: white;
-	height: 80px;
+    background: royalblue;
+    color: white;
+    height: 80px;
 }	
-	#main-header a {
-		color: royalblue;
-	}
-
-        #logo-header {
-	float: left;
-	padding: 15px 0 0 20px;
-	text-decoration: black;
+#main-header a {
+    color: royalblue;
 }
-	#logo-header:hover {
-		color: white;
-	}
-	
-	#logo-header .site-name {
-		display: block;
 
-		font-weight: 700;
-		font-size: 1.2em;
-	}
-	
-	#logo-header .site-desc {
-		display: block;
-		font-weight: 300;
-		font-size: 0.8em;
-		color: black;
-	}
-        
-	
+#logo-header {
+    float: left;
+    padding: 15px 0 0 20px;
+    text-decoration: black;
+}
+#logo-header:hover {
+    color: white;
+}
+
+#logo-header .site-name {
+    display: block;
+
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+#logo-header .site-desc {
+    display: block;
+    font-weight: 300;
+    font-size: 0.8em;
+    color: black;
+}
+
+
 
 /*
  * Navegación
  */
 nav {
-	float: right;
+    float: right;
 }
-	nav ul {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		padding-right: 20px;
-	}
-	
-		nav ul li {
-			display: inline-block;
-                       
-			line-height: 80px;
-		}
-                #pestanaActual {
-			 
-                        background: royalblue;
-			
-		}
-			nav ul li a {
-				display: block;
-                                font-size: 15px;
-                                font-weight:bold;
-				padding: 0 10px;
-                                color: black;
-/*				text-decoration: black;*/
-			}
-                        #pestanaActualTexto{
-				display: block;
-                                font-size: 15px;
-                                font-weight:bold;
-				padding: 0 10px;
-                                color: white;
-/*				text-decoration: black;*/
-			}
-                        #nombreSesion{
-/*                                display: block;
-*/                                font-size: 15px;
-                                font-weight:bold;
-				padding: 0 10px;
-                                color: royalblue;
-                                
-                        }
-                        
-			
-				nav ul li a:hover {
-					background: royalblue;
-				}
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    padding-right: 20px;
+}
+
+nav ul li {
+    display: inline-block;
+
+    line-height: 80px;
+}
+#pestanaActual {
+
+    background: royalblue;
+
+}
+nav ul li a {
+    display: block;
+    font-size: 15px;
+    font-weight:bold;
+    padding: 0 10px;
+    color: black;
+    /*				text-decoration: black;*/
+}
+#pestanaActualTexto{
+    display: block;
+    font-size: 15px;
+    font-weight:bold;
+    padding: 0 10px;
+    color: white;
+    /*				text-decoration: black;*/
+}
+#nombreSesion{
+    /*                                display: block;
+    */                                font-size: 15px;
+    font-weight:bold;
+    padding: 0 10px;
+    color: royalblue;
+
+}
+
+
+nav ul li a:hover {
+    background: royalblue;
+}
 
 .clear{
     display:block;
@@ -128,7 +128,7 @@ nav {
 #registropie{
     position: static;
     /* Altura total del footer en px con valor negativo */
-    margin-top: 950px;
+    margin-top: 1200px;
     /* Altura del footer en px. Se han restado los 5px del margen
        superior mas los 5px del margen inferior
     */
@@ -184,8 +184,19 @@ nav {
 
 }
 
+#mensajeError{
+    font-size: 10px;
+    font-weight:bold;
+/*    padding: 0 10px;*/
+    color: red;
+    display:block;
+    margin-top: -16px;
 
- 
+
+}
+
+
+
 /*.seccionpie {
     float: left;
     width: 270px;

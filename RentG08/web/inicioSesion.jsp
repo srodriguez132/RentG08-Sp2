@@ -48,7 +48,17 @@
                                     <label for="email" class="campo">E-mail: 
                                         <input type="email" name="email" id="email"  pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required/>
                                     </label><br />
-                                    <div class="clear"></div>
+                                    <div id="mensajeError">
+                                        <%
+                                            if (request.getParameter("message") != null) {
+                                        %>
+                                        
+                                            <h3><%=request.getParameter("message")%></h3>
+                                        
+                                        <% }
+                                        %>
+                                    </div>
+                                    
                                     <label for="contrasena">Contraseña:
                                         <input type="password" name="contrasena" id="contrasena" required/>
                                     </label><br />
@@ -70,14 +80,7 @@
                             </section>
                         </div>
                         </main>
-                        <%
-                            if (request.getParameter("message") != null) {
-                        %>
-                        <table>
-                            <tr><td><h3><%=request.getParameter("message")%></h3></td><td>
-                        </table>
-                        <% }
-                        %>
+
                         <footer id="seccionpie">
                             <div>
                                 <section class="seccionpie">
