@@ -22,3 +22,4 @@ function permitirDrop(ev)
 function leer(ev) {
     document.getElementById('caja').style.backgroundImage = "url('" + ev.target.result + "')";
 }
+

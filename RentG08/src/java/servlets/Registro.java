@@ -113,7 +113,8 @@ public class Registro extends HttpServlet {
             String nombre = (String) request.getParameter("nombre");
             String apellido = (String) request.getParameter("apellido");
             String movil = (String) request.getParameter("movil");
-            String imagen = (String) request.getParameter("caja");
+            String imagen = (String) request.getParameter("imagen");
+          
         
         try{
             boolean existe;
@@ -123,6 +124,7 @@ public class Registro extends HttpServlet {
             if(rs.next()){
                 existe=true;
                 //AVERGIGUAR COMO MANDAR ALERTA 
+                
                 rs.close();
                 set.close();
                        
@@ -130,8 +132,9 @@ public class Registro extends HttpServlet {
             else{
                 existe=false;
                 rs.close();
-                set.executeUpdate("INSERT INTO Clientes (email)"
-                        + " VALUES ('"  + email + "')");
+                set.executeUpdate("INSERT INTO Clientes (email, contraseña, nombre, apellido, movil, imagen)"
+                        + " VALUES ('"  + email + "', '"  + contra + "', '"  + nombre + "', '"  + apellido + "'"
+                                + ",'"  + movil + "','"  + imagen + "' )");
                 set.close();
                 request.getRequestDispatcher("inicioSesion.html").forward(request, response);
     
