@@ -101,7 +101,7 @@ public class LoginAdmin extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
          HttpSession s = request.getSession(true);
-        String email = request.getParameter("email");
+        String usuario = request.getParameter("email");
         String contra = request.getParameter("contrasena");
 
         boolean existe = false;
@@ -109,7 +109,7 @@ public class LoginAdmin extends HttpServlet {
         String mensaje = null;
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM responsable where email ='" + email + "'");
+            rs = set.executeQuery("SELECT * FROM responsable where usuario ='" + usuario + "'");
             if (rs.next()) {
                 existe = true;
                 pass = rs.getString("contraseña");
@@ -123,7 +123,7 @@ public class LoginAdmin extends HttpServlet {
         }
         if (existe == true) {
             if (pass.equals(contra)) {
-                s.setAttribute("Email", email);
+                s.setAttribute("Usuario", usuario);
                 s.setAttribute("Contrasena", contra);
                 request.getRequestDispatcher("/consultaReservasRS.html").forward(request, response);
             } else {
