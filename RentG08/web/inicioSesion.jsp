@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang ="es">
     <head>
-        <title>RentG - Inicio Sesi贸n</title>
+        <title>RentG - Inicio Sesi髇</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/iniciosesion.css">
         <link rel="stylesheet" href="css/css1.css">
 
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-<!--        <script src="javascript/loginCliente.js"></script>
-        <script src="javascript/indexedunido.js"></script>
-        <script src="javascript/sessionStorageCliente.js"></script>-->
+        <!--        <script src="javascript/loginCliente.js"></script>
+                <script src="javascript/indexedunido.js"></script>
+                <script src="javascript/sessionStorageCliente.js"></script>-->
         <script src="javascript/comprobacionTReal.js"></script>
 
     </head>
@@ -25,7 +25,7 @@
         <nav id="menupricipal">
             <div>
                 <ul>
-                    <li id="busqueda"><a href="index.html">B煤squeda</a></li>
+                    <li id="busqueda"><a href="index.html">B鷖queda</a></li>
                     <li><a href="registro.html">Registrarse</a></li>
                     <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Iniciar Sesion</a></li>
 
@@ -49,34 +49,43 @@
                                         <input type="email" name="email" id="email"  pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required/>
                                     </label><br />
                                     <div class="clear"></div>
-                                    <label for="contrasena">Contrase帽a:
+                                    <label for="contrasena">Contrase馻:
                                         <input type="password" name="contrasena" id="contrasena" required/>
                                     </label><br />
                                     <div class="clear"></div>
                                     <section id="zonadatos">
                                     </section>
 
-                                    <button type="submit" id="btnInicioSesion" class="boton">Iniciar Sesi贸n</button>
+                                    <button type="submit" id="btnInicioSesion" class="boton">Iniciar Sesi髇</button>
 
                                 </form>
 
 
                             </div>
-                            <div id="pieiniciosesion">Sistema de Inicio de Sesi贸n de Usuario <br />
+                            <div id="pieiniciosesion">Sistema de Inicio de Sesi髇 de Usuario <br />
 
-                                <a id="link" href="inicioSesionAdmin.html">Inicio Sesi贸n Responsable</a>
+                                <a id="link" href="inicioSesionAdmin.html">Inicio Sesi髇 Responsable</a>
                             </div>
 
                             </section>
                         </div>
                         </main>
+                        <%
+                            if (request.getParameter("message") != null) {
+                        %>
+                        <table>
+                            <tr><td><h3><%=request.getParameter("message")%></h3></td><td>
+                        </table>
+                        <% }
+                        %>
                         <footer id="seccionpie">
                             <div>
                                 <section class="seccionpie">
-                                    <address>Vitoria, Pa铆s Vasco</address>
+                                    <address>Vitoria, Pa韘 Vasco</address>
                                     <small>&copy; Derechos Reservados 2018</small>
                                 </section>
                             </div>
                         </footer>
+
                         </body>
                         </html>

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utils.BD08;
 
 /**
@@ -23,7 +25,7 @@ import utils.BD08;
  * @author kurri
  */
 public class Login extends HttpServlet {
-    
+
     private Connection con;
     private Statement set;
     private ResultSet rs;
@@ -32,15 +34,15 @@ public class Login extends HttpServlet {
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         ServletContext contexto = cfg.getServletContext();
-        
+
         String IP = contexto.getInitParameter("IP");
-        String database = contexto.getInitParameter("BD");
-        String URL = "jdbc:mysql://"+ IP + "/" + database;
-    
-        String userName = contexto.getInitParameter("user");
-        String password = contexto.getInitParameter("pass");
-        
-        con = BD08.getConexion(URL,userName,password);
+        String basedatos = contexto.getInitParameter("BDNombre");
+        String URL = "jdbc:mysql://" + IP + "/" + basedatos;
+
+        String nombreUsuario = contexto.getInitParameter("usuario");
+        String contrasena = contexto.getInitParameter("contrasena");
+
+        con = BD08.getConexion("jdbc:mysql://localhost:3306/bdrentg08", "root", "root");
     }
 
     /**
@@ -54,13 +56,15 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        //response.sendRedirect("index.jsp?message="+mensaje);
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");            
+            out.println("<title>Servlet Login</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
@@ -95,7 +99,41 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession s = request.getSession(true);
+        String email = request.getParameter("email");
+        String contra = request.getParameter("contrasena");
+
+        boolean existe = false;
+        String pass = null;
+        String mensaje = null;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM Clientes where email ='" + email + "'");
+            if (rs.next()) {
+                existe = true;
+                pass = rs.getString("contraseña");
+            } else {
+                existe = false;
+            }
+            rs.close();
+            set.close();
+        } catch (SQLException ex1) {
+            System.out.println("No lee de la tabla Clientes. " + ex1);
+        }
+        if (existe == true) {
+            if (pass.equals(contra)) {
+                s.setAttribute("Email", email);
+                s.setAttribute("Contrasena", contra);
+                request.getRequestDispatcher("/inicioLogueado.html").forward(request, response);
+            } else {
+                mensaje = "La contrasena es incorrecta";
+                request.getRequestDispatcher("/inicioSesion.jsp?message=" + mensaje).forward(request, response);
+            }
+        } else {
+            mensaje = "El email es incorrecto";
+            request.getRequestDispatcher("/inicioSesion.jsp?message=" + mensaje).forward(request, response);
+        }
     }
 
     /**
