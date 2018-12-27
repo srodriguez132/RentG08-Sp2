@@ -70,13 +70,9 @@
                                     <label for="movil">Móvil:
                                         <input type="tel" name="movil" id="movil" pattern="^(\+34|0034|34)?[6|7|9][0-9]{8}$" required=""/>
                                     </label><br />
-
-                                    <label for="imagen">Imagen:
-                                    </label>
-                                    
-                                    <input type="file" id="caja" name="imagen"/>
-                                    <p id="txtImagen">Arrastre y suelte la imagen el en recuadro superior</p>
-                                    <br />
+                                    <label for="imagen">Foto:
+                                        <input type="file" name="imagen" id="imagen"/>
+                                    </label><br />
 
                                     <button type="submit" id="registrarse" class="boton">Registrarse</button>
 

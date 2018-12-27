@@ -34,8 +34,6 @@ import utils.BD08;
 @MultipartConfig
 public class Registro extends HttpServlet {
 
-    
-    
     private Connection con;
     private Statement set;
     private ResultSet rs;
@@ -44,16 +42,17 @@ public class Registro extends HttpServlet {
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         ServletContext contexto = cfg.getServletContext();
-        
+
         String IP = contexto.getInitParameter("IP");
         String basedatos = contexto.getInitParameter("BDNombre");
-        String URL = "jdbc:mysql://"+ IP + "/" + basedatos;
-    
+        String URL = "jdbc:mysql://" + IP + "/" + basedatos;
+
         String nombreUsuario = contexto.getInitParameter("usuario");
         String contrasena = contexto.getInitParameter("contrasena");
-        
-        con = BD08.getConexion(URL,nombreUsuario,contrasena);
+
+        con = BD08.getConexion(URL, nombreUsuario, contrasena);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -71,7 +70,7 @@ public class Registro extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Registro</title>");            
+            out.println("<title>Servlet Registro</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Registro at " + request.getContextPath() + "</h1>");
@@ -93,13 +92,7 @@ public class Registro extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
-           
-        
     }
-    
-    
-    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -112,47 +105,39 @@ public class Registro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         String email = (String) request.getParameter("email");
-            String contra = (String) request.getParameter("contrasena");
-            String nombre = (String) request.getParameter("nombre");
-            String apellido = (String) request.getParameter("apellido");
-            String movil = (String) request.getParameter("movil");
-//            String imagen = (String) request.getParameter("imagen");
-            Part filePart = request.getPart("imagen");
-            String imagen = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            InputStream fileContent = filePart.getInputStream();
-            
-        
-        try{
+
+        String email = (String) request.getParameter("email");
+        String contra = (String) request.getParameter("contrasena");
+        String nombre = (String) request.getParameter("nombre");
+        String apellido = (String) request.getParameter("apellido");
+        String movil = (String) request.getParameter("movil");
+        String imagen = (String) request.getParameter("imagen");
+
+        try {
             boolean existe;
             set = con.createStatement();
             rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
-            
-            if(rs.next()){
-                existe=true;
+
+            if (rs.next()) {
+                existe = true;
                 //AVERGIGUAR COMO MANDAR ALERTA 
                 String mensaje = "Email en uso. Seleccione otro.";
-                 request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
                 rs.close();
                 set.close();
-                       
-            }
-            else{
-                existe=false;
+
+            } else {
+                existe = false;
                 rs.close();
                 set.executeUpdate("INSERT INTO Clientes (email, contraseña, nombre, apellido, movil, imagen)"
-                        + " VALUES ('"  + email + "', '"  + contra + "', '"  + nombre + "', '"  + apellido + "'"
-                                + ",'"  + movil + "','"  + filePart + "' )");
+                        + " VALUES ('" + email + "', '" + contra + "', '" + nombre + "', '" + apellido + "'"
+                        + ",'" + movil + "','" + imagen + "' )");
                 set.close();
                 request.getRequestDispatcher("inicioSesion.jsp").forward(request, response);
-    
-              
+
             }
-            
-        }
-        
-        catch(SQLException e){
+
+        } catch (SQLException e) {
             System.out.println("Error" + e);
         }
     }
