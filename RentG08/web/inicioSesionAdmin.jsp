@@ -58,7 +58,7 @@
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Inicio de Sesión Responsable <br />
-                                <a id="link" href="inicioSesion.html">Inicio Sesión Usuario</a>
+                                <a id="link" href="inicioSesion.jsp">Inicio Sesión Usuario</a>
                             </div>
 
                             </section>

@@ -22,7 +22,8 @@ body{
 .cabecera{
     background: royalblue;
     color: white;
-    height: 100px;
+    height: 80px;
+    margin-bottom: -20px;
 }	
 #main-header a {
     color: royalblue;
@@ -62,7 +63,7 @@ nav {
 }
 nav ul {
     margin: 0;
-    padding: -60px;
+    padding: 0;
     list-style: none;
     padding-right: 20px;
 }
@@ -114,7 +115,7 @@ nav ul li h1 {
 
 nav ul li a:hover {
     background: royalblue;
-    margin-top: 20px;
+    margin-top: -100px;
 }
 
 .clear{

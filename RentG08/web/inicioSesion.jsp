@@ -79,7 +79,7 @@
                             </div>
                             <div id="pieiniciosesion">Sistema de Inicio de Sesión de Usuario <br />
 
-                                <a id="link" href="inicioSesionAdmin.html">Inicio Sesión Responsable</a>
+                                <a id="link" href="inicioSesionAdmin.jsp">Inicio Sesión Responsable</a>
                             </div>
 
                             </section>
