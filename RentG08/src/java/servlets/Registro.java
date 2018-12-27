@@ -6,8 +6,10 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import static java.sql.JDBCType.VARCHAR;
 import java.sql.ResultSet;
@@ -16,10 +18,12 @@ import java.sql.Statement;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import utils.BD08;
 
 /**
@@ -27,6 +31,7 @@ import utils.BD08;
  * @author Grupo 08
  */
 @WebServlet(name = "Registro", urlPatterns = {"/Registro"})
+@MultipartConfig
 public class Registro extends HttpServlet {
 
     
@@ -113,7 +118,10 @@ public class Registro extends HttpServlet {
             String nombre = (String) request.getParameter("nombre");
             String apellido = (String) request.getParameter("apellido");
             String movil = (String) request.getParameter("movil");
-            String imagen = (String) request.getParameter("imagen");
+//            String imagen = (String) request.getParameter("imagen");
+            Part filePart = request.getPart("imagen");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            InputStream imagen = filePart.getInputStream();
           
         
         try{
@@ -137,7 +145,7 @@ public class Registro extends HttpServlet {
                         + " VALUES ('"  + email + "', '"  + contra + "', '"  + nombre + "', '"  + apellido + "'"
                                 + ",'"  + movil + "','"  + imagen + "' )");
                 set.close();
-                request.getRequestDispatcher("inicioSesion.html").forward(request, response);
+                request.getRequestDispatcher("inicioSesion.jsp").forward(request, response);
     
               
             }

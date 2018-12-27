@@ -29,7 +29,7 @@
                 <ul>
                     <li id="busqueda"><a href="index.html">Búsqueda</a></li>
                     <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Registrarse</a></li>
-                    <li><a href="inicioSesion.html">Iniciar Sesión</a></li>
+                    <li><a href="inicioSesion.jsp">Iniciar Sesión</a></li>
 
                 </ul>
             </div>
@@ -43,7 +43,7 @@
                                 <img src="img/favicon.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form name="datos" action="Registrarse" class="formulario" id="registro" method="post">
+                                <form name="datos" action="Registrarse" class="formulario" id="registro" method="post" enctype="multipart/form-data">
                                     <label for="email" class="campo">E-mail: 
                                         <input type="email" name="email" id="email" placeholder="Ej: a@a.com" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required=""/>
                                     </label><br />
@@ -73,13 +73,16 @@
 
                                     <label for="imagen">Imagen:
                                     </label>
-                                    <input id="caja" name="imagen"/>
+                                    
+                                    <input type="file" id="caja" name="imagen"/>
                                     <p id="txtImagen">Arrastre y suelte la imagen el en recuadro superior</p>
                                     <br />
 
                                     <button type="submit" id="registrarse" class="boton">Registrarse</button>
 
                                 </form>
+                                    
+                                   
 
                             </div>
                             <div id="pieregistro">Sistema de Registro</div>

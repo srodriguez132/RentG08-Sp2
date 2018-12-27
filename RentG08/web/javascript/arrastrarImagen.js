@@ -11,7 +11,7 @@ function drop(ev)
     var arch = new FileReader();
     arch.addEventListener('load', leer, false);
     arch.readAsDataURL(ev.dataTransfer.files[0]);
-    document.getElementById('caja').innerHTML =ev.dataTransfer.getData("Text");
+    document.getElementById('caja').innerHTML =ev.dataTransfer.getData("text");
 }
 
 function permitirDrop(ev)
