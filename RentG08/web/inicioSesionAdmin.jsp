@@ -28,7 +28,7 @@
             <div>
                 <ul>
                     <li id="busqueda"><a href="index.html">Búsqueda</a></li>
-                    <li><a href="Registro.java">Registrarse</a></li>
+                    <li><a href="registro.jsp">Registrarse</a></li>
                     <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Iniciar Sesion</a></li>
 
                 </ul>

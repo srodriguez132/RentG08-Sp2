@@ -120,9 +120,9 @@ public class Registro extends HttpServlet {
             String movil = (String) request.getParameter("movil");
 //            String imagen = (String) request.getParameter("imagen");
             Part filePart = request.getPart("imagen");
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            InputStream imagen = filePart.getInputStream();
-          
+            String imagen = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            InputStream fileContent = filePart.getInputStream();
+            
         
         try{
             boolean existe;
@@ -143,7 +143,7 @@ public class Registro extends HttpServlet {
                 rs.close();
                 set.executeUpdate("INSERT INTO Clientes (email, contraseña, nombre, apellido, movil, imagen)"
                         + " VALUES ('"  + email + "', '"  + contra + "', '"  + nombre + "', '"  + apellido + "'"
-                                + ",'"  + movil + "','"  + imagen + "' )");
+                                + ",'"  + movil + "','"  + filePart + "' )");
                 set.close();
                 request.getRequestDispatcher("inicioSesion.jsp").forward(request, response);
     
