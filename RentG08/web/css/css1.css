@@ -22,11 +22,12 @@ body{
 .cabecera{
     background: royalblue;
     color: white;
-    height: 80px;
+    height: 100px;
 }	
 #main-header a {
     color: royalblue;
 }
+
 
 #logo-header {
     float: left;
@@ -61,7 +62,7 @@ nav {
 }
 nav ul {
     margin: 0;
-    padding: 0;
+    padding: -60px;
     list-style: none;
     padding-right: 20px;
 }
@@ -81,7 +82,16 @@ nav ul li a {
     font-size: 15px;
     font-weight:bold;
     padding: 0 10px;
+    margin-top: 20px;
     color: black;
+    /*				text-decoration: black;*/
+}
+nav ul li h1 {
+    display: block;
+    font-size: 15px;
+    font-weight:bold;
+    padding: 0 10px;
+    color: royalblue;
     /*				text-decoration: black;*/
 }
 #pestanaActualTexto{
@@ -104,6 +114,7 @@ nav ul li a {
 
 nav ul li a:hover {
     background: royalblue;
+    margin-top: 20px;
 }
 
 .clear{

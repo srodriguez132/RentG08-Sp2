@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="utils.BD08"%>
+<%@page import="java.sql.Connection"%>
 <!DOCTYPE html>
 <html lang ="es">
     <head>
@@ -22,6 +26,7 @@
             </a> 
 
         </header>
+         
         <nav id="menupricipal">
             <div>
                 <ul>

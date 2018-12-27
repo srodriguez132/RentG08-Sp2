@@ -1,3 +1,9 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="utils.BD08"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page session="true"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -29,9 +35,37 @@ and open the template in the editor.
             <div>
                 <ul>
                     <li><a href="inicioSesion.jsp" id="cerrarsesion">Cerrar Sesion</a></li>
-                    <li><a href="inicioLogueado.jsp">BÃºsqueda</a></li>
-                    <li  id="pestanaActual"><a id="pestanaActualTexto"  href="consultaReservaUsuario.html">Consultar Reservas</a></li>
-                    <li  id="nombreSesion" >
+                    <li><a href="inicioLogueado.jsp">Búsqueda</a></li>
+                    <li  id="pestanaActual"><a id="pestanaActualTexto"  href="consultaReservaUsuario.jsp">Consultar Reservas</a></li>
+                        <%!
+                            private Connection con;
+                            
+                            public void jspInit() {
+                                ServletContext application = getServletContext();
+                                String IP = application.getInitParameter("IP");
+                                String database = application.getInitParameter("BDNombre");
+                                String URL = "jdbc:mysql://" + IP + "/" + database;
+                                String userName = application.getInitParameter("usuario");
+                                String password = application.getInitParameter("contrasena");
+                                con = BD08.getConexion(URL, userName, password);
+                            };
+                            
+                            
+                              
+                        %>
+                    
+                        <%
+                            HttpSession s = request.getSession();
+                            
+                            String nombre = (String) s.getAttribute("nombreUsuario");
+                         
+                            
+                                
+                        %>   
+
+                    <li><h1><%=nombre%></h1> </li>
+
+                    
                 </ul>
             </div>
         </nav>
@@ -62,7 +96,7 @@ and open the template in the editor.
                         <footer id="seccionpie">
                             <div>
                                 <section class="seccionpie" id="busquedapieUsuario">
-                                    <address>Vitoria, PaÃ­s Vasco</address>
+                                    <address>Vitoria, País Vasco</address>
                                     <small>&copy; Derechos Reservados 2018</small>
                                 </section>
                             </div>
