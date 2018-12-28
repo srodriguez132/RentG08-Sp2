@@ -68,7 +68,7 @@
                                         <input type="text" name="apellido" maxlength="40" id="apellido" required=""/>
                                     </label><br />
                                     <label for="movil">Móvil:
-                                        <input type="tel" name="movil" id="movil" pattern="^(\+34|0034|34)?[6|7|9][0-9]{8}$" required=""/>
+                                        <input type="tel" name="movil" id="movil" pattern="^(\+34|0034|34)?[6|7|9][0-9]{8}$" />
                                     </label><br />
                                     <label for="imagen">Foto:
                                         <input type="file" name="imagen" id="imagen"/>

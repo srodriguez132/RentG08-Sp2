@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -111,8 +112,12 @@ public class Registro extends HttpServlet {
         String nombre = (String) request.getParameter("nombre");
         String apellido = (String) request.getParameter("apellido");
         String movil = (String) request.getParameter("movil");
-        String imagen = (String) request.getParameter("imagen");
-
+//        String imagen = (String) request.getParameter("imagen");
+        File imagen = new File("/img"); 
+        imagen = (File) request.getAttribute("imagen");
+//        Part filePart = request.getPart("imagen"); // Retrieves <input type="file" name="file">
+//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+//        InputStream fileContent = filePart.getInputStream();
         try {
             boolean existe;
             set = con.createStatement();
@@ -120,7 +125,7 @@ public class Registro extends HttpServlet {
 
             if (rs.next()) {
                 existe = true;
-                //AVERGIGUAR COMO MANDAR ALERTA 
+                
                 String mensaje = "Email en uso. Seleccione otro.";
                 request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
                 rs.close();
