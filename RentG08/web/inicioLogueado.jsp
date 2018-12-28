@@ -53,6 +53,7 @@
                     ResultSet rs = set.executeQuery("SELECT * from clientes WHERE email LIKE '%" + email + "%'");
                     rs.next();
                     String nombre = rs.getString("nombre");
+                    String imagen = rs.getString("imagen");
                     
                     HttpSession s2 = request.getSession();
                     s2.setAttribute("nombreUsuario", nombre);
@@ -61,6 +62,7 @@
             
               
                     <li><h1><%=nombre%></h1> </li>
+                    <li><h1><img src="img/citroen.png" alt="" height="70"/></h1> </li>
 
  <%
                         
