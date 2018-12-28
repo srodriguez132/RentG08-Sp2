@@ -43,18 +43,28 @@
                                 <img src="img/admin.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form name="logueo" class="formulario" id="iniciarsesion" action="LoginAdmin" method="post">
+                                <form name="logueo" action="LoginAdmin" class="formulario" id="iniciarsesion"  method="post">
                                     <label for="text" class="campo">Usuario: 
                                         <input type="text" name="usuario" id="usuario" required/>
                                     </label><br />
-                                    <div class="clear"></div>
+                                    <div id="mensajeError">
+                                        <%
+                                            if (request.getParameter("message") != null) {
+                                        %>
+                                        
+                                            <h3><%=request.getParameter("message")%></h3>
+                                        
+                                        <% }
+                                        %>
+                                    </div>
+                                    
                                     <label for="contrasena">Contraseña:
                                         <input type="password" name="contrasena" id="contrasena" required/>
                                     </label><br />
                                     <div class="clear"></div>
                                     <section id="zonadatos">
                                     </section>
-                                    <button type="button" id="btnInicioSesion" class="boton">Iniciar Sesión</button>
+                                    <button type="submit" id="btnInicioSesion" class="boton">Iniciar Sesión</button>
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Inicio de Sesión Responsable <br />

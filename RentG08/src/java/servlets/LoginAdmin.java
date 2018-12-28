@@ -39,11 +39,11 @@ public class LoginAdmin extends HttpServlet {
         ServletContext contexto = cfg.getServletContext();
         
         String IP = contexto.getInitParameter("IP");
-        String database = contexto.getInitParameter("BD");
+        String database = contexto.getInitParameter("BDNombre");
         String URL = "jdbc:mysql://"+ IP + "/" + database;
     
-        String userName = contexto.getInitParameter("user");
-        String password = contexto.getInitParameter("pass");
+        String userName = contexto.getInitParameter("usuario");
+        String password = contexto.getInitParameter("contrasena");
         
         con = BD08.getConexion(URL,userName,password);
     }
@@ -99,9 +99,9 @@ public class LoginAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
          HttpSession s = request.getSession(true);
-        String usuario = request.getParameter("email");
+        String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contrasena");
 
         boolean existe = false;
@@ -125,7 +125,7 @@ public class LoginAdmin extends HttpServlet {
             if (pass.equals(contra)) {
                 s.setAttribute("Usuario", usuario);
                 s.setAttribute("Contrasena", contra);
-                request.getRequestDispatcher("/consultaReservasRS.html").forward(request, response);
+                request.getRequestDispatcher("/consultaReservaRS.html").forward(request, response);
             } else {
                 mensaje = "La contrasena es incorrecta";
                 request.getRequestDispatcher("/inicioSesionAdmin.jsp?message=" + mensaje).forward(request, response);
