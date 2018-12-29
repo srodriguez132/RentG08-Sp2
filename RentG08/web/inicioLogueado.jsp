@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -60,9 +61,9 @@
             %>  
             
             
-              
+                    <%System.out.println(request.getServletContext().getRealPath("/img") + File.separator + imagen);%>
                     <li><h1><%=nombre%></h1> </li>
-                    <li><h1><img src="<%=imagen%>" alt="" height="70"/></h1> </li>
+                    <li><h1><img src="<%=request.getServletContext().getRealPath("/img") + File.separator + imagen%>" alt=""/></h1> </li>
 
  <%
                         

@@ -128,7 +128,7 @@ public class Registro extends HttpServlet {
         File fileSaveDir = new File(ruta);
         
         part.write(ruta + File.separator);
-        String imagen = ruta;
+        String imagen = fileName;
         
        
 
