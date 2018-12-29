@@ -88,7 +88,7 @@
 
                         <footer id="seccionpie">
                             <div>
-                                <section class="seccionpie">
+                                <section class="seccionpie" id="inicioSesionPie">
                                     <address>Vitoria, País Vasco</address>
                                     <small>&copy; Derechos Reservados 2018</small>
                                 </section>
