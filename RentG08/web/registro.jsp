@@ -73,7 +73,7 @@
                                     </div>
 
                                     <label for="contrasena">Contraseña:
-                                        <input type="password"  name="contrasena" id="contrasena" required=""/>
+                                        <input type="password"  name="contrasena" id="contrasena" pattern="^[a-zA-Z0-9]{3,30}$" required=""/>
                                     </label><br />
                                     <label for="nombre">Nombre:
                                         <input type="text" id="nombre" maxlength="20" name="nombre" pattern="^[a-zA-Z]{3,20}$" required=""/>
