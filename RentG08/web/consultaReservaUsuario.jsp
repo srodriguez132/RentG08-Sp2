@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="utils.BD08"%>
@@ -39,7 +40,7 @@ and open the template in the editor.
                     <li  id="pestanaActual"><a id="pestanaActualTexto"  href="consultaReservaUsuario.jsp">Consultar Reservas</a></li>
                         <%!
                             private Connection con;
-                            
+
                             public void jspInit() {
                                 ServletContext application = getServletContext();
                                 String IP = application.getInitParameter("IP");
@@ -48,24 +49,48 @@ and open the template in the editor.
                                 String userName = application.getInitParameter("usuario");
                                 String password = application.getInitParameter("contrasena");
                                 con = BD08.getConexion(URL, userName, password);
-                            };
+                            }
+
+                            ;
                             
                             
                               
                         %>
-                    
-                        <%
-                            HttpSession s = request.getSession();
-                            
-                            String nombre = (String) s.getAttribute("nombreUsuario");
-                         
-                            
-                                
-                        %>   
 
-                    <li><h1><%=nombre%></h1> </li>
+                    <%
+                        HttpSession s = request.getSession();
 
+                        
+                        String email = (String) session.getAttribute("emailUsuario");
+                        try {
+
+                            Statement set = con.createStatement();
+
+                            ResultSet rs = set.executeQuery("SELECT * from clientes WHERE email LIKE '%" + email + "%'");
+                            rs.next();
+                            String nombre = rs.getString("nombre");
+                            String imagen = rs.getString("imagen");
+
+                            HttpSession s2 = request.getSession();
+                            s2.setAttribute("nombreUsuario", nombre);
+
+
+                    %>   
+
+            
+    
+                    <li><h1>Hola, <%=nombre%></h1> </li>
+                    <li><h1><img src="img/<%=imagen%>" alt="" height="60" width="60"/></h1> </li>
                     
+ <%
+                        
+                        rs.close();
+                        set.close();
+                        
+                    } catch (SQLException ex) {
+                        System.out.println("Error en acceso a Clientes" + ex);
+                    }
+                %>
                 </ul>
             </div>
         </nav>

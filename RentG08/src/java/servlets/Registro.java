@@ -122,12 +122,15 @@ public class Registro extends HttpServlet {
         Part part = request.getPart("imagen");
         String fileName = extractFileName(part);
 
-        String ruta = request.getServletContext().getRealPath("/img") + File.separator + fileName;
+//        String ruta = request.getServletContext().getRealPath("/img") + File.separator + fileName;
+        String parte1 = request.getServletContext().getRealPath("/img");
+        String parte2 = parte1.substring(0, parte1.indexOf("build"));
+        String ruta= parte2 + "web/img" + File.separator + fileName;
         System.out.println(ruta);
 
         File fileSaveDir = new File(ruta);
         
-        part.write(ruta + File.separator);
+        part.write(ruta);
         String imagen = fileName;
         
        

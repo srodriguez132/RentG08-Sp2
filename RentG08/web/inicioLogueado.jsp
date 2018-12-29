@@ -61,10 +61,9 @@
             %>  
             
             
-                    <%System.out.println(request.getServletContext().getRealPath("/img") + File.separator + imagen);%>
-                    <li><h1><%=nombre%></h1> </li>
-                    <li><h1><img src="<%=request.getServletContext().getRealPath("/img") + File.separator + imagen%>" alt=""/></h1> </li>
-
+                    <li><h1>Hola, <%=nombre%></h1> </li>
+                    <li><h1><img src="img/<%=imagen%>" alt="" height="60" width="60"/></h1> </li>
+                    
  <%
                         
                         rs.close();
@@ -103,7 +102,7 @@
                                         <option value ="donostia">Donostia</option>
                                         <option value ="bilbao">Bilbao</option>
                                     </select><br />
-                                    <button type="button" id="buscar" class="boton"><a id="btnBuscar" href="reservaLogueada.html">Buscar coches</a>.</button>
+                                    <button type="button" id="buscar" class="boton"><a id="btnBuscar" href="reservaLogueada.jsp">Buscar coches</a>.</button>
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Búsqueda de Coches</div>
