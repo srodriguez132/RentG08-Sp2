@@ -80,7 +80,7 @@ and open the template in the editor.
             
     
                     <li><h1>Hola, <%=nombre%></h1> </li>
-                    <li><h1><img src="img/<%=imagen%>" alt="" height="60" width="60"/></h1> </li>
+                    <img src="img/<%=imagen%>" alt=""  width="80"/>
                     
  <%
                         

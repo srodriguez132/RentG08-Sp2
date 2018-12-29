@@ -19,7 +19,7 @@ body{
         position:absolute;
     /*left y top al 50% para que quede centrado en la pantalla*/
     left:50%;
-    top:50%;
+    top:60%;
     margin-left:-165px;
     margin-top: -210px;
     width: 330px;

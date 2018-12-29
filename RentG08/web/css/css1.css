@@ -22,8 +22,8 @@ body{
 .cabecera{
     background: royalblue;
     color: white;
-    height: 80px;
-    margin-bottom: -20px;
+    height: 100px;
+    margin-bottom: -40px;
 }	
 #main-header a {
     color: royalblue;
@@ -60,6 +60,7 @@ body{
  */
 nav {
     float: right;
+    
 }
 nav ul {
     margin: 0;
@@ -83,7 +84,7 @@ nav ul li a {
     font-size: 15px;
     font-weight:bold;
     padding: 0 10px;
-    margin-top: 20px;
+    margin-top: 30px;
     color: black;
     /*				text-decoration: black;*/
 }
@@ -111,11 +112,18 @@ nav ul li h1 {
     color: royalblue;
 
 }
+nav ul li img{
+    
+    
+    margin-top: 20px;
+    margin-right: 20px;
+   ;
+}
 
 
 nav ul li a:hover {
     background: royalblue;
-    margin-top: -100px;
+    margin-top: -180px;
 }
 
 .clear{
@@ -168,7 +176,7 @@ nav ul li a:hover {
 #busquedapieUsuario{
     position: static;
     /* Altura total del footer en px con valor negativo */
-    margin-top: 800px;
+    margin-top: 950px;
     /* Altura del footer en px. Se han restado los 5px del margen
        superior mas los 5px del margen inferior
     */
