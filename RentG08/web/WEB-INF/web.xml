@@ -16,6 +16,10 @@
         <param-name>contrasena</param-name>
         <param-value>root</param-value>
     </context-param>
+    <context-param>
+        <param-name>path</param-name>
+        <param-value>/img</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>servlets.Login</servlet-class>

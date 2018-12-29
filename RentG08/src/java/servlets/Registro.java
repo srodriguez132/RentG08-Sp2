@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import static java.lang.System.out;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import static java.sql.JDBCType.VARCHAR;
@@ -36,23 +37,23 @@ import utils.BD08;
 @WebServlet(name = "Registro", urlPatterns = {"/Registro"})
 @MultipartConfig
 public class Registro extends HttpServlet {
-
+    
     private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
-
+    
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         ServletContext contexto = cfg.getServletContext();
-
+        
         String IP = contexto.getInitParameter("IP");
         String basedatos = contexto.getInitParameter("BDNombre");
         String URL = "jdbc:mysql://" + IP + "/" + basedatos;
-
+        
         String nombreUsuario = contexto.getInitParameter("usuario");
         String contrasena = contexto.getInitParameter("contrasena");
-
+        
         con = BD08.getConexion(URL, nombreUsuario, contrasena);
     }
 
@@ -94,7 +95,7 @@ public class Registro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**
@@ -108,7 +109,7 @@ public class Registro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String email = (String) request.getParameter("email");
         String contra = (String) request.getParameter("contrasena");
         String nombre = (String) request.getParameter("nombre");
@@ -118,14 +119,18 @@ public class Registro extends HttpServlet {
 //        File imagen = new File("/img");
 //        imagen = (File) request.getAttribute("imagen");
 
-          Part part = request.getPart("imagen");
-          String fileName = extractFileName(part);
-          String ruta = "C:\\Users\\kurri\\Desktop" + File.separator + fileName;
-          File fileSaveDir = new File(ruta);
-          part.write(ruta + File.separator);
-          
-          String imagen = ruta;
+        Part part = request.getPart("imagen");
+        String fileName = extractFileName(part);
 
+        String ruta = request.getServletContext().getRealPath("/img") + File.separator + fileName;
+        System.out.println(ruta);
+
+        File fileSaveDir = new File(ruta);
+        
+        part.write(ruta + File.separator);
+        String imagen = ruta;
+        
+       
 
 // Retrieves <input type="file" name="file">
 //        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
@@ -134,15 +139,15 @@ public class Registro extends HttpServlet {
             boolean existe;
             set = con.createStatement();
             rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
-
+            
             if (rs.next()) {
                 existe = true;
-
+                
                 String mensaje = "Email en uso. Seleccione otro.";
                 request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
                 rs.close();
                 set.close();
-
+                
             } else {
                 existe = false;
                 rs.close();
@@ -151,9 +156,9 @@ public class Registro extends HttpServlet {
                         + ",'" + movil + "','" + imagen + "' )");
                 set.close();
                 request.getRequestDispatcher("inicioSesion.jsp").forward(request, response);
-
+                
             }
-
+            
         } catch (SQLException e) {
             System.out.println("Error" + e);
         }
@@ -172,13 +177,12 @@ public class Registro extends HttpServlet {
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
-        for(String s : items){
-            if(s.trim().startsWith("filename")){
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
                 return s.substring(s.indexOf("=") + 2, s.length() - 1);
             }
         }
         return "";
     }
-
-
+    
 }

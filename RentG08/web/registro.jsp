@@ -44,19 +44,19 @@
                             </div>
                             <div id="cuerpo">
                                 <?php
-$ruta_indexphp = dirname(realpath(__FILE__));
-$ruta_fichero_origen = $_FILES['imagen1']['tmp_name'];
-$ruta_nuevo_destino = $ruta_indexphp . '/imagenes/' . $_FILES['imagen1']['name'];
-if ( in_array($_FILES['imagen1']['type'], $extensiones) ) {
-     echo 'Es una imagen';
-     if ( $_FILES['imagen1']['size']< $max_tamanyo ) {
-          echo 'Pesa menos de 1 MB';
-          if( move_uploaded_file ( $ruta_fichero_origen, $ruta_nuevo_destino ) ) {
-               echo 'Fichero guardado con éxito';
-          }
-     }
-}
-?>
+                                $ruta_indexphp = dirname(realpath(__FILE__));
+                                $ruta_fichero_origen = $_FILES['imagen1']['tmp_name'];
+                                $ruta_nuevo_destino = $ruta_indexphp . '/imagenes/' . $_FILES['imagen1']['name'];
+                                if ( in_array($_FILES['imagen1']['type'], $extensiones) ) {
+                                echo 'Es una imagen';
+                                if ( $_FILES['imagen1']['size']< $max_tamanyo ) {
+                                echo 'Pesa menos de 1 MB';
+                                if( move_uploaded_file ( $ruta_fichero_origen, $ruta_nuevo_destino ) ) {
+                                echo 'Fichero guardado con éxito';
+                                }
+                                }
+                                }
+                                ?>
                                 <form name="datos" action="Registrarse" class="formulario" id="registro" method="post" enctype="multipart/form-data">
                                     <label for="email" class="campo">E-mail: 
                                         <input type="email" name="email" id="email" placeholder="Ej: a@a.com" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required=""/>
@@ -65,13 +65,13 @@ if ( in_array($_FILES['imagen1']['type'], $extensiones) ) {
                                         <%
                                             if (request.getParameter("message") != null) {
                                         %>
-                                        
-                                            <h3><%=request.getParameter("message")%></h3>
-                                        
+
+                                        <h3><%=request.getParameter("message")%></h3>
+
                                         <% }
                                         %>
                                     </div>
-                                    
+
                                     <label for="contrasena">Contraseña:
                                         <input type="password"  name="contrasena" id="contrasena" required=""/>
                                     </label><br />
@@ -85,14 +85,14 @@ if ( in_array($_FILES['imagen1']['type'], $extensiones) ) {
                                         <input type="tel" name="movil" id="movil" pattern="^(\+34|0034|34)?[6|7|9][0-9]{8}$" />
                                     </label><br />
                                     <label for="imagen">Imagen:
-                                        <input type="file" name="imagen" id="imagen"/>
+                                        <input type="file" name="imagen" id="imagen" required=""/>
                                     </label><br />
 
                                     <button type="submit" id="registrarse" class="boton">Registrarse</button>
 
                                 </form>
-                                    
-                                   
+
+
 
                             </div>
                             <div id="pieregistro">Sistema de Registro</div>
