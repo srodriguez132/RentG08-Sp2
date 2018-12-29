@@ -62,7 +62,7 @@
             
               
                     <li><h1><%=nombre%></h1> </li>
-                    <li><h1><img src="img/citroen.png" alt="" height="70"/></h1> </li>
+                    <li><h1><img src="<%=imagen%>" alt="" height="70"/></h1> </li>
 
  <%
                         
