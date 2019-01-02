@@ -1,9 +1,18 @@
+<%-- 
+    Document   : consultaReservaRS
+    Created on : 02-ene-2019, 16:10:51
+    Author     : Usuario
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.io.File"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="utils.BD08"%>
+<%@page import="java.sql.Connection"%>
+<%@page session="true"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Consulta Reservas Admin</title>
@@ -38,16 +47,16 @@ and open the template in the editor.
                                 <img src="img/busqueda.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form name="formulario">
+                                <form name="formulario" >
                                     <label for="email">Email:</label>
                                     <input type="email" name="cliente" id="consCliente"><br />
-                                    <input type="button" name="botonC" id="botonC" class="boton" value="Buscar por cliente"><br />
+                                    <input type="button" name="botonC" id="botonC" class="boton" value="Buscar por cliente" action="consultaRS" method="post"><br />
                                     <label for="date">Fecha:</label>
                                     <input type="date" name="fecha" id="consFecha"><br />
-                                    <input type="button" name="botonF" id="botonF" class="boton" value="Buscar por fecha"><br />
-                                    <label for="email">Matrícula:</label>
+                                    <input type="button" name="botonF" id="botonF" class="boton" value="Buscar por fecha" action="consultaRS" method="post"><br />
+                                    <label for="matricula">Matrícula:</label>
                                     <input type="text" name="matricula" id="consMatricula"><br />
-                                    <input type="button" name="botonM" id="botonM" class="boton" value="Buscar por matrícula"><br />
+                                    <input type="button" name="botonM" id="botonM" class="boton" value="Buscar por matrícula" action="consultaRS" method="post"><br />
                                 </form>
                             </div>
                             <section id="cajaReservas">   
@@ -67,3 +76,4 @@ and open the template in the editor.
                         </footer>
                         </body>
                         </html>
+                      
