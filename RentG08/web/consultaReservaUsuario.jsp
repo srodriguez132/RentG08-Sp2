@@ -104,69 +104,84 @@ and open the template in the editor.
                                 <img src="img/busqueda.png" style="max-width: 8%">
                             </div>
                             <div id="cuerpo">                
-                                <form name="formulario" action="ConsultaUsuario" method="post">
+                                <form name="formulario" action="consultaReservaUsuario.jsp" method="post">
                                     <label for="fecha">Fecha: </label>
                                     <input type="date" name="fecha" id="fechaUsuario"><br />
-                                    <input type="submit" name="btnFecha" id="botonPost" class="boton" value="Buscar Posteriores"><br />
-                                    <!--                                    <input type="button" name="botonAnt" id="botonAnt" class="boton" value="Buscar Anteriores"><br />-->
+                                    <button type="submit" name="btnConsultaUsuario" id="botonPost" class="boton" value="buscar">Buscar<br />
+                                         
+                      
                                 </form>
+                                
+                                
                             </div>    
-                            <section id="zonadatos">   
+                            <div id="mensajeError">
+                                        <%
+                                            if (request.getParameter("message") != null) {
+                                        %>
 
-                                <div class="datagrid">
-                                    <table>
-                                        <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th><th>Estado</th>
-                                                <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+                                        <h3><%=request.getParameter("message")%></h3>
+
+                                        <% }
+                                        %>
+                                    </div>
+                            <form name="cancelarReservas" action="ConsultaUsuario" method="post">
+                                <section id="zonadatos">   
+
+                                    <div class="datagrid">
+                                        <table>
+                                            <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th><th>Estado</th>
+                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
 
 
-                                        <tbody id="datosTabla">
+                                            <tbody id="datosTabla">
 
 
-                                            <%
-                                                try {
-                                                    String matricula;
-                                                    Date fechainicio;
-                                                    Date fechafin;
-                                                    String estado;
-                                                    int penalizacion;
-                                                    int precio;
-                                                    int total;
-                                                    String fechaBusqueda = request.getParameter("fecha");
-                                                    Statement set = con.createStatement();
-                                                    ResultSet rs = set.executeQuery("SELECT * from reserva WHERE email LIKE '%" + email + "%' AND fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
-                                                    int cont = 0;
-                                                    while (rs.next()) {
-                                                        int id = rs.getInt("id");
-                                                        matricula = rs.getString("matricula");
-                                                        fechainicio = rs.getDate("fechainicio");
-                                                        fechafin = rs.getDate("fechafin");
-                                                        estado = rs.getString("estado");
-                                                        penalizacion = rs.getInt("penalizacion");
-                                                        precio = rs.getInt("precio");
-                                                        total = rs.getInt("total");
-                                                        if (cont % 2 == 0) {
-                                            %>                         
-
-                                            <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
-
-                                            <%
-                                            } else {
-                                            %>
-                                            <tr class="alt"><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
                                                 <%
-                                                            }
-                                                            cont = cont + 1;
-                                                        }
-                                                        rs.close();
-                                                        set.close();
+                                                    try {
+                                                        String matricula;
+                                                        Date fechainicio;
+                                                        Date fechafin;
+                                                        String estado;
+                                                        int penalizacion;
+                                                        int precio;
+                                                        int total;
+                                                        String fechaBusqueda = request.getParameter("fecha");
+                                                        Statement set = con.createStatement();
+                                                        ResultSet rs = set.executeQuery("SELECT * from reserva WHERE email LIKE '%" + email + "%' AND fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                        int cont = 0;
+                                                        while (rs.next()) {
+                                                            int id = rs.getInt("id");
+                                                            matricula = rs.getString("matricula");
+                                                            fechainicio = rs.getDate("fechainicio");
+                                                            fechafin = rs.getDate("fechafin");
+                                                            estado = rs.getString("estado");
+                                                            penalizacion = rs.getInt("penalizacion");
+                                                            precio = rs.getInt("precio");
+                                                            total = rs.getInt("total");
+                                                            
+                                                            if (cont % 2 == 0) {
+                                                %>                         
 
-                                                        //con.close();
-                                                    } catch (Exception ex) {
-                                                        System.out.println("Error en acceso a BD Jugadores" + ex);
-                                                    }
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                                <%
+                                                } else {
                                                 %>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <%
+                                                                }
+                                                                cont = cont + 1;
+                                                            }
+                                                            rs.close();
+                                                            set.close();
+
+                                                            //con.close();
+                                                        } catch (Exception ex) {
+                                                            System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                        }
+                                                    %>
 
 
 
@@ -174,29 +189,31 @@ and open the template in the editor.
 
 
 
-                                        </tbody>
+                                            </tbody>
 
-                                </div> 
-                                </table>
+                                    </div> 
+                                    </table>
 
+                                    </div>
+                                    <p>
+                                        <br> <button type="submit" name="btnConsultaUsuario" class="boton" value="cancelar">Cancelar Reserva</button></br>
+                                        <br> <button onclick="vaciar()" class="boton" name="vaciar">Vaciar</button></br>
+
+                                    </p>
+                                </section>
+                            </form>
+
+                            <div id="pieconsulta">Sistema de Consulta</div>                       
+                            </section>    
                         </div>
-                        <p>
-                            <br> <button type="submit" class="boton">Cancelar Reserva</button></br>
-                            <br> <button onclick="vaciar()" class="boton">Vaciar</button></br>
-
-                        </p>
-                </section>
-                <div id="pieconsulta">Sistema de Consulta</div>                       
-                </section>    
-            </div>
-        </main>  
-        <footer id="seccionpie">
-            <div>
-                <section class="seccionpie" id="busquedapieUsuario">
-                    <address>Vitoria, País Vasco</address>
-                    <small>&copy; Derechos Reservados 2018</small>
-                </section>
-            </div>
-        </footer>
-    </body>
-</html>
+                        </main>  
+                        <footer id="seccionpie">
+                            <div>
+                                <section class="seccionpie" id="busquedapieUsuario">
+                                    <address>Vitoria, País Vasco</address>
+                                    <small>&copy; Derechos Reservados 2018</small>
+                                </section>
+                            </div>
+                        </footer>
+                        </body>
+                        </html>
