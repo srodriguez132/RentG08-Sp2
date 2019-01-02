@@ -151,6 +151,7 @@ and open the template in the editor.
                                                         int cont = 0;
                                                         while (rs.next()) {
                                                             int id = rs.getInt("id");
+                                                            
                                                             matricula = rs.getString("matricula");
                                                             fechainicio = rs.getDate("fechainicio");
                                                             fechafin = rs.getDate("fechafin");
@@ -162,13 +163,13 @@ and open the template in the editor.
                                                             if (cont % 2 == 0) {
                                                 %>                         
 
-                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
 
                                                 <%
                                                 } else {
                                                 %>
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
                                                     <%
                                                                 }

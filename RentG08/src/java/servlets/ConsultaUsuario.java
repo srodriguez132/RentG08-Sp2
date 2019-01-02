@@ -107,12 +107,13 @@ public class ConsultaUsuario extends HttpServlet {
 //        if (request.getParameter("btnConsultaUsuario").equals("buscar")) {
 //            request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
 //        } else {
-            String id = request.getParameter("R1");
 
             try {
-                set = con.createStatement();
+                String idString = request.getParameter("R1");
+                int id = Integer.parseInt(idString);
+                
                 Statement set2 = con.createStatement();
-                rs = set2.executeQuery("Select * from reserva where id=" + id + "");
+                rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
                 rs.next();
                 java.sql.Date fechaInicio =  rs.getDate("fechainicio");
                 
@@ -121,7 +122,8 @@ public class ConsultaUsuario extends HttpServlet {
                 String estado = rs.getString("estado");
 
                 if (fechaInicio.compareTo(fechaActual)>0) {
-                    set.executeUpdate("update reserva set estado='Pendiente' where id="+ id + "");
+                    set = con.createStatement();
+                    set.executeUpdate("update reserva set estado='Cancelada' where id LIKE '%"+ id + "%'");
                     set.close();
                     request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
                 } else {
