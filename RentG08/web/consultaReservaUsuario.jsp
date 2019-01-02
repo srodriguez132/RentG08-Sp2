@@ -198,12 +198,16 @@ and open the template in the editor.
                                     </div>
                                     <p>
                                         <br> <button type="submit" name="btnConsultaUsuario" class="boton" value="cancelar">Cancelar Reserva</button></br>
-                                        <br> <button onclick="vaciar()" class="boton" name="vaciar">Vaciar</button></br>
-
-                                    </p>
+                                        
+                                        <br> <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
+                                        </p>
+                                    
                                 </section>
+                                              
                             </form>
-
+                            
+                                        
+                                        
                             <div id="pieconsulta">Sistema de Consulta</div>                       
                             </section>    
                         </div>

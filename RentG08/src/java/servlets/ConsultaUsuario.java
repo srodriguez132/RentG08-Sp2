@@ -104,9 +104,9 @@ public class ConsultaUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        if (request.getParameter("btnConsultaUsuario").equals("buscar")) {
-//            request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
-//        } else {
+        if (request.getParameter("btnConsultaUsuario").equals("vaciar")) {
+            request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
+        } else {
 
             try {
                 String idString = request.getParameter("R1");
@@ -121,7 +121,7 @@ public class ConsultaUsuario extends HttpServlet {
                 java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
                 String estado = rs.getString("estado");
 
-                if (fechaInicio.compareTo(fechaActual)>0) {
+                if (fechaInicio.compareTo(fechaActual)>0 && estado.equals("Pendiente")) {
                     set = con.createStatement();
                     set.executeUpdate("update reserva set estado='Cancelada' where id LIKE '%"+ id + "%'");
                     set.close();
@@ -135,7 +135,7 @@ public class ConsultaUsuario extends HttpServlet {
             } catch (SQLException ex) {
                 System.out.println("No funciona" + ex);
             }
-//        }
+        }
     }
 
     /**
