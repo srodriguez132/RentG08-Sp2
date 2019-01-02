@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +34,6 @@ public class Buscar extends HttpServlet {
     private Connection con;
     private Statement set;
     private ResultSet rs;
-    private ResultSet rsc;
     String cad;
 
     @Override
@@ -103,49 +104,114 @@ public class Buscar extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession s = request.getSession(true);
-        String fechaI = request.getParameter("fechaI");
-        String horaI = request.getParameter("horaI");
-        String fechaF = request.getParameter("fechaF");
-        String horaF = request.getParameter("horaF");
-        s.setAttribute("FechaInicio", fechaI);
+        String fechaIni = request.getParameter("fechaI");
+        SimpleDateFormat formatodate = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date fechaI = null;
+        try {
+            fechaI = formatodate.parse(fechaIni);
+        } catch (ParseException ex) {
+            Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String horaIni = request.getParameter("horaI");
+        java.sql.Time horaI = java.sql.Time.valueOf(horaIni);
+        String fechaFina = request.getParameter("fechaF");
+        java.util.Date fechaF = null;
+        try {
+            fechaF = formatodate.parse(fechaFina);
+        } catch (ParseException ex) {
+            Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String horaFina = request.getParameter("horaFina");
+        java.sql.Time horaF = java.sql.Time.valueOf(horaFina);
+
+        s.setAttribute("FechaInicio", fechaIni);
         s.setAttribute("HoraInicio", horaI);
-        s.setAttribute("FechaFin", fechaF);
+        s.setAttribute("FechaFin", fechaFina);
         s.setAttribute("HoraFin", horaF);
-        System.out.println(fechaI);
-        System.out.println(horaI);
 
         boolean existe = false;
         String mensaje;
-        String fechaHoraI;
-        ArrayList<String> coches = new ArrayList<String>();
-        int i = 1;
+        ArrayList<String> coches = new ArrayList<>();
+        String matricula;
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM Reserva");
-            if (rs.next()) {
+            rs = set.executeQuery("SELECT * FROM coches");
+            while (rs.next()) {
+                matricula = rs.getString("matricula");
+                coches.add(matricula);
                 existe = true;
             }
             rs.close();
-            set.close();
-        } catch (SQLException ex1) {
-            System.out.println("No lee de la tabla Reserva. " + ex1);
-        }
-
-        try {
-            set = con.createStatement();
-            rsc = set.executeQuery("SELECT * FROM Coches");
-            if (rsc.next()) {
-                coches.add(i, rsc.getString("matricula"));
-                i++;
-                System.out.println(coches.get(1));
-                existe = true;
-            }
-            rs.close();
-            set.close();
         } catch (SQLException ex1) {
             System.out.println("No lee de la tabla Coches. " + ex1);
         }
 
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT * FROM reserva");
+            if (rs.next()) {
+                existe = true;
+            }
+        } catch (SQLException ex1) {
+            System.out.println("No lee de la tabla Reserva. " + ex1);
+        }
+        if (existe) {
+            try {
+                java.sql.Date fechaInicio = rs.getDate("fechainicio");
+                java.sql.Time horaInicio = rs.getTime("fechainicio");
+                java.sql.Date fechaFin = rs.getDate("fechafin");
+                java.sql.Time horaFin = rs.getTime("fechafin");
+
+                boolean borrar = false;
+                //Controlar fecha de inicio seleccionada
+                if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
+                    borrar = true;
+                }
+                if (fechaI.compareTo(fechaInicio) == 0 && horaI.compareTo(horaInicio) >= 0) {
+                    borrar = true;
+                }
+                if (fechaI.compareTo(fechaFin) == 0 && horaI.compareTo(horaFin) <= 0) {
+                    borrar = true;
+                }
+                //Controlar fecha de fin seleccionada
+                if (fechaF.compareTo(fechaInicio) > 0 && fechaF.compareTo(fechaFin) < 0) {
+                    borrar = true;
+                }
+                if (fechaF.compareTo(fechaInicio) == 0 && horaF.compareTo(horaInicio) >= 0) {
+                    borrar = true;
+                }
+                if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
+                    borrar = true;
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                matricula = rs.getString("matricula");
+                int j = 0;
+                while (j < coches.size()) {
+                    String mat = coches.get(j);
+                    if (matricula.equals(mat)) {
+                        coches.remove(j);
+                    }
+                    j++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            int i = 0;
+            while (i < coches.size()) {
+                String co = coches.get(i);
+                System.out.println(co);
+                i++;
+            }
+            if (coches.isEmpty()) {
+                mensaje = "No hay coches disponibles para esas fechas";
+                request.getRequestDispatcher("/index.html?message=" + mensaje).forward(request, response);
+            }
+        }
         request.getRequestDispatcher("reserva.html").forward(request, response);
     }
 
