@@ -100,58 +100,7 @@ public class consultaRS extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession s = request.getSession(true);
-                String email= request.getParameter("cliente");
-                String fecha= request.getParameter("fecha");
-                String matricula= request.getParameter("matricula");
-     if(email.isEmpty() && fecha.isEmpty() && !matricula.isEmpty()){
-            try {
-                set=con.createStatement();
-                    rs=set.executeQuery("select * from reserva where matricula ='"+ matricula +"'");
-                    if(rs.next()){
-                        System.out.println(rs);
-                    }
-                    else{
-                        System.out.println("No hay reservas");
-                    }
-                        
-            } catch (SQLException ex) {
-                Logger.getLogger(consultaRS.class.getName()).log(Level.SEVERE, null, ex);
-            }
-     
-     }   
-      if(!email.isEmpty() && fecha.isEmpty() && matricula.isEmpty()){
-            try {
-                set=con.createStatement();
-                    rs=set.executeQuery("select * from reserva where email ='"+ email +"'");
-                    if(rs.next()){
-                        System.out.println(rs);
-                    }
-                    else{
-                        System.out.println("No hay reservas");
-                    }
-                        
-            } catch (SQLException ex) {
-                Logger.getLogger(consultaRS.class.getName()).log(Level.SEVERE, null, ex);
-            }
-     
-     }   
-       if(email.isEmpty() && !fecha.isEmpty() && matricula.isEmpty()){
-            try {
-                set=con.createStatement();
-                    rs=set.executeQuery("select * from reserva where fechafin >'"+ fecha +"' and fechainicio<'"+fecha+"'");
-                    if(rs.next()){
-                        System.out.println(rs);
-                    }
-                    else{
-                        System.out.println("No hay reservas");
-                    }
-                        
-            } catch (SQLException ex) {
-                Logger.getLogger(consultaRS.class.getName()).log(Level.SEVERE, null, ex);
-            }
-     
-     }   
+        request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
     }
 
     /**

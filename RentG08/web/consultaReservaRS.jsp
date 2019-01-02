@@ -4,6 +4,7 @@
     Author     : Usuario
 --%>
 
+<%@page import="java.sql.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
@@ -21,7 +22,7 @@
         <link rel="stylesheet" href="css/css1.css">
         <link rel="stylesheet" href="css/consultaReservaAdmin.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-        <script src="javascript/indexedunido.js"></script>
+         <link rel="stylesheet" href="css/consultaReserva.css">
     </head>
     <body>
         <header class="cabecera" id="cabeceraBusqueda">
@@ -47,33 +48,119 @@
                                 <img src="img/busqueda.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form name="formulario" >
+                                <form name="formulario" action="consultaRS" method="post" >
                                     <label for="email">Email:</label>
                                     <input type="email" name="cliente" id="consCliente"><br />
-                                    <input type="button" name="botonC" id="botonC" class="boton" value="Buscar por cliente" action="consultaRS" method="post"><br />
+                                    <input type="submit" name="boton" id="botonC" class="boton" value="Buscar por cliente" ><br />
                                     <label for="date">Fecha:</label>
                                     <input type="date" name="fecha" id="consFecha"><br />
-                                    <input type="button" name="botonF" id="botonF" class="boton" value="Buscar por fecha" action="consultaRS" method="post"><br />
+                                    <input type="submit" name="boton" id="botonF" class="boton" value="Buscar por fecha" ><br />
                                     <label for="matricula">Matrícula:</label>
                                     <input type="text" name="matricula" id="consMatricula"><br />
-                                    <input type="button" name="botonM" id="botonM" class="boton" value="Buscar por matrícula" action="consultaRS" method="post"><br />
+                                    <input type="submit" name="boton" id="botonM" class="boton" value="Buscar por matrícula" ><br />
                                 </form>
-                            </div>
-                            <section id="cajaReservas">   
-                                <p>Información no disponible</p>
-                            </section>
-                            <div id="pieconsulta">Sistema de Consulta</div>                    
-                            </section>
+                                <%!
+                                    private Connection con;
+
+                                    public void jspInit() {
+                                        ServletContext application = getServletContext();
+                                        String IP = application.getInitParameter("IP");
+                                        String database = application.getInitParameter("BDNombre");
+                                        String URL = "jdbc:mysql://" + IP + "/" + database;
+                                        String userName = application.getInitParameter("usuario");
+                                        String password = application.getInitParameter("contrasena");
+                                        con = BD08.getConexion(URL, userName, password);
+                                    }
+
+                                    ;
+                            
+                            
+                              
+                                %>  <table>
+                                    <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
+                                            <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+
+
+                                    <tbody id="datosTabla">
+
+
+                                        <%
+                                            HttpSession s = request.getSession();
+                        String email = (String) session.getAttribute("emailUsuario");
+                                            try {
+                                                Statement set = con.createStatement();
+                                                String matricula;
+                                                Date fechainicio;
+                                                Date fechafin;
+                                                String estado;
+                                                int penalizacion;
+                                                int precio;
+                                                int total;
+                                                ResultSet rs;
+                                                if (request.getParameter("boton").equals("Buscar por fecha")){                                                
+                                                String fechaBusqueda = request.getParameter("fecha");
+                                                rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                }
+                                                else  if (request.getParameter("boton").equals("Buscar por Matricula")){
+                                                  String MatriculaBusqueda = request.getParameter("matricula");
+                                                 rs = set.executeQuery("SELECT * from reserva WHERE matricula ='%" + MatriculaBusqueda + "%'");
+                                                }
+                                                else{
+                                                     String emailBusqueda = request.getParameter("cliente");
+                                                rs = set.executeQuery("SELECT * from reserva WHERE email ='%" + emailBusqueda + "%'");
+                                                }
+                                                int cont = 0;
+                                                while (rs.next()) {
+                                                    int id = rs.getInt("id");
+                                                    matricula = rs.getString("matricula");
+                                                    fechainicio = rs.getDate("fechainicio");
+                                                    fechafin = rs.getDate("fechafin");
+                                                    estado = rs.getString("estado");
+                                                    penalizacion = rs.getInt("penalizacion");
+                                                    precio = rs.getInt("precio");
+                                                    total = rs.getInt("total");
+                                                    if (cont % 2 == 0) {
+                                        %>                         
+
+                                        <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                            <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                        <%
+                                        } else {
+                                        %>
+                                        <tr class="alt"><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                            <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                            <%
+                                                        }
+                                                        cont = cont + 1;
+                                                    }
+                                                    rs.close();
+                                                    set.close();
+
+                                                    //con.close();
+                                                } catch (Exception ex) {
+                                                    System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                }
+                                            %>
+                                    </tbody>
+                            </div> 
+                            </table>
                         </div>
-                        </main>
-                        <footer id="seccionpie">
-                            <div>
-                                <section class="seccionpie" id="busquedapie">
-                                    <address>Vitoria, País Vasco</address>
-                                    <small>&copy; Derechos Reservados 2018</small>
-                                </section>
-                            </div>
-                        </footer>
-                        </body>
-                        </html>
-                      
+                        <p>
+                            <br> <button type="submit" class="boton">Calcular Total</button></br>
+                        </p>
+                    </div>
+                    <div id="pieconsulta">Sistema de Consulta</div>                    
+                </section>
+            </div>
+        </main>
+        <footer id="seccionpie">
+            <div>
+                <section class="seccionpie" id="busquedapie">
+                    <address>Vitoria, País Vasco</address>
+                    <small>&copy; Derechos Reservados 2018</small>
+                </section>
+            </div>
+        </footer>
+    </body>
+</html>
