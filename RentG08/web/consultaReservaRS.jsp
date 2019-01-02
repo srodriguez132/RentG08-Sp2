@@ -147,7 +147,7 @@
                             </table>
                         </div>
                         <p>
-                            <br> <button type="submit" class="boton">Calcular Total</button></br>
+                            <br> <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
                         </p>
                     </div>
                     <div id="pieconsulta">Sistema de Consulta</div>                    
