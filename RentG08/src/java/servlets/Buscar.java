@@ -7,13 +7,13 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,13 +27,13 @@ import utils.BD08;
  *
  * @author Grupo 08
  */
-public class Login extends HttpServlet {
+public class Buscar extends HttpServlet {
 
     private Connection con;
     private Statement set;
     private ResultSet rs;
+    private ResultSet rsc;
     String cad;
-    
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -60,18 +60,16 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //response.sendRedirect("index.jsp?message="+mensaje);
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");
+            out.println("<title>Servlet Buscar</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Buscar at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -105,46 +103,50 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession s = request.getSession(true);
-        String email = request.getParameter("email");
-        String contra = request.getParameter("contrasena");
-        s.setAttribute("emailUsuario", email);
-        
-        
-        String datoSesion = (String) s.getAttribute("emailUsuario");
-        
-        
-        
+        String fechaI = request.getParameter("fechaI");
+        String horaI = request.getParameter("horaI");
+        String fechaF = request.getParameter("fechaF");
+        String horaF = request.getParameter("horaF");
+        s.setAttribute("FechaInicio", fechaI);
+        s.setAttribute("HoraInicio", horaI);
+        s.setAttribute("FechaFin", fechaF);
+        s.setAttribute("HoraFin", horaF);
+        System.out.println(fechaI);
+        System.out.println(horaI);
+
         boolean existe = false;
-        String pass = null;
-        String mensaje = null;
+        String mensaje;
+        String fechaHoraI;
+        ArrayList<String> coches = new ArrayList<String>();
+        int i = 1;
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM Clientes where email ='" + email + "'");
+            rs = set.executeQuery("SELECT * FROM Reserva");
             if (rs.next()) {
                 existe = true;
-                pass = rs.getString("contraseña");
-            } else {
-                existe = false;
             }
             rs.close();
             set.close();
         } catch (SQLException ex1) {
-            System.out.println("No lee de la tabla Clientes. " + ex1);
+            System.out.println("No lee de la tabla Reserva. " + ex1);
         }
-        if (existe == true) {
-            if (pass.equals(contra)) {
-                s.setAttribute("Email", email);
-                s.setAttribute("Contrasena", contra);
-                request.getRequestDispatcher("/inicioLogueado.jsp").forward(request, response);
-                
-            } else {
-                mensaje = "La contrasena es incorrecta";
-                request.getRequestDispatcher("/inicioSesion.jsp?message=" + mensaje).forward(request, response);
+
+        try {
+            set = con.createStatement();
+            rsc = set.executeQuery("SELECT * FROM Coches");
+            if (rsc.next()) {
+                coches.add(i, rsc.getString("matricula"));
+                i++;
+                System.out.println(coches.get(1));
+                existe = true;
             }
-        } else {
-            mensaje = "El email es incorrecto";
-            request.getRequestDispatcher("/inicioSesion.jsp?message=" + mensaje).forward(request, response);
+            rs.close();
+            set.close();
+        } catch (SQLException ex1) {
+            System.out.println("No lee de la tabla Coches. " + ex1);
         }
+
+        request.getRequestDispatcher("reserva.html").forward(request, response);
     }
 
     /**

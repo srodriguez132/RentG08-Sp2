@@ -28,6 +28,10 @@
         <servlet-name>LoginAdmin</servlet-name>
         <servlet-class>servlets.LoginAdmin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Buscar</servlet-name>
+        <servlet-class>servlets.Buscar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>LoginAdmin</servlet-name>
         <url-pattern>/LoginAdmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Buscar</servlet-name>
+        <url-pattern>/Buscar</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -87,7 +87,7 @@
                                 <img src="img/busqueda.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form name="busqueda" class="formulario">
+                                <form action="Buscar" name="busqueda" class="formulario" method="post">
                                     <label for="fechaI">Fecha Inicio:</label>
                                     <input type="date" name="fechaI" id="fechaI" ><br /> 
                                     <label for="horaI">Hora Inicio:</label>
@@ -102,7 +102,7 @@
                                         <option value ="donostia">Donostia</option>
                                         <option value ="bilbao">Bilbao</option>
                                     </select><br />
-                                    <button type="button" id="buscar" class="boton"><a id="btnBuscar" href="reservaLogueada.jsp">Buscar coches</a>.</button>
+                                    <button type="button" id="buscar" class="boton">Buscar coches</button>
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Búsqueda de Coches</div>
