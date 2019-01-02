@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
@@ -19,7 +20,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/css1.css">
         <link rel="stylesheet" href="css/consultaReserva.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-        <script src="javascript/indexedunido.js"></script>
+        <script src="javascript/vaciarTabla.js"></script>
         <script src="javascript/sessionStorageCliente.js"></script>
         <script src="javascript/cerrarSesion.js"></script>
 
@@ -60,7 +61,6 @@ and open the template in the editor.
                     <%
                         HttpSession s = request.getSession();
 
-                        
                         String email = (String) session.getAttribute("emailUsuario");
                         try {
 
@@ -77,20 +77,20 @@ and open the template in the editor.
 
                     %>   
 
-            
-    
+
+
                     <li><h1>Hola, <%=nombre%></h1> </li>
                     <img src="img/<%=imagen%>" alt=""  width="80"/>
-                    
- <%
-                        
-                        rs.close();
-                        set.close();
-                        
-                    } catch (SQLException ex) {
-                        System.out.println("Error en acceso a Clientes" + ex);
-                    }
-                %>
+
+                    <%
+
+                            rs.close();
+                            set.close();
+
+                        } catch (SQLException ex) {
+                            System.out.println("Error en acceso a Clientes" + ex);
+                        }
+                    %>
                 </ul>
             </div>
         </nav>
@@ -101,30 +101,102 @@ and open the template in the editor.
                         <div id="contenedor">
 
                             <div id="superior" >
-                                <img src="img/busqueda.png" style="max-width: 18%">
+                                <img src="img/busqueda.png" style="max-width: 8%">
                             </div>
                             <div id="cuerpo">                
-                                <form name="formulario">
+                                <form name="formulario" action="ConsultaUsuario" method="post">
                                     <label for="fecha">Fecha: </label>
                                     <input type="date" name="fecha" id="fechaUsuario"><br />
-                                    <input type="button" name="botonPost" id="botonPost" class="boton" value="Buscar Posteriores"><br />
-                                    <input type="button" name="botonAnt" id="botonAnt" class="boton" value="Buscar Anteriores"><br />
+                                    <input type="submit" name="btnFecha" id="botonPost" class="boton" value="Buscar Posteriores"><br />
+                                    <!--                                    <input type="button" name="botonAnt" id="botonAnt" class="boton" value="Buscar Anteriores"><br />-->
                                 </form>
                             </div>    
                             <section id="zonadatos">   
 
-                            </section>
-                            <div id="pieconsulta">Sistema de Consulta</div>                       
-                            </section>    
+                                <div class="datagrid">
+                                    <table>
+                                        <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th><th>Estado</th>
+                                                <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+
+
+                                        <tbody id="datosTabla">
+
+
+                                            <%
+                                                try {
+                                                    String matricula;
+                                                    Date fechainicio;
+                                                    Date fechafin;
+                                                    String estado;
+                                                    int penalizacion;
+                                                    int precio;
+                                                    int total;
+                                                    String fechaBusqueda = request.getParameter("fecha");
+                                                    Statement set = con.createStatement();
+                                                    ResultSet rs = set.executeQuery("SELECT * from reserva WHERE email LIKE '%" + email + "%' AND fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                    int cont = 0;
+                                                    while (rs.next()) {
+                                                        int id = rs.getInt("id");
+                                                        matricula = rs.getString("matricula");
+                                                        fechainicio = rs.getDate("fechainicio");
+                                                        fechafin = rs.getDate("fechafin");
+                                                        estado = rs.getString("estado");
+                                                        penalizacion = rs.getInt("penalizacion");
+                                                        precio = rs.getInt("precio");
+                                                        total = rs.getInt("total");
+                                                        if (cont % 2 == 0) {
+                                            %>                         
+
+                                            <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                            <%
+                                            } else {
+                                            %>
+                                            <tr class="alt"><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                <%
+                                                            }
+                                                            cont = cont + 1;
+                                                        }
+                                                        rs.close();
+                                                        set.close();
+
+                                                        //con.close();
+                                                    } catch (Exception ex) {
+                                                        System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                    }
+                                                %>
+
+
+
+
+
+
+
+                                        </tbody>
+
+                                </div> 
+                                </table>
+
                         </div>
-                        </main>  
-                        <footer id="seccionpie">
-                            <div>
-                                <section class="seccionpie" id="busquedapieUsuario">
-                                    <address>Vitoria, País Vasco</address>
-                                    <small>&copy; Derechos Reservados 2018</small>
-                                </section>
-                            </div>
-                        </footer>
-                        </body>
-                        </html>
+                        <p>
+                            <br> <button type="submit" class="boton">Cancelar Reserva</button></br>
+                            <br> <button onclick="vaciar()" class="boton">Vaciar</button></br>
+
+                        </p>
+                </section>
+                <div id="pieconsulta">Sistema de Consulta</div>                       
+                </section>    
+            </div>
+        </main>  
+        <footer id="seccionpie">
+            <div>
+                <section class="seccionpie" id="busquedapieUsuario">
+                    <address>Vitoria, País Vasco</address>
+                    <small>&copy; Derechos Reservados 2018</small>
+                </section>
+            </div>
+        </footer>
+    </body>
+</html>
