@@ -150,7 +150,7 @@ and open the template in the editor.
                                                         int total;
                                                         String fechaBusqueda = request.getParameter("fecha");
                                                         Statement set = con.createStatement();
-                                                        ResultSet rs = set.executeQuery("SELECT * from reserva WHERE email LIKE '%" + email + "%' AND fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                        ResultSet rs = set.executeQuery("SELECT * from reserva WHERE email LIKE '%" + email + "%' AND fechainicio >= CAST('" + fechaBusqueda + "' as datetime) ORDER BY fechainicio ASC");
                                                         int cont = 0;
                                                         while (rs.next()) {
                                                             int id = rs.getInt("id");

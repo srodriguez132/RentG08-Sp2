@@ -62,7 +62,7 @@
             
             
                     <li><h1>Hola, <%=nombre%></h1> </li>
-                    <img id="imgusuario" src="img/<%=imagen%>" alt=""  width="80" />
+                    <img id="imgusuario" src="img/<%=imagen%>" alt=""  width="80"/>
                     
  <%
                         
