@@ -104,13 +104,13 @@ public class Total extends HttpServlet {
       String fechaDevolucion= request.getParameter("fechaDevolucion");
       String id= request.getParameter("R1");
      try {
-          if(!fechaEntrega.isEmpty()){
+          if(!fechaEntrega.isEmpty() && !id.isEmpty()){
          set = con.createStatement();
          rs=set.executeQuery("select * from reserva where id= '"+ id+"'");
          set.executeUpdate("update reserva set inicio= '"+fechaEntrega+"' as datetime where id='"+id+"'");
           
           }
-          if(!fechaDevolucion.isEmpty()){
+          if(!fechaDevolucion.isEmpty() && !id.isEmpty()){
          set = con.createStatement();
          rs=set.executeQuery("select * from reserva where id= '"+ id+"'");
          set.executeUpdate("update reserva set fin= '"+fechaDevolucion+"'as datetime where id='"+id+"'");

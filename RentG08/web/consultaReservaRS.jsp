@@ -171,13 +171,11 @@
                                                 %>                         
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
-                                                    <%}
-                                                        if (inicio != null && fin == null) {
+                                                    <%} else if (inicio != null && fin == null) {
                                                     %>
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
-                                                    <% }
-                                                        if (inicio == null && fin != null) {
+                                                    <% } else if (inicio == null && fin != null) {
                                                     %>
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><%=fin%><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
@@ -187,9 +185,9 @@
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
                                                     <%}
-
-                                                                    cont = cont + 1;
                                                                 }
+                                                                cont = cont + 1;
+
                                                             }
                                                             rs.close();
                                                             set.close();
@@ -204,23 +202,23 @@
                                     </table>
                                     </div>
                                     <p>
-                                        <br><button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
+                                        <br><button type="submit" class="boton" method="post">Guardar fechas</button></br>
                                         <br><button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
                                     </p>
                                 </section>
                             </form>
-                        
-                        <div id="pieconsulta">Sistema de Consulta</div>                    
-                </section>
-            </div>
-        </main>
-        <footer id="seccionpie">
-            <div>
-                <section class="seccionpie" id="consultaRSpie">
-                    <address>Vitoria, País Vasco</address>
-                    <small>&copy; Derechos Reservados 2018</small>
-                </section>
-            </div>
-        </footer>
-    </body>
-</html>
+
+                            <div id="pieconsulta">Sistema de Consulta</div>                    
+                            </section>
+                        </div>
+                        </main>
+                        <footer id="seccionpie">
+                            <div>
+                                <section class="seccionpie" id="consultaRSpie">
+                                    <address>Vitoria, País Vasco</address>
+                                    <small>&copy; Derechos Reservados 2018</small>
+                                </section>
+                            </div>
+                        </footer>
+                        </body>
+                        </html>
