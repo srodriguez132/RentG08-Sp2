@@ -190,8 +190,8 @@
                                     </table>
                             </div>
                             <p>
-                                <br> <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
-                                <br> <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
+                                 <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button>
+                                 <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button>
                             </p>
                         </div>
                         <div id="pieconsulta">Sistema de Consulta</div>                    
