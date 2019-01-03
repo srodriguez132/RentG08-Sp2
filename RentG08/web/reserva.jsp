@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang ="es">
     <head>
@@ -55,20 +57,16 @@
                                             <img src="img/mercedes.png" alt="" />Mercedes
                                         </label>
                                         <input type="radio" name="coche" value="4444ddd" id="coche4" required /><br><br><br>
-                                        <label for="fechaI">Fecha Inicio:</label>
-                                        <input type="date" name="fechaI" id="fechaI" required >
-                                        <label for="horaI">Hora Inicio:</label>
-                                        <input type="time" name="horaI" id="horaI" required ><br><br><br>
-                                        <label for="fechaF">Fecha Fin: </label>
-                                        <input type="date" name="fechaF" id="fechaF" required >
-                                        <label for="horaF">Hora Fin:</label>
-                                        <input type="time" name="horaF" id="horaF" required ><br><br><br>
-                                        <label for="lugar">Lugar:</label>
-                                        <select name="lugar" id="lugar" required>
-                                            <option value="Vitoria-Gasteiz">Vitoria-Gasteiz</option>
-                                            <option value="Donostia">Donostia</option>
-                                            <option value="Bilbao">Bilbao</option>
-                                        </select><br><br>
+                                        <label for="fechaI">Fecha Inicio: <%=session.getAttribute("FechaInicio")%></label>
+                                        <br>
+                                        <label for="horaI">Hora Inicio: <%=session.getAttribute("HoraInicio")%></label>
+                                        <br><br>
+                                        <label for="fechaF">Fecha Fin: <%=session.getAttribute("FechaFin")%></label>
+                                        <br>
+                                        <label for="horaF">Hora Fin: <%=session.getAttribute("HoraFin")%></label>
+                                        <br><br>
+                                        <label for="lugar">Lugar: <%=session.getAttribute("Lugar")%></label>
+                                        <br><br>
                                         <button type="submit" id="reservar" class="boton">Reservar</button><br><br>
                                     </form>
                                 </section>

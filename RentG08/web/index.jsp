@@ -1,10 +1,3 @@
-<%@page import="java.io.File"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="utils.BD08"%>
-<%@page import="java.sql.Connection"%>
-<%@page session="true"%>
 <!DOCTYPE html>
 <html lang ="es">
     <head>
@@ -15,8 +8,7 @@
         <link rel="stylesheet" href="css/css1.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
 
-        <script src="javascript/sessionStorageCliente.js"></script>
-        <script src="javascript/cerrarSesion.js"></script>
+
 
     </head>
     <body>
@@ -28,51 +20,9 @@
         <nav id="menupricipal">
             <div>
                 <ul>
-                    <li><a href="inicioSesion.jsp" id="cerrarsesion">Cerrar Sesion</a></li>
-                    <li id="pestanaActual"><a id="pestanaActualTexto" href="inicioLogueado.jsp">Búsqueda</a></li>
-                    <li><a href="consultaReservaUsuario.jsp">Consultar Reservas</a></li>
-        <%!
-               
-                private Connection con;
-                public void jspInit() {
-                   ServletContext application = getServletContext();
-                   String IP = application.getInitParameter("IP");
-                   String database = application.getInitParameter("BDNombre");
-                   String URL = "jdbc:mysql://"+ IP + "/" + database;
-                   String userName = application.getInitParameter("usuario");
-                   String password = application.getInitParameter("contrasena");
-                   con = BD08.getConexion(URL, userName, password);
-                };  
-             
-                %>
-    <%
-                String email = (String) session.getAttribute("emailUsuario");
-                try {
-                    
-                    Statement set = con.createStatement();
-                    
-                    ResultSet rs = set.executeQuery("SELECT * from clientes WHERE email LIKE '%" + email + "%'");
-                    rs.next();
-                    String nombre = rs.getString("nombre");
-                    String imagen = rs.getString("imagen");
-                    
-                    HttpSession s2 = request.getSession();
-                    s2.setAttribute("nombreUsuario", nombre);
-            %>  
-            
-            
-                    <li><h1>Hola, <%=nombre%></h1> </li>
-                    <img id="imgusuario" src="img/<%=imagen%>" alt=""  width="80" />
-                    
- <%
-                        
-                        rs.close();
-                        set.close();
-                        
-                    } catch (SQLException ex) {
-                        System.out.println("Error en acceso a Clientes" + ex);
-                    }
-                %>
+                    <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Búsqueda</a></li>
+                    <li><a href="registro.jsp">Registrarse</a></li>
+                    <li><a href="inicioSesion.jsp">Iniciar Sesión</a></li>
 
                 </ul>
             </div>
@@ -87,7 +37,7 @@
                                 <img src="img/busqueda.png" style="max-width: 18%">
                             </div>
                             <div id="cuerpo">
-                                <form action="BuscarLogueado" name="busqueda" class="formulario" method="post">
+                                <form action="Buscar" name="busqueda" class="formulario" method="post">
                                     <label for="fechaI">Fecha Inicio:</label>
                                     <input type="date" name="fechaI" id="fechaI" ><br /> 
                                     <label for="horaI">Hora Inicio:</label>
@@ -102,7 +52,17 @@
                                         <option value ="Donostia">Donostia</option>
                                         <option value ="Bilbao">Bilbao</option>
                                     </select><br />
-                                    <button type="button" id="buscar" class="boton">Buscar coches</button>
+                                    <div id="mensajeError">
+                                        <%
+                                            if (request.getParameter("message") != null) {
+                                        %>
+
+                                        <h3><%=request.getParameter("message")%></h3>
+
+                                        <% }
+                                        %>
+                                    </div>
+                                    <button type="submit" id="btnBuscar" class="boton">Buscar coches</button>
                                 </form>
                             </div>
                             <div id="pieiniciosesion">Sistema de Búsqueda de Coches</div>

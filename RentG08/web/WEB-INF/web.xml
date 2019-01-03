@@ -32,6 +32,10 @@
         <servlet-name>Buscar</servlet-name>
         <servlet-class>servlets.Buscar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscarLogueado</servlet-name>
+        <servlet-class>servlets.BuscarLogueado</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -48,12 +52,16 @@
         <servlet-name>Buscar</servlet-name>
         <url-pattern>/Buscar</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscarLogueado</servlet-name>
+        <url-pattern>/BuscarLogueado</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

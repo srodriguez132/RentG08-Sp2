@@ -31,7 +31,7 @@ import utils.BD08;
  *
  * @author Grupo 08
  */
-public class Buscar extends HttpServlet {
+public class BuscarLogueado extends HttpServlet {
 
     private Connection con;
     private Statement set;
@@ -105,8 +105,8 @@ public class Buscar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String mensaje;
-        String lugar = request.getParameter("lugar");
         HttpSession s = request.getSession(true);
+        String lugar = request.getParameter("lugar");
 
         //Fecha inicio deseada
         String fechaIni = request.getParameter("fechaI");
@@ -158,20 +158,20 @@ public class Buscar extends HttpServlet {
         java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
         if (fechaI.compareTo(fechaActual) < 0) {
             mensaje = "La fecha de inicio debe ser mayor a la actual";
-            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
         }
         Timestamp horaActual = new Timestamp(System.currentTimeMillis());
         if (fechaI.compareTo(fechaActual) == 0 && horaI.compareTo(horaActual) < 0) {
             mensaje = "La hora de inicio debe ser mayor a la actual";
-            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
         }
         if (fechaI.compareTo(fechaF) > 0) {
             mensaje = "La fecha de fin debe ser mayor que la fecha de inicio";
-            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
         }
         if (fechaI.compareTo(fechaF) == 0 && horaI.compareTo(horaF) > 0) {
             mensaje = "La hora de fin debe ser mayor que la hora de inicio";
-            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
         }
 
         boolean existe = false;
@@ -260,7 +260,7 @@ public class Buscar extends HttpServlet {
             }
             if (coches.isEmpty()) {
                 mensaje = "No hay coches disponibles para esas fechas";
-                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
             }
         }
         s.setAttribute("FechaInicio", fechaIni);
@@ -281,7 +281,7 @@ public class Buscar extends HttpServlet {
         num = num - 1;
         //Numero de coches empieza en 0
         s.setAttribute("NumCoches", num);
-        request.getRequestDispatcher("reserva.jsp").forward(request, response);
+        request.getRequestDispatcher("reservaLogueada.jsp").forward(request, response);
     }
 
     /**
