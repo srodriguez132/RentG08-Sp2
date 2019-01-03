@@ -111,32 +111,12 @@ public class ReservaLogueada extends HttpServlet {
         String fechaHoraIni = fechaI + " " +  horaI;
         String fechaHoraFin = fechaF + " " + horaF;
         s.setAttribute("Matricula", matricula);
-        
-        java.text.SimpleDateFormat formatodatetime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        java.util.Date fechaIn;
-        java.sql.Date fechaHoraI = null;
-        try {
-            fechaIn = formatodatetime.parse(fechaHoraIni);
-            fechaHoraI = new java.sql.Date(fechaIn.getTime());
-            
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        java.util.Date fechaFina;
-        java.sql.Date fechaHoraF = null;
-        try {
-            fechaFina = formatodatetime.parse(fechaHoraFin);
-            fechaHoraF = new java.sql.Date(fechaFina.getTime());
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         try {
             set = con.createStatement();
             set.executeUpdate("INSERT INTO reserva (id, email, matricula, fechainicio, fechafin)"
-                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + fechaHoraI + "'"
-                    + ",'" + fechaHoraF + "' )");
+                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + fechaHoraIni + "'"
+                    + ",'" + fechaHoraFin + "' )");
             set.close();
             request.getRequestDispatcher("ReservaOk.jsp").forward(request, response);
         } catch (SQLException ex) {
