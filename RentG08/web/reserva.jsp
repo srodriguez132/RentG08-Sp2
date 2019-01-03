@@ -1,5 +1,10 @@
 
 
+<%@page import="utils.BD08"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang ="es">
     <head>
@@ -11,6 +16,24 @@
         <script src="javascript/indexedunido.js"></script>
         <link rel="icon" href="img/favicon.png" sizes="16x16">
 
+        <%!
+            private Connection con;
+
+            public void jspInit() {
+                ServletContext application = getServletContext();
+                String IP = application.getInitParameter("IP");
+                String database = application.getInitParameter("BDNombre");
+                String URL = "jdbc:mysql://" + IP + "/" + database;
+                String userName = application.getInitParameter("usuario");
+                String password = application.getInitParameter("contrasena");
+                con = BD08.getConexion(URL, userName, password);
+            }
+
+            ;
+                            
+                            
+                              
+        %>
 
     </head>
     <body>
@@ -39,7 +62,61 @@
 
                             <div>
                                 <section id="cuerpo">
-                                    <form name="reserva" class="formulario" id="reserva" onsubmit="return enviarsubmit();">
+                                    <form action="Reservar" name="reserva" class="formulario" id="reserva" onsubmit="return enviarsubmit();">
+                                        <table>
+                                            <thead><tr><th></th><th>Coche</th><th>Marca</th><th>Seleccionar</th></tr></thead>
+                                            <tbody id="datosTabla">
+                                                <%
+                                                    try {
+                                                        String imagen;
+                                                        String marca;
+                                                        String numCoches = session.getAttribute("NumCoches").toString();
+                                                        int num = Integer.parseInt(numCoches);
+                                                        int i = 0;
+                                                        ArrayList<String> matriculas = new ArrayList<>();
+                                                        String coche = "Coche";
+                                                        while (i <= num) {
+                                                            coche = coche + i;
+                                                            matriculas.add(session.getAttribute(coche).toString());
+                                                            coche = coche.substring(0, 5);
+                                                            i++;
+                                                        }
+                                                        int cont = 0;
+                                                        while (cont <= num) {
+                                                            String matricula = matriculas.get(cont);
+                                                            Statement set = con.createStatement();
+                                                            ResultSet rs = set.executeQuery("SELECT * from coches WHERE matricula = '" + matricula + "'");
+                                                            
+
+                                                            imagen = rs.getString("imagen");
+                                                            marca = rs.getString("marca");
+
+
+                                                %>                         
+
+                                                <tr> <td><input type="radio" id="seleccionCoche" name="R1" value="<%=matricula%>"/></td> <td><img src="img/bmw.png" alt="" /></td><td><%=marca%></td></tr>
+
+
+                                                <%
+                                                            rs.close();
+                                                            set.close();
+                                                        }
+                                                    } //con.close();
+                                                    catch (Exception ex) {
+                                                        System.out.println("Error en acceso a BD" + ex);
+                                                    }
+                                                %>
+
+
+
+
+
+
+
+                                            </tbody>
+
+                                            </div> 
+                                        </table>
                                         <label for="coche">Seleccione Coche:</label><br><br>
                                         <label for="coche1">
                                             <img src="img/bmw.png" alt="" />BMW
