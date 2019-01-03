@@ -34,7 +34,7 @@
         <nav id="menupricipal">
             <div>
                 <ul>
-                    <li ><a href="inicioSesionAdmin.html">Cerrar Sesion Admin</a></li>
+                    <li ><a href="inicioSesionAdmin.jsp">Cerrar Sesion Admin</a></li>
                     <li id="pestanaActual"><a  id="pestanaActualTexto" href="#">Consultar Reservas</a></li>
                     <!--                    <li><a href="inicioSesion.html">Iniciar Sesión</a></li>-->
                     <%!

@@ -131,7 +131,7 @@ and open the template in the editor.
                                     <div class="datagrid">
                                         <table>
                                             <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Entrega</th><th>Recogida</th><th>Matrícula</th><th>Estado</th>
-                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Lugar</th></tr></thead>
 
 
                                             <tbody id="datosTabla">
@@ -145,6 +145,7 @@ and open the template in the editor.
                                                         Timestamp inicio;
                                                         Timestamp fin;
                                                         String estado;
+                                                        String lugar;
                                                         int penalizacion;
                                                         int precio;
                                                         int total;
@@ -164,6 +165,7 @@ and open the template in the editor.
                                                             penalizacion = rs.getInt("penalizacion");
                                                             precio = rs.getInt("precio");
                                                             total = rs.getInt("total");
+                                                            lugar = rs.getString
                                                             
                                                             if (cont % 2 == 0) {
                                                 %>                         
