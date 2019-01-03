@@ -111,44 +111,47 @@ public class ConsultaUsuario extends HttpServlet {
 
             try {
                 String idString = request.getParameter("R1");
-                int id = Integer.parseInt(idString);
 
-                Statement set2 = con.createStatement();
-                rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
-                rs.next();
-                java.sql.Timestamp fechaInicio = rs.getTimestamp("fechainicio");
+                if (!idString.equals("null")) {
+                    int id = Integer.parseInt(idString);
+                    Statement set2 = con.createStatement();
+                    rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
+                    rs.next();
+                    java.sql.Timestamp fechaInicio = rs.getTimestamp("fechainicio");
 
-                Date fecha = Calendar.getInstance().getTime();
-                
-                
+                    Date fecha = Calendar.getInstance().getTime();
+
 //                java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
-                java.sql.Timestamp fechaActual = new Timestamp(fecha.getTime());
-                
-                String estado = rs.getString("estado");
+                    java.sql.Timestamp fechaActual = new Timestamp(fecha.getTime());
 
-                long diferencia = fechaInicio.getTime() - fechaActual.getTime();
-               
+                    String estado = rs.getString("estado");
 
-                long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
-                long actual = TimeUnit.MILLISECONDS.toHours(fechaActual.getTime());
-                
-                 System.out.println("Prueba: " + minutos);
-                 System.out.println("Dia y hora de ahora: " + fechaActual.getTime());
-                 System.out.println("Dia y hora de ahora: " + fechaInicio.getTime());
+                    long diferencia = fechaInicio.getTime() - fechaActual.getTime();
 
-                if (estado.equals("Pendiente") && minutos > 120) {
-                    set = con.createStatement();
+                    long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+                    long actual = TimeUnit.MILLISECONDS.toHours(fechaActual.getTime());
 
-//                    set.executeUpdate("delete from reserva where id LIKE '%" + id + "%'");
-                    set.executeUpdate("Update reserva set estado='Pendiente' where id LIKE '%" + id + "%'");
-                    set.close();
-                    request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
+                    System.out.println("Prueba: " + minutos);
+                    System.out.println("Dia y hora de ahora: " + fechaActual.getTime());
+                    System.out.println("Dia y hora de ahora: " + fechaInicio.getTime());
+
+                    if (estado.equals("Pendiente") && minutos > 120) {
+                        set = con.createStatement();
+
+                        set.executeUpdate("delete from reserva where id LIKE '%" + id + "%'");
+//                    set.executeUpdate("Update reserva set estado='Pendiente' where id LIKE '%" + id + "%'");
+                        set.close();
+                        request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
+                    } else {
+                        String mensaje = "La reserva no se puede cancelar";
+                        request.getRequestDispatcher("/consultaReservaUsuario.jsp?message=" + mensaje).forward(request, response);
+                    }
+                    rs.close();
+                    set2.close();
                 } else {
-                    String mensaje = "La reserva no se puede cancelar";
+                    String mensaje = "Tiene que seleccionar una reserva";
                     request.getRequestDispatcher("/consultaReservaUsuario.jsp?message=" + mensaje).forward(request, response);
                 }
-                rs.close();
-                set2.close();
             } catch (SQLException ex) {
                 System.out.println("No funciona" + ex);
             }

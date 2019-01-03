@@ -1,3 +1,4 @@
+<%@page import="java.sql.Timestamp"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.io.File"%>
 <%@page import="java.sql.SQLException"%>
@@ -101,7 +102,7 @@ and open the template in the editor.
                         <div id="contenedor">
 
                             <div id="superior" >
-                                <img src="img/busqueda.png" style="max-width: 8%">
+                                <img src="img/busqueda.png" style="max-width: 7%">
                             </div>
                             <div id="cuerpo">                
                                 <form name="formulario" action="consultaReservaUsuario.jsp" method="post">
@@ -129,7 +130,7 @@ and open the template in the editor.
 
                                     <div class="datagrid">
                                         <table>
-                                            <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Matrícula</th><th>Estado</th>
+                                            <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Entrega</th><th>Recogida</th><th>Matrícula</th><th>Estado</th>
                                                     <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
 
 
@@ -139,8 +140,10 @@ and open the template in the editor.
                                                 <%
                                                     try {
                                                         String matricula;
-                                                        Date fechainicio;
-                                                        Date fechafin;
+                                                        Timestamp fechainicio;
+                                                        Timestamp fechafin;
+                                                        Timestamp inicio;
+                                                        Timestamp fin;
                                                         String estado;
                                                         int penalizacion;
                                                         int precio;
@@ -153,8 +156,10 @@ and open the template in the editor.
                                                             int id = rs.getInt("id");
                                                             
                                                             matricula = rs.getString("matricula");
-                                                            fechainicio = rs.getDate("fechainicio");
-                                                            fechafin = rs.getDate("fechafin");
+                                                            fechainicio = rs.getTimestamp("fechainicio");
+                                                            fechafin = rs.getTimestamp("fechafin");
+                                                            inicio = rs.getTimestamp("inicio");
+                                                            fin = rs.getTimestamp("fin");
                                                             estado = rs.getString("estado");
                                                             penalizacion = rs.getInt("penalizacion");
                                                             precio = rs.getInt("precio");
@@ -163,13 +168,13 @@ and open the template in the editor.
                                                             if (cont % 2 == 0) {
                                                 %>                         
 
-                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
 
                                                 <%
                                                 } else {
                                                 %>
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
                                                     <%
                                                                 }
