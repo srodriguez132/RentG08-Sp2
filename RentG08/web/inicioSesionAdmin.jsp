@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="css/inicioSesionAdmin.css">
         <link rel="stylesheet" href="css/css1.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
+        
+        <script src="javascript/comprobacionTReal.js"></script>
     </head>
     <body>
         <header class= "cabecera" id="cabeceraInicioSesion">
@@ -45,7 +47,7 @@
                             <div id="cuerpo">
                                 <form name="logueo" action="LoginAdmin" class="formulario" id="iniciarsesion"  method="post">
                                     <label for="text" class="campo">Usuario: 
-                                        <input type="text" name="usuario" id="usuario" required/>
+                                        <input type="text" name="usuario" id="usuario" pattern="^[a-zA-Z0-9]{1,30}$" required=""/>
                                     </label><br />
                                     <div id="mensajeError">
                                         <%
@@ -59,7 +61,7 @@
                                     </div>
                                     
                                     <label for="contrasena">Contraseña:
-                                        <input type="password" name="contrasena" id="contrasena" required/>
+                                        <input type="password" name="contrasena" id="contrasena" pattern="^[a-zA-Z0-9]{1,30}$" required=""/>
                                     </label><br />
                                     <div class="clear"></div>
                                     <section id="zonadatos">

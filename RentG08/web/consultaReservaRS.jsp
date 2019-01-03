@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="css/css1.css">
         <link rel="stylesheet" href="css/consultaReservaAdmin.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-         <link rel="stylesheet" href="css/consultaReserva.css">
+        
     </head>
     <body>
         <header class="cabecera" id="cabeceraBusqueda">
@@ -45,7 +45,7 @@
                     <div id="envoltura">
                         <div id="contenedor">
                             <div id="superior" >
-                                <img src="img/busqueda.png" style="max-width: 18%">
+                                <img src="img/busqueda.png" style="max-width: 5%">
                             </div>
                             <div id="cuerpo">
                                 <form name="formulario" action="consultaRS" method="post" >
@@ -76,7 +76,10 @@
                             
                             
                               
-                                %>  <table>
+                                %>  
+                                <section id="zonadatos"> 
+                                       <div class="datagrid">
+                                <table>
                                     <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
                                             <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
 
@@ -86,7 +89,7 @@
 
                                         <%
                                             HttpSession s = request.getSession();
-                        String email = (String) session.getAttribute("emailUsuario");
+                                            String email = (String) session.getAttribute("emailUsuario");
                                             try {
                                                 Statement set = con.createStatement();
                                                 String matricula;
@@ -128,7 +131,7 @@
                                         <%
                                         } else {
                                         %>
-                                        <tr class="alt"><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                        <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                             <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
                                             <%
                                                         }
@@ -156,7 +159,7 @@
         </main>
         <footer id="seccionpie">
             <div>
-                <section class="seccionpie" id="busquedapie">
+                <section class="seccionpie" id="consultaRSpie">
                     <address>Vitoria, País Vasco</address>
                     <small>&copy; Derechos Reservados 2018</small>
                 </section>

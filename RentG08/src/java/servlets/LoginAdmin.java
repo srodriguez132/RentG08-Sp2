@@ -125,7 +125,7 @@ public class LoginAdmin extends HttpServlet {
             if (pass.equals(contra)) {
                 s.setAttribute("Usuario", usuario);
                 s.setAttribute("Contrasena", contra);
-                request.getRequestDispatcher("/consultaReservaRS.html").forward(request, response);
+                request.getRequestDispatcher("/consultaReservaRS.jsp").forward(request, response);
             } else {
                 mensaje = "La contrasena es incorrecta";
                 request.getRequestDispatcher("/inicioSesionAdmin.jsp?message=" + mensaje).forward(request, response);

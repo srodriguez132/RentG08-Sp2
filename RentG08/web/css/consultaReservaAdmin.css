@@ -20,7 +20,7 @@ body{
     /*aumentando el 2px 'aparece' un borde*/
     border-width: 5px 0;
     padding:25px 35px;
-    height: 200px;
+    height: 400px;
     color: black;
     font-family:Arial, Helvetica, sans-serif;
     font-size:12px;
@@ -28,13 +28,13 @@ body{
 }
  
 #envoltura{
-        position:absolute;
+    position:absolute;
     /*left y top al 50% para que quede centrado en la pantalla*/
-    left:50%;
-    top:50%;
+    left:15%;
+    top:60%;
     margin-left:-165px;
     margin-top: -210px;
-    width: 330px;
+    width: 1300px;
     
  
 }
@@ -99,6 +99,18 @@ select{
     display: block;
     width: 238px;
 }
+#seleccionReserva{
+    border-radius:5px; 
+/*    probar con 10px se hacen ovalados los inputs*/
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+    font:bold 12px Arial, Helvetica, sans-serif;
+    height: 24px;
+    line-height: 20px;
+    padding:0 2px;
+    /*Para separar los inputs*/
+    display: block;
+    width: 15px;
+}
 /*input#usuario{
     background:#ffc url(./images/loquito.jpg) no-repeat 0 2px; probar con #ddf.
                                                                 Para mover arriba-abajo la imagen 'jugar' con 2px, 5px 
@@ -155,3 +167,48 @@ p{
 p#bot{
     padding-top: 30px;
 }
+
+.datagrid table { 
+    border-collapse: collapse; 
+    text-align: left; width: 100%; 
+} 
+.datagrid {
+    font: normal 12px/150% Arial, Helvetica, sans-serif; 
+    background: #fff; 
+    overflow: hidden; 
+    border: 4px solid goldenrod; 
+    -webkit-border-radius: 15px; 
+    -moz-border-radius: 15px; 
+    border-radius: 15px; 
+}
+.datagrid table td, .datagrid table th { 
+    padding: 7px 10px;
+}
+.datagrid table thead th {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, goldenrod), color-stop(1, goldenrod) );
+    background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');
+    background-color:goldenrod; 
+    color:#FFFFFF; 
+    font-size: 14px; 
+    font-weight: bold; 
+    border-left: 2px solid white; 
+} 
+.datagrid table thead th:first-child { 
+    border: none; 
+}
+.datagrid table tbody td { 
+    color: black;
+    border-left: 1px solid #E1EEF4;
+    font-size: 12px;
+    border-bottom: 1px solid #E1EEF4;
+    font-weight: normal; 
+}
+.datagrid table tbody .alt td { 
+    background: #E1EEF4; 
+    color: #00496B; 
+}
+.datagrid table tbody td:first-child { 
+    border-left: none; 
+}
+.datagrid table tbody tr:last-child td { border-bottom: none; }
