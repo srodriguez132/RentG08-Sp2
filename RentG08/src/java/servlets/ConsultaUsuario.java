@@ -121,10 +121,15 @@ public class ConsultaUsuario extends HttpServlet {
                 String estado = rs.getString("estado");
 
                 long diferencia = fechaInicio.getTime() - fechaActual.getTime();
+               
 
                 long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+                long actual = TimeUnit.MILLISECONDS.toHours(fechaActual.getTime());
+                
+                 System.out.println("Prueba: " + minutos);
+                 System.out.println("Dia y hora de ahora: " + actual);
 
-                if (estado.equals("Pendiente") || minutos > 120) {
+                if (estado.equals("Pendiente") && minutos > 120) {
                     set = con.createStatement();
 
 //                    set.executeUpdate("delete from reserva where id LIKE '%" + id + "%'");
