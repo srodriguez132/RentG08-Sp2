@@ -22,7 +22,8 @@
         <link rel="stylesheet" href="css/css1.css">
         <link rel="stylesheet" href="css/consultaReservaAdmin.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-        
+        <script src="javascript/vaciarTabla.js"></script>
+
     </head>
     <body>
         <header class="cabecera" id="cabeceraBusqueda">
@@ -78,82 +79,122 @@
                               
                                 %>  
                                 <section id="zonadatos"> 
-                                       <div class="datagrid">
-                                <table>
-                                    <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
-                                            <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+                                    <div class="datagrid">
+                                        <table>
+                                            <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
+                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
 
 
-                                    <tbody id="datosTabla">
+                                            <tbody id="datosTabla">
 
 
-                                        <%
-                                            HttpSession s = request.getSession();
-                                            String email = (String) session.getAttribute("emailUsuario");
-                                            try {
-                                                Statement set = con.createStatement();
-                                                String matricula;
-                                                Date fechainicio;
-                                                Date fechafin;
-                                                String estado;
-                                                int penalizacion;
-                                                int precio;
-                                                int total;
-                                                ResultSet rs;
-                                                if (request.getParameter("boton").equals("Buscar por fecha")){                                                
-                                                String fechaBusqueda = request.getParameter("fecha");
-                                                rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
-                                                }
-                                                else  if (request.getParameter("boton").equals("Buscar por Matricula")){
-                                                  String MatriculaBusqueda = request.getParameter("matricula");
-                                                 rs = set.executeQuery("SELECT * from reserva WHERE matricula ='%" + MatriculaBusqueda + "%'");
-                                                }
-                                                else{
-                                                     String emailBusqueda = request.getParameter("cliente");
-                                                rs = set.executeQuery("SELECT * from reserva WHERE email ='%" + emailBusqueda + "%'");
-                                                }
-                                                int cont = 0;
-                                                while (rs.next()) {
-                                                    int id = rs.getInt("id");
-                                                    matricula = rs.getString("matricula");
-                                                    fechainicio = rs.getDate("fechainicio");
-                                                    fechafin = rs.getDate("fechafin");
-                                                    estado = rs.getString("estado");
-                                                    penalizacion = rs.getInt("penalizacion");
-                                                    precio = rs.getInt("precio");
-                                                    total = rs.getInt("total");
-                                                    if (cont % 2 == 0) {
-                                        %>                         
-
-                                        <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                            <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
-
-                                        <%
-                                        } else {
-                                        %>
-                                        <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                            <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
-                                            <%
+                                                <%
+                                                    HttpSession s = request.getSession();
+                                                    String email = (String) session.getAttribute("emailUsuario");
+                                                    try {
+                                                        Statement set = con.createStatement();
+                                                        String matricula;
+                                                        Date fechainicio;
+                                                        Date fechafin;
+                                                        String estado;
+                                                        int penalizacion;
+                                                        int precio;
+                                                        int total;
+                                                        Date inicio;
+                                                        Date fin;
+                                                        ResultSet rs;
+                                                        if (request.getParameter("boton").equals("Buscar por fecha")) {
+                                                            String fechaBusqueda = request.getParameter("fecha");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                        } else if (request.getParameter("boton").equals("Buscar por matricula")) {
+                                                            String MatriculaBusqueda = request.getParameter("matricula");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE matricula ='" + MatriculaBusqueda + "'");
+                                                        } else {
+                                                            String emailBusqueda = request.getParameter("cliente");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE email ='" + emailBusqueda + "'");
                                                         }
-                                                        cont = cont + 1;
-                                                    }
-                                                    rs.close();
-                                                    set.close();
+                                                        int cont = 0;
+                                                        while (rs.next()) {
+                                                            int id = rs.getInt("id");
+                                                            matricula = rs.getString("matricula");
+                                                            fechainicio = rs.getDate("fechainicio");
+                                                            fechafin = rs.getDate("fechafin");
+                                                            estado = rs.getString("estado");
+                                                            penalizacion = rs.getInt("penalizacion");
+                                                            precio = rs.getInt("precio");
+                                                            total = rs.getInt("total");
+                                                            inicio = rs.getDate("inicio");
+                                                            fin = rs.getDate("fin");
+                                                            if (cont % 2 == 0) {
+                                                                if (inicio == null && fin == null) {
+                                                %>                         
 
-                                                    //con.close();
-                                                } catch (Exception ex) {
-                                                    System.out.println("Error en acceso a BD Jugadores" + ex);
-                                                }
-                                            %>
-                                    </tbody>
-                            </div> 
-                            </table>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                                <%} else if (inicio == null && fin != null) {
+                                                %>                         
+
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                                <%} else if (inicio != null && fin == null) {
+                                                %>                         
+
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                                <%} else {
+                                                %>                         
+
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+
+                                                <%}
+
+                                                } else {
+                                                    if (inicio == null && fin == null) {
+                                                %>                         
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <%}
+                                                        if (inicio != null && fin == null) {
+                                                    %>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><input type="datetime" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <% }
+                                                        if (inicio == null && fin != null) {
+                                                    %>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="datetime" name="fechaEntrega"/></td><td><%=fin%><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <%} else {
+                                                    %>
+
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <%}
+
+                                                                    cont = cont + 1;
+                                                                }
+                                                            }
+                                                            rs.close();
+                                                            set.close();
+
+                                                            //con.close();
+                                                        } catch (Exception ex) {
+                                                            System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                        }
+                                                    %>
+                                            </tbody>
+                                    </div> 
+                                    </table>
+                            </div>
+                            <p>
+                                <br> <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
+                                <br> <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
+                            </p>
                         </div>
-                        <p>
-                            <br> <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
-                        </p>
-                    </div>
-                    <div id="pieconsulta">Sistema de Consulta</div>                    
+                        <div id="pieconsulta">Sistema de Consulta</div>                    
                 </section>
             </div>
         </main>
