@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -108,16 +111,34 @@ public class ReservaLogueada extends HttpServlet {
         String horaI = s.getAttribute("HoraInicio").toString();
         String fechaF = s.getAttribute("FechaFin").toString();
         String horaF = s.getAttribute("HoraFin").toString();
-        String fechaHoraIni = fechaI + " " +  horaI;
+        String fechaHoraIni = fechaI + " " + horaI;
         String fechaHoraFin = fechaF + " " + horaF;
         s.setAttribute("Matricula", matricula);
+        float precio = 0;
 
         try {
             set = con.createStatement();
-            set.executeUpdate("INSERT INTO reserva (id, email, matricula, fechainicio, fechafin)"
-                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + fechaHoraIni + "'"
+            set.executeUpdate("INSERT INTO reserva (id, email, matricula, precio, fechainicio, fechafin)"
+                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + precio + "', '" + fechaHoraIni + "'"
                     + ",'" + fechaHoraFin + "' )");
             set.close();
+            Statement set2 = con.createStatement();
+            rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
+            rs.next();
+            java.sql.Timestamp fechaInicio = rs.getTimestamp("fechainicio");
+            java.sql.Timestamp fechaFin = rs.getTimestamp("fechafin");
+
+            java.util.Date fecha = Calendar.getInstance().getTime();
+
+            long diferencia = fechaFin.getTime() - fechaInicio.getTime();
+
+            long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
+            precio = horas * 10;
+            rs.close();
+            set2.close();
+            Statement st3 = con.createStatement();
+            st3.executeUpdate("update reserva set precio = '" + precio +"' where id LIKE '%" + id + "%'");
+            st3.close();
             request.getRequestDispatcher("ReservaOk.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);

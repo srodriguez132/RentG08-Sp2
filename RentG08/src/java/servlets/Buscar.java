@@ -153,6 +153,7 @@ public class Buscar extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
         java.util.Date fecha = new java.util.Date();
         java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
@@ -207,7 +208,7 @@ public class Buscar extends HttpServlet {
                     java.sql.Time horaInicio = rs.getTime("fechainicio");
                     java.sql.Date fechaFin = rs.getDate("fechafin");
                     java.sql.Time horaFin = rs.getTime("fechafin");
-                    
+
                     //Controlar fecha de inicio seleccionada
                     //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
                     if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
@@ -234,7 +235,7 @@ public class Buscar extends HttpServlet {
                     if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
                         borrar = true;
                     }
-                    
+
                 } catch (SQLException ex) {
                     Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -279,7 +280,7 @@ public class Buscar extends HttpServlet {
             String coch = coches.get(num);
             System.out.println(coche);
             s.setAttribute(coche, coch);
-            coche = coche.substring(0,5);
+            coche = coche.substring(0, 5);
             num++;
         }
         num = num - 1;
