@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -114,10 +116,14 @@ public class ConsultaUsuario extends HttpServlet {
                 Statement set2 = con.createStatement();
                 rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
                 rs.next();
-                java.sql.Date fechaInicio = rs.getDate("fechainicio");
+                java.sql.Timestamp fechaInicio = rs.getTimestamp("fechainicio");
 
-                Date fecha = new Date();
-                java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
+                Date fecha = Calendar.getInstance().getTime();
+                
+                
+//                java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
+                java.sql.Timestamp fechaActual = new Timestamp(fecha.getTime());
+                
                 String estado = rs.getString("estado");
 
                 long diferencia = fechaInicio.getTime() - fechaActual.getTime();
@@ -127,13 +133,14 @@ public class ConsultaUsuario extends HttpServlet {
                 long actual = TimeUnit.MILLISECONDS.toHours(fechaActual.getTime());
                 
                  System.out.println("Prueba: " + minutos);
-                 System.out.println("Dia y hora de ahora: " + actual);
+                 System.out.println("Dia y hora de ahora: " + fechaActual.getTime());
+                 System.out.println("Dia y hora de ahora: " + fechaInicio.getTime());
 
                 if (estado.equals("Pendiente") && minutos > 120) {
                     set = con.createStatement();
 
 //                    set.executeUpdate("delete from reserva where id LIKE '%" + id + "%'");
-                    set.executeUpdate("Update reserva set estado='Cancelada' where id LIKE '%" + id + "%'");
+                    set.executeUpdate("Update reserva set estado='Pendiente' where id LIKE '%" + id + "%'");
                     set.close();
                     request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
                 } else {
