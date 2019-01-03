@@ -39,13 +39,13 @@
                             <div id="cuerpo">
                                 <form action="Buscar" name="busqueda" class="formulario" method="post">
                                     <label for="fechaI">Fecha Inicio:</label>
-                                    <input type="date" name="fechaI" id="fechaI" ><br /> 
+                                    <input type="date" name="fechaI" id="fechaI" required="" ><br /> 
                                     <label for="horaI">Hora Inicio:</label>
-                                    <input type="time" name="horaI" id="horaI"><br />
+                                    <input type="time" name="horaI" id="horaI" required=""><br />
                                     <label for="fechaF">Fecha Fin:</label>
-                                    <input type="date" name="fechaF" id="fechaF"><br />
+                                    <input type="date" name="fechaF" id="fechaF" required=""><br />
                                     <label for="horaF">Hora Fin:</label>
-                                    <input type="time" name="horaF" id="horaF"><br />
+                                    <input type="time" name="horaF" id="horaF" required=""><br />
                                     <label for="lugar">Lugar:</label><br>
                                     <select name="lugar" id="lugar">
                                         <option value ="Vitoria-Gasteiz">Vitoria-Gasteiz</option>

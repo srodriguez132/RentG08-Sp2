@@ -200,68 +200,72 @@ public class BuscarLogueado extends HttpServlet {
         } catch (SQLException ex1) {
             System.out.println("No lee de la tabla Reserva. " + ex1);
         }
-        if (existe) {
-            try {
-                java.sql.Date fechaInicio = rs.getDate("fechainicio");
-                java.sql.Time horaInicio = rs.getTime("fechainicio");
-                java.sql.Date fechaFin = rs.getDate("fechafin");
-                java.sql.Time horaFin = rs.getTime("fechafin");
-
-                //Controlar fecha de inicio seleccionada
-                //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
-                if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
-                    borrar = true;
-                }
-                //Entra si la fecha seleccionada es igual a la fecha de inicio y despues de alguna hora registrada
-                if (fechaI.compareTo(fechaInicio) == 0 && horaI.compareTo(horaInicio) >= 0) {
-                    borrar = true;
-                }
-                //Entra si la fecha seleccionada es igual a la fecha de fin y antes de de alguna hora registrada
-                if (fechaI.compareTo(fechaFin) == 0 && horaI.compareTo(horaFin) <= 0) {
-                    borrar = true;
-                }
-                //Controlar fecha de fin seleccionada
-                //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
-                if (fechaF.compareTo(fechaInicio) > 0 && fechaF.compareTo(fechaFin) < 0) {
-                    borrar = true;
-                }
-                //Entra si la fecha seleccionada es igual a la fecha de inicio y despues de alguna hora registrada
-                if (fechaF.compareTo(fechaInicio) == 0 && horaF.compareTo(horaInicio) >= 0) {
-                    borrar = true;
-                }
-                //Entra si la fecha seleccionada es igual a la fecha de fin y antes de de alguna hora registrada
-                if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
-                    borrar = true;
-                }
-
-            } catch (SQLException ex) {
-                Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (borrar == true) {
+        try {
+            if (existe && rs.next()) {
                 try {
-                    matricula = rs.getString("matricula");
-                    int j = 0;
-                    while (j < coches.size()) {
-                        String mat = coches.get(j);
-                        if (matricula.equals(mat)) {
-                            coches.remove(j);
-                        }
-                        j++;
+                    java.sql.Date fechaInicio = rs.getDate("fechainicio");
+                    java.sql.Time horaInicio = rs.getTime("fechainicio");
+                    java.sql.Date fechaFin = rs.getDate("fechafin");
+                    java.sql.Time horaFin = rs.getTime("fechafin");
+                    
+                    //Controlar fecha de inicio seleccionada
+                    //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
+                    if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
+                        borrar = true;
                     }
+                    //Entra si la fecha seleccionada es igual a la fecha de inicio y despues de alguna hora registrada
+                    if (fechaI.compareTo(fechaInicio) == 0 && horaI.compareTo(horaInicio) >= 0) {
+                        borrar = true;
+                    }
+                    //Entra si la fecha seleccionada es igual a la fecha de fin y antes de de alguna hora registrada
+                    if (fechaI.compareTo(fechaFin) == 0 && horaI.compareTo(horaFin) <= 0) {
+                        borrar = true;
+                    }
+                    //Controlar fecha de fin seleccionada
+                    //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
+                    if (fechaF.compareTo(fechaInicio) > 0 && fechaF.compareTo(fechaFin) < 0) {
+                        borrar = true;
+                    }
+                    //Entra si la fecha seleccionada es igual a la fecha de inicio y despues de alguna hora registrada
+                    if (fechaF.compareTo(fechaInicio) == 0 && horaF.compareTo(horaInicio) >= 0) {
+                        borrar = true;
+                    }
+                    //Entra si la fecha seleccionada es igual a la fecha de fin y antes de de alguna hora registrada
+                    if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
+                        borrar = true;
+                    }
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                if (borrar == true) {
+                    try {
+                        matricula = rs.getString("matricula");
+                        int j = 0;
+                        while (j < coches.size()) {
+                            String mat = coches.get(j);
+                            if (matricula.equals(mat)) {
+                                coches.remove(j);
+                            }
+                            j++;
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                int i = 0;
+                while (i < coches.size()) {
+                    String co = coches.get(i);
+                    System.out.println(co);
+                    i++;
+                }
+                if (coches.isEmpty()) {
+                    mensaje = "No hay coches disponibles para esas fechas";
+                    request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
+                }
             }
-            int i = 0;
-            while (i < coches.size()) {
-                String co = coches.get(i);
-                System.out.println(co);
-                i++;
-            }
-            if (coches.isEmpty()) {
-                mensaje = "No hay coches disponibles para esas fechas";
-                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
-            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscarLogueado.class.getName()).log(Level.SEVERE, null, ex);
         }
         s.setAttribute("FechaInicio", fechaIni);
         s.setAttribute("HoraInicio", horaI);

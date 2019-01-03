@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,7 +27,7 @@ import utils.BD08;
  *
  * @author kurri
  */
-public class Reservar extends HttpServlet {
+public class ReservaLogueada extends HttpServlet {
 
     private Connection con;
     private Statement set;
@@ -61,10 +65,10 @@ public class Reservar extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Reservar</title>");
+            out.println("<title>Servlet ReservaLogueada</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Reservar at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ReservaLogueada at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -97,9 +101,48 @@ public class Reservar extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession s = request.getSession(true);
+        int id = (int) (Math.random() * 999999999) + 1;
+        String email = s.getAttribute("emailUsuario").toString();
         String matricula = request.getParameter("coche");
+        String fechaI = s.getAttribute("FechaInicio").toString();
+        String horaI = s.getAttribute("HoraInicio").toString();
+        String fechaF = s.getAttribute("FechaFin").toString();
+        String horaF = s.getAttribute("HoraFin").toString();
+        String fechaHoraIni = fechaI + " " +  horaI;
+        String fechaHoraFin = fechaF + " " + horaF;
         s.setAttribute("Matricula", matricula);
-        request.getRequestDispatcher("/LoginReserva.jsp").forward(request, response);
+        
+        java.text.SimpleDateFormat formatodatetime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date fechaIn;
+        java.sql.Date fechaHoraI = null;
+        try {
+            fechaIn = formatodatetime.parse(fechaHoraIni);
+            fechaHoraI = new java.sql.Date(fechaIn.getTime());
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        java.util.Date fechaFina;
+        java.sql.Date fechaHoraF = null;
+        try {
+            fechaFina = formatodatetime.parse(fechaHoraFin);
+            fechaHoraF = new java.sql.Date(fechaFina.getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            set = con.createStatement();
+            set.executeUpdate("INSERT INTO reserva (id, email, matricula, fechainicio, fechafin)"
+                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + fechaHoraI + "'"
+                    + ",'" + fechaHoraF + "' )");
+            set.close();
+            request.getRequestDispatcher("ReservaOk.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**

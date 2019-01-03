@@ -62,78 +62,60 @@
 
                             <div>
                                 <section id="cuerpo">
-                                    <form action="Reservar" name="reserva" class="formulario" id="reserva" onsubmit="return enviarsubmit();">
-                                        <table>
-                                            <thead><tr><th></th><th>Coche</th><th>Marca</th><th>Seleccionar</th></tr></thead>
-                                            <tbody id="datosTabla">
-                                                <%
-                                                    try {
-                                                        String imagen;
-                                                        String marca;
-                                                        String numCoches = session.getAttribute("NumCoches").toString();
-                                                        int num = Integer.parseInt(numCoches);
-                                                        int i = 0;
-                                                        ArrayList<String> matriculas = new ArrayList<>();
-                                                        String coche = "Coche";
-                                                        while (i <= num) {
-                                                            coche = coche + i;
-                                                            matriculas.add(session.getAttribute(coche).toString());
-                                                            coche = coche.substring(0, 5);
-                                                            i++;
-                                                        }
-                                                        int cont = 0;
-                                                        while (cont <= num) {
-                                                            String matricula = matriculas.get(cont);
-                                                            Statement set = con.createStatement();
-                                                            ResultSet rs = set.executeQuery("SELECT * from coches WHERE matricula = '" + matricula + "'");
-                                                            
-
-                                                            imagen = rs.getString("imagen");
-                                                            marca = rs.getString("marca");
-
-
-                                                %>                         
-
-                                                <tr> <td><input type="radio" id="seleccionCoche" name="R1" value="<%=matricula%>"/></td> <td><img src="img/bmw.png" alt="" /></td><td><%=marca%></td></tr>
-
-
-                                                <%
-                                                            rs.close();
-                                                            set.close();
-                                                        }
-                                                    } //con.close();
-                                                    catch (Exception ex) {
-                                                        System.out.println("Error en acceso a BD" + ex);
-                                                    }
-                                                %>
-
-
-
-
-
-
-
-                                            </tbody>
-
-                                            </div> 
-                                        </table>
+                                    <form action="Reservar" name="reserva" class="formulario" id="reserva"  method="post" onsubmit="return enviarsubmit();">
                                         <label for="coche">Seleccione Coche:</label><br><br>
-                                        <label for="coche1">
-                                            <img src="img/bmw.png" alt="" />BMW
+                                        <%
+                                            try {
+                                                String imagen;
+                                                String marca;
+                                                String numCoches = session.getAttribute("NumCoches").toString();
+                                                int num = Integer.parseInt(numCoches);
+                                                int i = 0;
+                                                ArrayList<String> matriculas = new ArrayList<>();
+                                                String coche = "Coche";
+                                                while (i <= num) {
+                                                    System.out.println("Entra1");
+                                                    coche = coche + i;
+                                                    matriculas.add(session.getAttribute(coche).toString());
+                                                    coche = coche.substring(0, 5);
+                                                    i++;
+                                                }
+                                                int cont = 0;
+                                                String co = "coche";
+                                                Statement set = con.createStatement();
+                                                while (cont <= num) {
+
+                                                    co = co + cont;
+                                                    String matricula = matriculas.get(cont);
+                                                    ResultSet rs = set.executeQuery("SELECT * from coches WHERE matricula = '" + matricula + "'");
+                                                    System.out.println("Entra2");
+                                                    while(rs.next()){
+                                                    imagen = rs.getString("imagen");
+                                                    marca = rs.getString("marca");
+                                        %>
+                                        <label for="<%=co%>">
+                                            <img src="<%=imagen%>" alt="" /><%=marca%>
                                         </label>
-                                        <input type="radio" name="coche" value="1111aaa" id="coche1" required  />
-                                        <label for="coche2">
-                                            <img src="img/citroen.png" alt="" />Citroen
-                                        </label>
-                                        <input type="radio" name="coche" value="2222bbb" id="coche2" required />
-                                        <label for="coche3">
-                                            <img src="img/ford.png" alt="" />Ford
-                                        </label>
-                                        <input type="radio" name="coche" value="3333ccc" id="coche3" required />
-                                        <label for="coche4">
-                                            <img src="img/mercedes.png" alt="" />Mercedes
-                                        </label>
-                                        <input type="radio" name="coche" value="4444ddd" id="coche4" required /><br><br><br>
+                                        <input type="radio" name="coche" value="<%=matricula%>" id="<%=co%>" required  />
+
+
+                                        <%
+                                                    
+                                                    }
+                                                    co = co.substring(0, 5);
+                                                    cont++;
+                                                    rs.close();
+
+                                                }
+                                                set.close();
+                                            } //con.close();
+                                            catch (Exception ex) {
+                                                System.out.println("Error en acceso a BD" + ex);
+                                            }
+
+                                        %>
+                                        <br><br><br>
+                                        
                                         <label for="fechaI">Fecha Inicio: <%=session.getAttribute("FechaInicio")%></label>
                                         <br>
                                         <label for="horaI">Hora Inicio: <%=session.getAttribute("HoraInicio")%></label>

@@ -40,6 +40,14 @@
         <servlet-name>Reservar</servlet-name>
         <servlet-class>servlets.Reservar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReservaLogueada</servlet-name>
+        <servlet-class>servlets.ReservaLogueada</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginReserva</servlet-name>
+        <servlet-class>servlets.LoginReserva</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>Reservar</servlet-name>
         <url-pattern>/Reservar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservaLogueada</servlet-name>
+        <url-pattern>/ReservaLogueada</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginReserva</servlet-name>
+        <url-pattern>/LoginReserva</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
