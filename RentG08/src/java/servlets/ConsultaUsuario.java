@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.temporal.ChronoUnit;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,9 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import utils.BD08;
 
 import java.util.Date;
-
-
-
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -111,19 +110,25 @@ public class ConsultaUsuario extends HttpServlet {
             try {
                 String idString = request.getParameter("R1");
                 int id = Integer.parseInt(idString);
-                
+
                 Statement set2 = con.createStatement();
                 rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
                 rs.next();
-                java.sql.Date fechaInicio =  rs.getDate("fechainicio");
-                
+                java.sql.Date fechaInicio = rs.getDate("fechainicio");
+
                 Date fecha = new Date();
                 java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
                 String estado = rs.getString("estado");
 
-                if (fechaInicio.compareTo(fechaActual)>0 && estado.equals("Pendiente")) {
+                long diferencia = fechaInicio.getTime() - fechaActual.getTime();
+
+                long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+
+                if (estado.equals("Pendiente") || minutos > 120) {
                     set = con.createStatement();
-                    set.executeUpdate("update reserva set estado='Cancelada' where id LIKE '%"+ id + "%'");
+
+//                    set.executeUpdate("delete from reserva where id LIKE '%" + id + "%'");
+                    set.executeUpdate("Update reserva set estado='Cancelada' where id LIKE '%" + id + "%'");
                     set.close();
                     request.getRequestDispatcher("consultaReservaUsuario.jsp").forward(request, response);
                 } else {

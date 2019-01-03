@@ -112,14 +112,14 @@ and open the template in the editor.
                       
                                 </form>
                                 
-                                
+                               
                             </div>    
-                            <div id="mensajeError">
+                             <div id="mensajeErrorConsulta">
                                         <%
                                             if (request.getParameter("message") != null) {
                                         %>
 
-                                        <h3><%=request.getParameter("message")%></h3>
+                                        <p><%=request.getParameter("message")%></p>
 
                                         <% }
                                         %>

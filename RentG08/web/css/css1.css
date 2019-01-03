@@ -227,6 +227,15 @@ nav ul li a:hover {
 
 
 }
+#mensajeErrorConsulta{
+    font-size: 12px;
+    font-weight:bold;
+/*    padding: 0 10px;*/
+    color: red;
+    display:block;
+    margin-top: -16px;
+    margin-left: 35px;
+}
 
 
 
