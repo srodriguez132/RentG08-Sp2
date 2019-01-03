@@ -37,6 +37,24 @@
                     <li ><a href="inicioSesionAdmin.html">Cerrar Sesion Admin</a></li>
                     <li id="pestanaActual"><a  id="pestanaActualTexto" href="#">Consultar Reservas</a></li>
                     <!--                    <li><a href="inicioSesion.html">Iniciar Sesión</a></li>-->
+                    <%!
+                        private Connection con;
+
+                        public void jspInit() {
+                            ServletContext application = getServletContext();
+                            String IP = application.getInitParameter("IP");
+                            String database = application.getInitParameter("BDNombre");
+                            String URL = "jdbc:mysql://" + IP + "/" + database;
+                            String userName = application.getInitParameter("usuario");
+                            String password = application.getInitParameter("contrasena");
+                            con = BD08.getConexion(URL, userName, password);
+                        }
+
+                        ;
+                            
+                            
+                              
+                    %>  
                 </ul>
             </div>
         </nav>
@@ -58,26 +76,22 @@
                                     <input type="submit" name="boton" id="botonF" class="boton" value="Buscar por fecha" ><br />
                                     <label for="matricula">Matrícula:</label>
                                     <input type="text" name="matricula" id="consMatricula"><br />
-                                    <input type="submit" name="boton" id="botonM" class="boton" value="Buscar por matrícula" ><br />
+                                    <input type="submit" name="boton" id="botonM" class="boton" value="Buscar por matricula" ><br />
                                 </form>
-                                <%!
-                                    private Connection con;
+                            </div>
+                            <div id="mensajeErrorConsulta">
+                                <%
+                                    if (request.getParameter("message") != null) {
+                                %>
 
-                                    public void jspInit() {
-                                        ServletContext application = getServletContext();
-                                        String IP = application.getInitParameter("IP");
-                                        String database = application.getInitParameter("BDNombre");
-                                        String URL = "jdbc:mysql://" + IP + "/" + database;
-                                        String userName = application.getInitParameter("usuario");
-                                        String password = application.getInitParameter("contrasena");
-                                        con = BD08.getConexion(URL, userName, password);
-                                    }
+                                <p><%=request.getParameter("message")%></p>
 
-                                    ;
-                            
-                            
-                              
-                                %>  
+                                <% }
+                                %>
+                            </div>
+
+
+                            <form name="guardarFechas" action="Total" method="post">
                                 <section id="zonadatos"> 
                                     <div class="datagrid">
                                         <table>
@@ -107,8 +121,8 @@
                                                             String fechaBusqueda = request.getParameter("fecha");
                                                             rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
                                                         } else if (request.getParameter("boton").equals("Buscar por matricula")) {
-                                                            String MatriculaBusqueda = request.getParameter("matricula");
-                                                            rs = set.executeQuery("SELECT * from reserva WHERE matricula ='" + MatriculaBusqueda + "'");
+                                                            String matriculaBusqueda = request.getParameter("matricula");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE matricula LIKE '%" + matriculaBusqueda + "%'");
                                                         } else {
                                                             String emailBusqueda = request.getParameter("cliente");
                                                             rs = set.executeQuery("SELECT * from reserva WHERE email ='" + emailBusqueda + "'");
@@ -188,12 +202,14 @@
                                             </tbody>
                                     </div> 
                                     </table>
-                            </div>
-                            <p>
-                                 <button type="submit" class="boton" action="Total" method="post">Guardar fechas</button>
-                                 <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button>
-                            </p>
-                        </div>
+                                    </div>
+                                    <p>
+                                        <br><button type="submit" class="boton" action="Total" method="post">Guardar fechas</button></br>
+                                        <br><button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
+                                    </p>
+                                </section>
+                            </form>
+                        
                         <div id="pieconsulta">Sistema de Consulta</div>                    
                 </section>
             </div>
