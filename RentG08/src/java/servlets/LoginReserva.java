@@ -145,6 +145,7 @@ public class LoginReserva extends HttpServlet {
                 String lugar = s.getAttribute("Lugar").toString();
                 String fechaHoraIni = fechaI + " " + horaI;
                 String fechaHoraFin = fechaF + " " + horaF;
+                s.setAttribute("id", id);
                 String precio = s.getAttribute("Precio").toString();
 
                 try {

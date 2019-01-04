@@ -93,6 +93,8 @@
                                     <label for="ok">RESERVA REALIZADA CORRECTAMENTE</label>
                                     <br><br>
                                     
+                                    <label for="id">ID de Reserva: <%=session.getAttribute("id")%></label>
+                                    <br><br>
                                     <label for="coche">Matricula: <%=session.getAttribute("Matricula")%></label>
                                     <br><br>
                                     <label for="fechaI">Fecha Inicio: <%=session.getAttribute("FechaInicio")%></label>

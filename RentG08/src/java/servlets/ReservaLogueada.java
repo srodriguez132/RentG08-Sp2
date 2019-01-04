@@ -115,6 +115,7 @@ public class ReservaLogueada extends HttpServlet {
         String fechaHoraIni = fechaI + " " + horaI;
         String fechaHoraFin = fechaF + " " + horaF;
         s.setAttribute("Matricula", matricula);
+        s.setAttribute("id", id);
         String precio = s.getAttribute("Precio").toString();
 
         try {
