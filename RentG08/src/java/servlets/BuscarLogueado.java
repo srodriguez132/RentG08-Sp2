@@ -298,7 +298,7 @@ public class BuscarLogueado extends HttpServlet {
         num = num - 1;
         //Numero de coches empieza en 0
         s.setAttribute("NumCoches", num);
-        request.getRequestDispatcher("reserva.jsp").forward(request, response);
+        request.getRequestDispatcher("reservaLogueada.jsp").forward(request, response);
     }
 
     /**
