@@ -145,7 +145,7 @@ public class LoginReserva extends HttpServlet {
                 String lugar = s.getAttribute("Lugar").toString();
                 String fechaHoraIni = fechaI + " " + horaI;
                 String fechaHoraFin = fechaF + " " + horaF;
-                float precio = 0;
+                String precio = s.getAttribute("Precio").toString();
 
                 try {
                     set = con.createStatement();
@@ -153,23 +153,6 @@ public class LoginReserva extends HttpServlet {
                             + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + lugar + "', '" + precio + "', '" + fechaHoraIni + "'"
                             + ",'" + fechaHoraFin + "' )");
                     set.close();
-                    Statement set2 = con.createStatement();
-                    rs = set2.executeQuery("Select * from reserva where id LIKE '%" + id + "%'");
-                    rs.next();
-                    java.sql.Timestamp fechaInicio = rs.getTimestamp("fechainicio");
-                    java.sql.Timestamp fechaFin = rs.getTimestamp("fechafin");
-
-                    java.util.Date fecha = Calendar.getInstance().getTime();
-
-                    long diferencia = fechaFin.getTime() - fechaInicio.getTime();
-
-                    long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
-                    precio = horas * 10;
-                    rs.close();
-                    set2.close();
-                    Statement st3 = con.createStatement();
-                    st3.executeUpdate("update reserva set precio = '" + precio + "' where id LIKE '%" + id + "%'");
-                    st3.close();
                     request.getRequestDispatcher("ReservaOk.jsp").forward(request, response);
                 } catch (SQLException ex) {
                     Logger.getLogger(ReservaLogueada.class.getName()).log(Level.SEVERE, null, ex);

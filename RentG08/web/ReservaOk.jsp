@@ -104,6 +104,8 @@
                                     <label for="horaF">Hora Fin: <%=session.getAttribute("HoraFin")%></label>
                                     <br><br>
                                     <label for="lugar">Lugar: <%=session.getAttribute("Lugar")%></label>
+                                    <br><br>
+                                    <label for="lugar">Precio: <%=session.getAttribute("Precio")%> Euros</label>
                                 </section>
                             </div>
                             <div id="piereserva">Sistema de Reserva de Coches</div>

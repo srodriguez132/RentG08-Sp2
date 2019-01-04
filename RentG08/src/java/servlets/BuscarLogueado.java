@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -273,6 +274,17 @@ public class BuscarLogueado extends HttpServlet {
         s.setAttribute("FechaFin", fechaFina);
         s.setAttribute("HoraFin", horaF);
         s.setAttribute("Lugar", lugar);
+        
+        String fechaHoraI = fechaI + " " + horaI + ".000000";
+        String fechaHoraF = fechaF + " " + horaF + ".000000";
+        java.sql.Timestamp fechaInicio = Timestamp.valueOf(fechaHoraI);
+        java.sql.Timestamp fechaFin = Timestamp.valueOf(fechaHoraF);
+        long diferencia = fechaFin.getTime() - fechaInicio.getTime();
+        long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
+        float precio = horas * 10;
+        s.setAttribute("Precio",precio);
+
+        
         int num = 0;
         String coche = "Coche";
         while (num < coches.size()) {

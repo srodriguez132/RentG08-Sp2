@@ -126,6 +126,8 @@
                                         <br><br>
                                         <label for="lugar">Lugar: <%=session.getAttribute("Lugar")%></label>
                                         <br><br>
+                                        <label for="precio">Precio: <%=session.getAttribute("Precio")%> Euros</label>
+                                        <br><br>
                                         <button type="submit" id="reservar" class="boton">Reservar</button><br><br>
                                     </form>
                                 </section>

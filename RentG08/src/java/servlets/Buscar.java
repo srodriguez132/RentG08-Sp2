@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -202,7 +204,6 @@ public class Buscar extends HttpServlet {
                     java.sql.Date fechaFin = rs.getDate("fechafin");
                     java.sql.Time horaFin = rs.getTime("fechafin");
 
-
                     //Controlar fecha de inicio seleccionada
                     //Entra si la fecha seleccionada esta entre alguna fecha de inicio y fin ya registrada
                     if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
@@ -229,12 +230,11 @@ public class Buscar extends HttpServlet {
                     if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
                         borrar = true;
                     }
-                    
+
                     //Controlar fecha de inicio y fin seleccionada
                     if (fechaI.compareTo(fechaInicio) < 0 && fechaF.compareTo(fechaFin) > 0) {
                         borrar = true;
                     }
-                    
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
@@ -275,6 +275,17 @@ public class Buscar extends HttpServlet {
         s.setAttribute("FechaFin", fechaFina);
         s.setAttribute("HoraFin", horaF);
         s.setAttribute("Lugar", lugar);
+        
+        
+        String fechaHoraI = fechaI + " " + horaI + ".000000";
+        String fechaHoraF = fechaF + " " + horaF + ".000000";
+        java.sql.Timestamp fechaInicio = Timestamp.valueOf(fechaHoraI);
+        java.sql.Timestamp fechaFin = Timestamp.valueOf(fechaHoraF);
+        long diferencia = fechaFin.getTime() - fechaInicio.getTime();
+        long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
+        float precio = horas * 10;
+        s.setAttribute("Precio",precio);
+
         int num = 0;
         String coche = "Coche";
         while (num < coches.size()) {

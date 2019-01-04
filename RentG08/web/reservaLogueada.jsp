@@ -97,6 +97,7 @@
                                             try {
                                                 String imagen;
                                                 String marca;
+                                                String euro = "\u20ac";
                                                 String numCoches = session.getAttribute("NumCoches").toString();
                                                 int num = Integer.parseInt(numCoches);
                                                 int i = 0;
@@ -153,6 +154,8 @@
                                         <label for="horaF">Hora Fin: <%=session.getAttribute("HoraFin")%></label>
                                         <br><br>
                                         <label for="lugar">Lugar: <%=session.getAttribute("Lugar")%></label>
+                                        <br><br>
+                                        <label for="precio">Precio: <%=session.getAttribute("Precio")%> Euros</label>
                                         <br><br>
                                         <button type="submit" id="reservar" class="boton">Reservar</button><br><br>
                                     </form>
