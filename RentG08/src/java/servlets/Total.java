@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utils.BD08;
 
 /**
@@ -104,25 +105,31 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
+        HttpSession s = request.getSession(true);
+        String boton= request.getParameter("guardar");
         String id = request.getParameter("R1");
         java.util.Date fecha = Calendar.getInstance().getTime();
         java.sql.Timestamp dato = new Timestamp(fecha.getTime());
-        if (request.getParameter("guardar").equals("fechaEntrega")) {
+        if (boton.equals("fechaEntrega")) {
             try {
-                set.executeUpdate("update reserva set inicio='" + dato + "' where id='"+id+"'");
-                System.out.println("Fecha de entrega actualizada");
+                set=con.createStatement();
+                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='"+id+"'");
+              //  System.out.println("Fecha de entrega actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
+                set=con.createStatement();
                 set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"'");
-                System.out.println("Fecha de devolución actualizada");
+               // System.out.println("Fecha de devolución actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         try {
+        
             rs= set.executeQuery("select * from reserva where id='"+id+"'");
             Timestamp fechaEntrega= rs.getTimestamp("inicio");
             Timestamp fechaDevolucion= rs.getTimestamp("fin");
@@ -140,8 +147,7 @@ public class Total extends HttpServlet {
              
         } catch (SQLException ex) {
             Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
  request.getRequestDispatcher ("consultaReservaRS.jsp").forward(request, response);
     }
 /**

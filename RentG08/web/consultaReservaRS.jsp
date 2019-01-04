@@ -103,9 +103,7 @@
                                             <tbody id="datosTabla">
 
 
-                                                <%
-                                                    HttpSession s = request.getSession();
-                                                    String email = (String) session.getAttribute("emailUsuario");
+                                                <%                                                 
                                                     try {
                                                         Statement set = con.createStatement();
                                                         String matricula;
@@ -165,8 +163,8 @@
                                     </table>
                                     </div>
                                     <p>
-                                        <button type="submit" name="guardar" value="fechaEntrega" class="boton" method="post">Guardar fecha entrega</button>
-                                        <button type="submit" name="guardar" value="fechaDevolucion" class="boton" method="post">Guardar fecha devolucion</button>
+                                        <button type="submit" name="guardar" value="fechaEntrega" class="boton" >Guardar fecha entrega</button>
+                                        <button type="submit" name="guardar" value="fechaDevolucion" class="boton" >Guardar fecha devolucion</button>
                                         <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button>
                                         
                                        
