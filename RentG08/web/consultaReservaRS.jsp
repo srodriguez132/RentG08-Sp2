@@ -145,7 +145,7 @@
                                                     <%
                                                     } else {
                                                     %>                         
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><input type="time" name="fechaEntrega"/></td><td><input type="time" name="fechaDevolucion"/></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>                                                  
                                                     <%
                                                                 }
@@ -163,8 +163,8 @@
                                     </table>
                                     </div>
                                     <p>
-                                        <button type="submit" name="guardar" value="fechaEntrega" class="boton" >Guardar fecha entrega</button>
-                                        <button type="submit" name="guardar" value="fechaDevolucion" class="boton" >Guardar fecha devolucion</button>
+                                        <button type="submit" name="fechaEntrega" value="fechaEntrega" class="boton" >Guardar fecha entrega</button>
+                                        <button type="submit" name="fechaDevolucion" value="fechaDevolucion" class="boton" >Guardar fecha devolucion</button>
                                         <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button>
                                         
                                        

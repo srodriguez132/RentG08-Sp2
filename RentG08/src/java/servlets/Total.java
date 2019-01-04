@@ -105,16 +105,14 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        HttpSession s = request.getSession(true);
-        String boton= request.getParameter("guardar");
         String id = request.getParameter("R1");
         java.util.Date fecha = Calendar.getInstance().getTime();
         java.sql.Timestamp dato = new Timestamp(fecha.getTime());
-        if (boton.equals("fechaEntrega")) {
+        if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
             try {
-                set=con.createStatement();
-                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='"+id+"'");
+                String sql= "update reserva set inicio=? where id=?;" ;
+                set=con.prepareStatement(sql);
+                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='"+id+"';");
               //  System.out.println("Fecha de entrega actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,7 +120,7 @@ public class Total extends HttpServlet {
         } else {
             try {
                 set=con.createStatement();
-                set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"'");
+                set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"';");
                // System.out.println("Fecha de devolución actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
