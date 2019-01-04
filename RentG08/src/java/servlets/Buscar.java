@@ -153,7 +153,6 @@ public class Buscar extends HttpServlet {
         } catch (ParseException ex) {
             Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
         java.util.Date fecha = new java.util.Date();
         java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
@@ -195,22 +194,17 @@ public class Buscar extends HttpServlet {
         try {
             set = con.createStatement();
             rs = set.executeQuery("SELECT * FROM reserva");
-            if (rs.next()) {
-                existe = true;
-            }
-        } catch (SQLException ex1) {
-            System.out.println("No lee de la tabla Reserva. " + ex1);
-        }
-        try {
-            if (existe && rs.next()) {
+            while (rs.next()) {
+                borrar = false;
                 try {
                     java.sql.Date fechaInicio = rs.getDate("fechainicio");
                     java.sql.Time horaInicio = rs.getTime("fechainicio");
                     java.sql.Date fechaFin = rs.getDate("fechafin");
                     java.sql.Time horaFin = rs.getTime("fechafin");
 
+
                     //Controlar fecha de inicio seleccionada
-                    //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
+                    //Entra si la fecha seleccionada esta entre alguna fecha de inicio y fin ya registrada
                     if (fechaI.compareTo(fechaInicio) > 0 && fechaI.compareTo(fechaFin) < 0) {
                         borrar = true;
                     }
@@ -223,7 +217,7 @@ public class Buscar extends HttpServlet {
                         borrar = true;
                     }
                     //Controlar fecha de fin seleccionada
-                    //Entra si la fecha seleccionada esta entre alguna fechade inicio y fin ya registrada
+                    //Entra si la fecha seleccionada esta entre alguna fecha de inicio y fin ya registrada
                     if (fechaF.compareTo(fechaInicio) > 0 && fechaF.compareTo(fechaFin) < 0) {
                         borrar = true;
                     }
@@ -235,6 +229,12 @@ public class Buscar extends HttpServlet {
                     if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
                         borrar = true;
                     }
+                    
+                    //Controlar fecha de inicio y fin seleccionada
+                    if (fechaI.compareTo(fechaInicio) < 0 && fechaF.compareTo(fechaFin) > 0) {
+                        borrar = true;
+                    }
+                    
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,20 +254,22 @@ public class Buscar extends HttpServlet {
                         Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                int i = 0;
-                while (i < coches.size()) {
-                    String co = coches.get(i);
-                    System.out.println(co);
-                    i++;
-                }
-                if (coches.isEmpty()) {
-                    mensaje = "No hay coches disponibles para esas fechas";
-                    request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
-                }
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex1) {
+            System.out.println("No lee de la tabla Reserva. " + ex1);
         }
+
+        int i = 0;
+        while (i < coches.size()) {
+            String co = coches.get(i);
+            System.out.println(co);
+            i++;
+        }
+        if (coches.isEmpty()) {
+            mensaje = "No hay coches disponibles para esas fechas";
+            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+        }
+
         s.setAttribute("FechaInicio", fechaIni);
         s.setAttribute("HoraInicio", horaI);
         s.setAttribute("FechaFin", fechaFina);

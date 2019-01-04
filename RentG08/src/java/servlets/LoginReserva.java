@@ -142,14 +142,15 @@ public class LoginReserva extends HttpServlet {
                 String horaI = s.getAttribute("HoraInicio").toString();
                 String fechaF = s.getAttribute("FechaFin").toString();
                 String horaF = s.getAttribute("HoraFin").toString();
+                String lugar = s.getAttribute("Lugar").toString();
                 String fechaHoraIni = fechaI + " " + horaI;
                 String fechaHoraFin = fechaF + " " + horaF;
                 float precio = 0;
 
                 try {
                     set = con.createStatement();
-                    set.executeUpdate("INSERT INTO reserva (id, email, matricula, precio, fechainicio, fechafin)"
-                            + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + precio + "', '" + fechaHoraIni + "'"
+                    set.executeUpdate("INSERT INTO reserva (id, email, matricula, lugar, precio, fechainicio, fechafin)"
+                            + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + lugar + "', '" + precio + "', '" + fechaHoraIni + "'"
                             + ",'" + fechaHoraFin + "' )");
                     set.close();
                     Statement set2 = con.createStatement();

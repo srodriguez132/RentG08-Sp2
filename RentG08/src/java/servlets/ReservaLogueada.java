@@ -111,6 +111,7 @@ public class ReservaLogueada extends HttpServlet {
         String horaI = s.getAttribute("HoraInicio").toString();
         String fechaF = s.getAttribute("FechaFin").toString();
         String horaF = s.getAttribute("HoraFin").toString();
+        String lugar = s.getAttribute("Lugar").toString();
         String fechaHoraIni = fechaI + " " + horaI;
         String fechaHoraFin = fechaF + " " + horaF;
         s.setAttribute("Matricula", matricula);
@@ -118,8 +119,8 @@ public class ReservaLogueada extends HttpServlet {
 
         try {
             set = con.createStatement();
-            set.executeUpdate("INSERT INTO reserva (id, email, matricula, precio, fechainicio, fechafin)"
-                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + precio + "', '" + fechaHoraIni + "'"
+            set.executeUpdate("INSERT INTO reserva (id, email, matricula, lugar, precio, fechainicio, fechafin)"
+                    + " VALUES ('" + id + "', '" + email + "', '" + matricula + "', '" + lugar + "', '" + precio + "', '" + fechaHoraIni + "'"
                     + ",'" + fechaHoraFin + "' )");
             set.close();
             Statement set2 = con.createStatement();
@@ -137,7 +138,7 @@ public class ReservaLogueada extends HttpServlet {
             rs.close();
             set2.close();
             Statement st3 = con.createStatement();
-            st3.executeUpdate("update reserva set precio = '" + precio +"' where id LIKE '%" + id + "%'");
+            st3.executeUpdate("update reserva set precio = '" + precio + "' where id LIKE '%" + id + "%'");
             st3.close();
             request.getRequestDispatcher("ReservaOk.jsp").forward(request, response);
         } catch (SQLException ex) {
