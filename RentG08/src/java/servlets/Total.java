@@ -12,6 +12,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletConfig;
@@ -29,11 +32,11 @@ import utils.BD08;
  */
 @WebServlet(name = "Total", urlPatterns = {"/Total"})
 public class Total extends HttpServlet {
- private Connection con;
+
+    private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
-    
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -48,6 +51,7 @@ public class Total extends HttpServlet {
 
         con = BD08.getConexion(URL, nombreUsuario, contrasena);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +69,7 @@ public class Total extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Total</title>");            
+            out.println("<title>Servlet Total</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Total at " + request.getContextPath() + "</h1>");
@@ -100,41 +104,53 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    String fechaEntrega= request.getParameter("fechaEntrega");
-      String fechaDevolucion= request.getParameter("fechaDevolucion");
-      String id= request.getParameter("R1");
-     try {
-          if(!fechaEntrega.isEmpty() && !id.isEmpty()){
-         set = con.createStatement();
-         rs=set.executeQuery("select * from reserva where id= '"+ id+"'");
-         set.executeUpdate("update reserva set inicio= '"+fechaEntrega+"' as datetime where id='"+id+"'");
-          
-          }
-          if(!fechaDevolucion.isEmpty() && !id.isEmpty()){
-         set = con.createStatement();
-         rs=set.executeQuery("select * from reserva where id= '"+ id+"'");
-         set.executeUpdate("update reserva set fin= '"+fechaDevolucion+"'as datetime where id='"+id+"'");
-          rs.close();
-          set.close();
-          set.close();
-          set.executeUpdate("update reserva set penalizacion= 3*extract(minutes from fin-fechafin)");
-          set.close();
-         set.executeUpdate("update reserva set total=precio+penalizacion");
-          }
-           request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
-          
-     } catch (SQLException ex) {
-         Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
-     }
+        String id = request.getParameter("R1");
+        java.util.Date fecha = Calendar.getInstance().getTime();
+        java.sql.Timestamp dato = new Timestamp(fecha.getTime());
+        if (request.getParameter("guardar").equals("fechaEntrega")) {
+            try {
+                set.executeUpdate("update reserva set inicio='" + dato + "' where id='"+id+"'");
+                System.out.println("Fecha de entrega actualizada");
+            } catch (SQLException ex) {
+                Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"'");
+                System.out.println("Fecha de devolución actualizada");
+            } catch (SQLException ex) {
+                Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        try {
+            rs= set.executeQuery("select * from reserva where id='"+id+"'");
+            Timestamp fechaEntrega= rs.getTimestamp("inicio");
+            Timestamp fechaDevolucion= rs.getTimestamp("fin");
+             long diferencia = fechaDevolucion.getTime() - fechaEntrega.getTime();
+             long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+             set.executeUpdate("update reserva set penalizacion= 2*'"+minutos+"'where id '"+id+"'");
+             rs.close();
+             rs= set.executeQuery("select * from reserva where id='"+id+"'");
+             float precio= rs.getFloat("precio");
+             float penalizacion= rs.getFloat("penalizacion");
+             float total= precio + penalizacion;
+             set.executeUpdate("update reserva set total='"+total+"'");
+             rs.close();
+             set.close();
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+ request.getRequestDispatcher ("consultaReservaRS.jsp").forward(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+/**
+ * Returns a short description of the servlet.
+ *
+ * @return a String containing servlet description
+ */
+@Override
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
