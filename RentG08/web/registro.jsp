@@ -27,7 +27,7 @@
         <nav id="menupricipal">
             <div>
                 <ul>
-                    <li id="busqueda"><a href="index.html">Búsqueda</a></li>
+                    <li id="busqueda"><a href="index.jsp">Búsqueda</a></li>
                     <li id="pestanaActual"><a id="pestanaActualTexto" href="#">Registrarse</a></li>
                     <li><a href="inicioSesion.jsp">Iniciar Sesión</a></li>
 

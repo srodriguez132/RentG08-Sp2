@@ -45,9 +45,9 @@
         <nav id="menuprincipal">
             <div>
                 <ul>
-                    <li><a href="index.html">Principal</a></li>
-                    <li><a href="registro.html">Registrarse</a></li>
-                    <li><a href="inicioSesion.html">Iniciar sesión</a></li>
+                    <li><a href="index.jsp">Principal</a></li>
+                    <li><a href="registro.jsp">Registrarse</a></li>
+                    <li><a href="inicioSesion.jsp">Iniciar sesión</a></li>
                 </ul>
             </div>
         </nav>

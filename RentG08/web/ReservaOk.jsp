@@ -31,7 +31,7 @@
         <nav id="menuprincipal">
             <div>
                 <ul>
-                    <li><a href="inicioSesion.html" id="cerrarsesion">Cerrar Sesion</a></li>
+                    <li><a href="inicioSesion.jsp" id="cerrarsesion">Cerrar Sesion</a></li>
                     <li><a href="inicioLogueado.jsp">Búsqueda</a></li>
                     <li><a href="consultaReservaUsuario.jsp">Consultar Reservas</a></li>
         <%!
