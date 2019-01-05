@@ -161,7 +161,7 @@ public class Buscar extends HttpServlet {
         
         try {
             fechaActual = formatodate.parse(formatodate.format(fecha));
-            long horaAct = sdf.parse(horaFina).getTime();
+            long horaAct = sdf.parse(sdf.format(fecha)).getTime();
             Time horaActual = new Time(horaAct);
 
             if (fechaI.compareTo(fechaActual) < 0) {
