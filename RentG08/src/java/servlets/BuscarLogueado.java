@@ -290,6 +290,11 @@ public class BuscarLogueado extends HttpServlet {
         java.sql.Timestamp fechaInicio = Timestamp.valueOf(fechaHoraI);
         java.sql.Timestamp fechaFin = Timestamp.valueOf(fechaHoraF);
         long diferencia = fechaFin.getTime() - fechaInicio.getTime();
+        long diferenciaHoras = 0;
+        if (diferencia == 0) {
+            diferenciaHoras = horaF.getTime() - horaI.getTime();
+        }
+        diferencia = diferencia + diferenciaHoras;
         long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
         float precio = horas * 10;
         s.setAttribute("Precio", precio);
