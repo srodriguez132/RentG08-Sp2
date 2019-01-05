@@ -124,7 +124,7 @@ public class Buscar extends HttpServlet {
 
         //Hora inicio deseada
         String horaIni = request.getParameter("horaI");
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         long horaInic;
         Time horaI = null;
         try {
