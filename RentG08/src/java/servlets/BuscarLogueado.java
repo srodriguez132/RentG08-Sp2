@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -155,24 +156,33 @@ public class BuscarLogueado extends HttpServlet {
             Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        java.util.Date fecha = new java.util.Date();
-        java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
-        if (fechaI.compareTo(fechaActual) < 0) {
-            mensaje = "La fecha de inicio debe ser mayor a la actual";
-            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
-        }
-        Timestamp horaActual = new Timestamp(System.currentTimeMillis());
-        if (fechaI.compareTo(fechaActual) == 0 && horaI.compareTo(horaActual) < 0) {
-            mensaje = "La hora de inicio debe ser mayor a la actual";
-            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
-        }
-        if (fechaI.compareTo(fechaF) > 0) {
-            mensaje = "La fecha de fin debe ser mayor que la fecha de inicio";
-            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
-        }
-        if (fechaI.compareTo(fechaF) == 0 && horaI.compareTo(horaF) > 0) {
-            mensaje = "La hora de fin debe ser mayor que la hora de inicio";
-            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
+        java.util.Date fecha = Calendar.getInstance().getTime();
+        java.util.Date fechaActual;
+
+        try {
+            fechaActual = formatodate.parse(formatodate.format(fecha));
+            long horaAct = sdf.parse(horaFina).getTime();
+            Time horaActual = new Time(horaAct);
+
+            if (fechaI.compareTo(fechaActual) < 0) {
+                mensaje = "La fecha de inicio debe ser mayor a la actual";
+                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            }
+
+            if (fechaI.compareTo(fechaActual) == 0 && horaI.compareTo(horaActual) < 0) {
+                mensaje = "La hora de inicio debe ser mayor a la actual";
+                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            }
+            if (fechaI.compareTo(fechaF) > 0) {
+                mensaje = "La fecha de fin debe ser mayor que la fecha de inicio";
+                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            }
+            if (fechaI.compareTo(fechaF) == 0 && horaI.compareTo(horaF) > 0) {
+                mensaje = "La hora de fin debe ser mayor que la hora de inicio";
+                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         boolean existe = false;
@@ -192,7 +202,7 @@ public class BuscarLogueado extends HttpServlet {
             System.out.println("No lee de la tabla Coches. " + ex1);
         }
 
-         try {
+        try {
             set = con.createStatement();
             rs = set.executeQuery("SELECT * FROM reserva");
             while (rs.next()) {
@@ -229,7 +239,7 @@ public class BuscarLogueado extends HttpServlet {
                     if (fechaF.compareTo(fechaFin) == 0 && horaF.compareTo(horaFin) <= 0) {
                         borrar = true;
                     }
-                    
+
                     //Controlar fecha de inicio y fin seleccionada
                     if (fechaI.compareTo(fechaInicio) < 0 && fechaF.compareTo(fechaFin) > 0) {
                         borrar = true;
@@ -274,7 +284,7 @@ public class BuscarLogueado extends HttpServlet {
         s.setAttribute("FechaFin", fechaFina);
         s.setAttribute("HoraFin", horaF);
         s.setAttribute("Lugar", lugar);
-        
+
         String fechaHoraI = fechaI + " " + horaI + ".000000";
         String fechaHoraF = fechaF + " " + horaF + ".000000";
         java.sql.Timestamp fechaInicio = Timestamp.valueOf(fechaHoraI);
@@ -282,9 +292,8 @@ public class BuscarLogueado extends HttpServlet {
         long diferencia = fechaFin.getTime() - fechaInicio.getTime();
         long horas = TimeUnit.MILLISECONDS.toHours(diferencia);
         float precio = horas * 10;
-        s.setAttribute("Precio",precio);
+        s.setAttribute("Precio", precio);
 
-        
         int num = 0;
         String coche = "Coche";
         while (num < coches.size()) {
