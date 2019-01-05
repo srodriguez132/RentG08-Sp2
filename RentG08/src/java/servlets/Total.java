@@ -116,6 +116,7 @@ public class Total extends HttpServlet {
                 String sql= "update reserva set inicio=? where id=?;" ;
                 set=con.prepareStatement(sql);
                 set.executeUpdate("update reserva set inicio = '" + dato + "' where id='"+id+"';");
+                set.executeUpdate("update reserva set estado = 'En curso' where id='"+id+"';");
               //  System.out.println("Fecha de entrega actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,6 +125,7 @@ public class Total extends HttpServlet {
             try {
                 set=con.createStatement();
                 set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"';");
+                set.executeUpdate("update reserva set estado = 'Finalizada' where id='"+id+"';");
                // System.out.println("Fecha de devolución actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);

@@ -97,7 +97,7 @@
                                     <div class="datagrid">
                                         <table>
                                             <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
-                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Acciones</th></tr></thead>
+                                                    <th>Precio</th><th>Penalización</th><th>Total</th><th>Lugar</th></tr></thead>
 
 
                                             <tbody id="datosTabla">
@@ -116,6 +116,7 @@
                                                         Timestamp inicio;
                                                         Timestamp fin;
                                                         ResultSet rs;
+                                                        String lugar;
                                                         if (request.getParameter("boton").equals("Buscar por fecha")) {
                                                             String fechaBusqueda = request.getParameter("fecha");
                                                             rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
@@ -138,15 +139,16 @@
                                                             total = rs.getInt("total");
                                                             inicio = rs.getTimestamp("inicio");
                                                             fin = rs.getTimestamp("fin");
+                                                            lugar= rs.getString("lugar");
                                                             if (cont % 2 == 0) {
                                                 %>                         
                                                 <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>                                              
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                              
                                                     <%
                                                     } else {
                                                     %>                         
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>                                                  
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                                  
                                                     <%
                                                                 }
                                                                 cont = cont + 1;
