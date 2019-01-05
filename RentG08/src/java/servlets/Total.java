@@ -105,7 +105,8 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("R1");
+        String id1 = request.getParameter("R1");
+        String id = id1.substring(0,id1.indexOf("/"));
         java.util.Date fecha = Calendar.getInstance().getTime();
         java.sql.Timestamp dato = new Timestamp(fecha.getTime());
         if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
