@@ -140,12 +140,12 @@
                                                             fin = rs.getTimestamp("fin");
                                                             if (cont % 2 == 0) {
                                                 %>                         
-                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>                                              
                                                     <%
                                                     } else {
                                                     %>                         
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value=<%=id%>/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>                                                  
                                                     <%
                                                                 }

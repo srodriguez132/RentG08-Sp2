@@ -37,6 +37,8 @@ public class Total extends HttpServlet {
     private Connection con;
     private Statement set;
     private ResultSet rs;
+     private Statement set1;
+    private ResultSet rs1;
     String cad;
 
     @Override
@@ -106,7 +108,7 @@ public class Total extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id1 = request.getParameter("R1");
-        String id = id1.substring(0,id1.indexOf("/"));
+        String id = id1.substring(0,id1.length());
         java.util.Date fecha = Calendar.getInstance().getTime();
         java.sql.Timestamp dato = new Timestamp(fecha.getTime());
         if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
@@ -128,19 +130,26 @@ public class Total extends HttpServlet {
             }
         }
         try {
-        
-            rs= set.executeQuery("select * from reserva where id='"+id+"'");
+            long minutos;
+        set=con.createStatement();
+            rs= set.executeQuery("select * from reserva where id='"+id+"';");
+           while(rs.next()){
             Timestamp fechaEntrega= rs.getTimestamp("inicio");
             Timestamp fechaDevolucion= rs.getTimestamp("fin");
              long diferencia = fechaDevolucion.getTime() - fechaEntrega.getTime();
-             long minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
-             set.executeUpdate("update reserva set penalizacion= 2*'"+minutos+"'where id '"+id+"'");
-             rs.close();
-             rs= set.executeQuery("select * from reserva where id='"+id+"'");
-             float precio= rs.getFloat("precio");
-             float penalizacion= rs.getFloat("penalizacion");
-             float total= precio + penalizacion;
-             set.executeUpdate("update reserva set total='"+total+"'");
+           minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+           set1=con.createStatement();
+             set1.executeUpdate("update reserva set penalizacion= 2*'"+minutos+"'where id= '"+id+"';");
+             rs1= set1.executeQuery("select * from reserva where id='"+id+"';");
+             while(rs1.next()){
+             float precio= rs1.getFloat("precio");
+             float penalizacion= rs1.getFloat("penalizacion");
+             float total= precio + penalizacion;          
+             set1.executeUpdate("update reserva set total='"+total+"';");
+             }
+             rs1.close();
+             set1.close();
+           }
              rs.close();
              set.close();
              
