@@ -37,7 +37,7 @@ public class Total extends HttpServlet {
     private Connection con;
     private Statement set;
     private ResultSet rs;
-     private Statement set1;
+    private Statement set1;
     private ResultSet rs1;
     String cad;
 
@@ -107,66 +107,84 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         if (request.getParameter("btnConsultaUsuario").equals("vaciar")) {
+            request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+        } else {
+        
+        
         String id1 = request.getParameter("R1");
-        String id = id1.substring(0,id1.length());
+        String id = id1.substring(0, id1.length());
         java.util.Date fecha = Calendar.getInstance().getTime();
         java.sql.Timestamp dato = new Timestamp(fecha.getTime());
         if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
             try {
-                String sql= "update reserva set inicio=? where id=?;" ;
-                set=con.prepareStatement(sql);
-                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='"+id+"';");
-                set.executeUpdate("update reserva set estado = 'En curso' where id='"+id+"';");
-              //  System.out.println("Fecha de entrega actualizada");
+                String sql = "update reserva set inicio=? where id=?;";
+                set = con.prepareStatement(sql);
+                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='" + id + "';");
+                set.executeUpdate("update reserva set estado = 'En curso' where id='" + id + "';");
+                set.close();
+                //  System.out.println("Fecha de entrega actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             try {
-                set=con.createStatement();
-                set.executeUpdate("update reserva set fin='" + dato + "'where id='"+id+"';");
-                set.executeUpdate("update reserva set estado = 'Finalizada' where id='"+id+"';");
-               // System.out.println("Fecha de devolución actualizada");
+                set = con.createStatement();
+                set.executeUpdate("update reserva set fin='" + dato + "'where id='" + id + "';");
+                set.executeUpdate("update reserva set estado = 'Finalizada' where id='" + id + "';");
+                set.close();
+                // System.out.println("Fecha de devolución actualizada");
             } catch (SQLException ex) {
                 Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         try {
             long minutos;
-        set=con.createStatement();
-            rs= set.executeQuery("select * from reserva where id='"+id+"';");
-           while(rs.next()){
-            Timestamp fechaEntrega= rs.getTimestamp("inicio");
-            Timestamp fechaDevolucion= rs.getTimestamp("fin");
-             long diferencia = fechaDevolucion.getTime() - fechaEntrega.getTime();
-           minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
-           set1=con.createStatement();
-             set1.executeUpdate("update reserva set penalizacion= 2*'"+minutos+"'where id= '"+id+"';");
-             rs1= set1.executeQuery("select * from reserva where id='"+id+"';");
-             while(rs1.next()){
-             float precio= rs1.getFloat("precio");
-             float penalizacion= rs1.getFloat("penalizacion");
-             float total= precio + penalizacion;          
-             set1.executeUpdate("update reserva set total='"+total+"';");
-             }
-             rs1.close();
-             set1.close();
-           }
-             rs.close();
-             set.close();
-             
+            set = con.createStatement();
+            rs = set.executeQuery("select * from reserva where id='" + id + "';");
+            rs.next();
+            if (rs.getTimestamp("inicio") == null || rs.getTimestamp("fin") == null) {
+                rs.close();
+                set.close();
+                request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+            } else {
+//                while (rs.next()) {
+                    Timestamp fechaEntrega = rs.getTimestamp("inicio");
+                    Timestamp fechaDevolucion = rs.getTimestamp("fin");
+                    long diferencia = fechaDevolucion.getTime() - fechaEntrega.getTime();
+                    minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+//                    rs.close();
+//                    set.close();
+//                    set = con.createStatement();
+                    set.executeUpdate("update reserva set penalizacion= 2*'" + minutos + "'where id= '" + id + "';");
+                    set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
+//                    rs = set.executeQuery("select * from reserva where id='" + id + "';");
+//                    while (rs.next()) {
+//                        float precio = rs.getFloat("precio");
+//                        float penalizacion = rs.getFloat("penalizacion");
+//                        float total = precio + penalizacion;
+//                        set.executeUpdate("update reserva set total='" + total + "';");
+//                    }
+//                }
+               
+                rs.close();
+                set.close();
+                request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
-        }        
- request.getRequestDispatcher ("consultaReservaRS.jsp").forward(request, response);
+        }
+         }
     }
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-        public String getServletInfo() {
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

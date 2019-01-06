@@ -165,19 +165,19 @@ and open the template in the editor.
                                                             penalizacion = rs.getInt("penalizacion");
                                                             precio = rs.getInt("precio");
                                                             total = rs.getInt("total");
-                                                            lugar = rs.getString
+                                                            lugar = rs.getString("lugar");
                                                             
                                                             if (cont % 2 == 0) {
                                                 %>                         
 
                                                 <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>
 
                                                 <%
                                                 } else {
                                                 %>
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                    <td><%=penalizacion%></td><td><%=total%></td><td>data</td></tr>
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>
                                                     <%
                                                                 }
                                                                 cont = cont + 1;
@@ -187,7 +187,7 @@ and open the template in the editor.
 
                                                             //con.close();
                                                         } catch (Exception ex) {
-                                                            System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                            System.out.println("Error en acceso a Clientes" + ex);
                                                         }
                                                     %>
 

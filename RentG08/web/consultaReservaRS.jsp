@@ -119,13 +119,13 @@
                                                         String lugar;
                                                         if (request.getParameter("boton").equals("Buscar por fecha")) {
                                                             String fechaBusqueda = request.getParameter("fecha");
-                                                            rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime)");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime) ORDER BY fechainicio ASC" );
                                                         } else if (request.getParameter("boton").equals("Buscar por matricula")) {
                                                             String matriculaBusqueda = request.getParameter("matricula");
-                                                            rs = set.executeQuery("SELECT * from reserva WHERE matricula LIKE '%" + matriculaBusqueda + "%'");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE matricula LIKE '%" + matriculaBusqueda + "%' ORDER BY fechainicio ASC");
                                                         } else {
                                                             String emailBusqueda = request.getParameter("cliente");
-                                                            rs = set.executeQuery("SELECT * from reserva WHERE email ='" + emailBusqueda + "'");
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE email ='" + emailBusqueda + "' ORDER BY fechainicio ASC");
                                                         }
                                                         int cont = 0;
                                                         while (rs.next()) {
@@ -142,12 +142,12 @@
                                                             lugar= rs.getString("lugar");
                                                             if (cont % 2 == 0) {
                                                 %>                         
-                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                              
                                                     <%
                                                     } else {
                                                     %>                         
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>"/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                                  
                                                     <%
                                                                 }
