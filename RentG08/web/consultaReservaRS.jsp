@@ -24,6 +24,8 @@
         <link rel="stylesheet" href="css/consultaReservaAdmin.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
         <script src="javascript/vaciarTabla.js"></script>
+        
+        <script src="javascript/comprobacionTReal.js"></script>
 
     </head>
     <body>
@@ -68,9 +70,9 @@
                                 <img src="img/busqueda.png" style="max-width: 5%">
                             </div>
                             <div id="cuerpo">
-                                <form name="formulario" action="consultaRS" method="post" >
+                                <form name="datos" action="consultaRS" method="post" >
                                     <label for="email">Email:</label>
-                                    <input type="email" name="cliente" id="consCliente"><br />
+                                    <input type="email" name="cliente" id="consCliente" pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"><br />
                                     <input type="submit" name="boton" id="botonC" class="boton" value="Buscar por cliente" ><br />
                                     <label for="date">Fecha:</label>
                                     <input type="date" name="fecha" id="consFecha"><br />

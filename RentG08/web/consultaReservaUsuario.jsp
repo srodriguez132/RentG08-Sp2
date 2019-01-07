@@ -24,7 +24,7 @@ and open the template in the editor.
         <script src="javascript/vaciarTabla.js"></script>
         <script src="javascript/sessionStorageCliente.js"></script>
         <script src="javascript/cerrarSesion.js"></script>
-
+        <script src="javascript/comprobacionTReal.js"></script>
     </head>
     <body>
         <header class="cabecera" id="cabeceraBusqueda">
@@ -105,7 +105,7 @@ and open the template in the editor.
                                 <img src="img/busqueda.png" style="max-width: 7%">
                             </div>
                             <div id="cuerpo">                
-                                <form name="formulario" action="consultaReservaUsuario.jsp" method="post">
+                                <form name="datos" action="consultaReservaUsuario.jsp" method="post">
                                     <label for="fecha">Fecha: </label>
                                     <input type="date" name="fecha" id="fechaUsuario"><br />
                                     <button type="submit" name="btnConsultaUsuario" id="botonPost" class="boton" value="buscar">Buscar<br />

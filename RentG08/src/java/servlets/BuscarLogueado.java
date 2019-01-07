@@ -166,20 +166,20 @@ public class BuscarLogueado extends HttpServlet {
 
             if (fechaI.compareTo(fechaActual) < 0) {
                 mensaje = "La fecha de inicio debe ser mayor a la actual";
-                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
             }
 
             if (fechaI.compareTo(fechaActual) == 0 && horaI.compareTo(horaActual) < 0) {
                 mensaje = "La hora de inicio debe ser mayor a la actual";
-                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
             }
             if (fechaI.compareTo(fechaF) > 0) {
                 mensaje = "La fecha de fin debe ser mayor que la fecha de inicio";
-                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
             }
             if (fechaI.compareTo(fechaF) == 0 && horaI.compareTo(horaF) > 0) {
                 mensaje = "La hora de fin debe ser mayor que la hora de inicio";
-                request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+                request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
             }
         } catch (ParseException ex) {
             Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,7 +276,7 @@ public class BuscarLogueado extends HttpServlet {
         }
         if (coches.isEmpty()) {
             mensaje = "No hay coches disponibles para esas fechas";
-            request.getRequestDispatcher("/index.jsp?message=" + mensaje).forward(request, response);
+            request.getRequestDispatcher("/inicioLogueado.jsp?message=" + mensaje).forward(request, response);
         }
 
         s.setAttribute("FechaInicio", fechaIni);

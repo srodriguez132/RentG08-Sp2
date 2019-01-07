@@ -147,7 +147,9 @@ public class Total extends HttpServlet {
                     rs.close();
                     set.close();
                     request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
-                } else {
+                } 
+               
+                else {
 
                     Timestamp fechaFin = rs.getTimestamp("fechafin");
                     Timestamp fechaDevolucion = rs.getTimestamp("fin");
