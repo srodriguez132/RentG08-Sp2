@@ -94,6 +94,7 @@
 
                             <form name="guardarFechas" action="Total" method="post">
                                 <section id="zonadatos"> 
+                                    
                                     <div class="datagrid">
                                         <table>
                                             <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
@@ -143,7 +144,9 @@
                                                             if (cont % 2 == 0) {
                                                 %>                         
                                                 <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
-                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                              
+                                                    <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr> 
+                                                
+                                                
                                                     <%
                                                     } else {
                                                     %>                         
