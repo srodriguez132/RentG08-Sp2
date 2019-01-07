@@ -29,11 +29,11 @@ import utils.BD08;
  */
 @WebServlet(name = "consultaRS", urlPatterns = {"/consultaRS"})
 public class consultaRS extends HttpServlet {
- private Connection con;
+
+    private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
-    
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -48,6 +48,7 @@ public class consultaRS extends HttpServlet {
 
         con = BD08.getConexion(URL, nombreUsuario, contrasena);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,7 +66,7 @@ public class consultaRS extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet consultaRS</title>");            
+            out.println("<title>Servlet consultaRS</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet consultaRS at " + request.getContextPath() + "</h1>");

@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/inicioSesionAdmin.css">
         <link rel="stylesheet" href="css/css1.css">
         <link rel="icon" href="img/favicon.png" sizes="16x16">
-        
+
         <script src="javascript/comprobacionTReal.js"></script>
     </head>
     <body>
@@ -53,13 +53,13 @@
                                         <%
                                             if (request.getParameter("message") != null) {
                                         %>
-                                        
-                                            <h3><%=request.getParameter("message")%></h3>
-                                        
+
+                                        <h3><%=request.getParameter("message")%></h3>
+
                                         <% }
                                         %>
                                     </div>
-                                    
+
                                     <label for="contrasena">Contraseña:
                                         <input type="password" name="contrasena" id="contrasena" pattern="^[a-zA-Z0-9]{1,30}$" required=""/>
                                     </label><br />

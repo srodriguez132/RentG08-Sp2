@@ -26,7 +26,7 @@
             </a> 
 
         </header>
-         
+
         <nav id="menupricipal">
             <div>
                 <ul>
@@ -57,13 +57,13 @@
                                         <%
                                             if (request.getParameter("message") != null) {
                                         %>
-                                        
-                                            <h3><%=request.getParameter("message")%></h3>
-                                        
+
+                                        <h3><%=request.getParameter("message")%></h3>
+
                                         <% }
                                         %>
                                     </div>
-                                    
+
                                     <label for="contrasena">Contraseña:
                                         <input type="password" name="contrasena" id="contrasena" required/>
                                     </label><br />

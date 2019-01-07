@@ -19,36 +19,38 @@
     <body>
         <h1>Hello World!</h1>
         <%!
-              
-                private Connection con;
-                public void jspInit() {
-                   ServletContext application = getServletContext();
-                   String IP = application.getInitParameter("IP");
-                   String database = application.getInitParameter("BDNombre");
-                   String URL = "jdbc:mysql://"+ IP + "/" + database;
-                   String userName = application.getInitParameter("usuario");
-                   String password = application.getInitParameter("contrasena");
-                   con = BD08.getConexion(URL, userName, password);
-                };             
-            %>
-             <%
-                try {
-                  
-                    Statement set = con.createStatement();
-                    ResultSet rs = set.executeQuery("SELECT * FROM Clientes");
-                    while (rs.next()) {
-                        String nombre = rs.getString("imagen");
-                        
-            %>                         
-            <h3><%=nombre%></h3>
-                <%
-                        }
-                        rs.close();
-                        set.close();
-                        //con.close();
-                    } catch (Exception ex) {
-                        System.out.println("Error en acceso a BD Jugadores" + ex);
-                    }
-                %>
+            private Connection con;
+
+            public void jspInit() {
+                ServletContext application = getServletContext();
+                String IP = application.getInitParameter("IP");
+                String database = application.getInitParameter("BDNombre");
+                String URL = "jdbc:mysql://" + IP + "/" + database;
+                String userName = application.getInitParameter("usuario");
+                String password = application.getInitParameter("contrasena");
+                con = BD08.getConexion(URL, userName, password);
+            }
+
+            ;             
+        %>
+        <%
+            try {
+
+                Statement set = con.createStatement();
+                ResultSet rs = set.executeQuery("SELECT * FROM Clientes");
+                while (rs.next()) {
+                    String nombre = rs.getString("imagen");
+
+        %>                         
+        <h3><%=nombre%></h3>
+        <%
+                }
+                rs.close();
+                set.close();
+                //con.close();
+            } catch (Exception ex) {
+                System.out.println("Error en acceso a BD Jugadores" + ex);
+            }
+        %>
     </body>
 </html>

@@ -94,7 +94,7 @@
 
                             <form name="guardarFechas" action="Total" method="post">
                                 <section id="zonadatos"> 
-                                    
+
                                     <div class="datagrid">
                                         <table>
                                             <thead><tr><th></th><th>Email</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
@@ -104,7 +104,7 @@
                                             <tbody id="datosTabla">
 
 
-                                                <%                                                 
+                                                <%
                                                     try {
                                                         Statement set = con.createStatement();
                                                         String email;
@@ -121,7 +121,7 @@
                                                         String lugar;
                                                         if (request.getParameter("boton").equals("Buscar por fecha")) {
                                                             String fechaBusqueda = request.getParameter("fecha");
-                                                            rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime) ORDER BY fechainicio ASC" );
+                                                            rs = set.executeQuery("SELECT * from reserva WHERE fechainicio >= CAST('" + fechaBusqueda + "' as datetime) ORDER BY fechainicio ASC");
                                                         } else if (request.getParameter("boton").equals("Buscar por matricula")) {
                                                             String matriculaBusqueda = request.getParameter("matricula");
                                                             rs = set.executeQuery("SELECT * from reserva WHERE matricula LIKE '%" + matriculaBusqueda + "%' ORDER BY fechainicio ASC");
@@ -142,16 +142,16 @@
                                                             total = rs.getInt("total");
                                                             inicio = rs.getTimestamp("inicio");
                                                             fin = rs.getTimestamp("fin");
-                                                            lugar= rs.getString("lugar");
+                                                            lugar = rs.getString("lugar");
                                                             if (cont % 2 == 0) {
                                                 %>                         
                                                 <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=email%></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr> 
-                                                
-                                                
-                                                    <%
-                                                    } else {
-                                                    %>                         
+
+
+                                                <%
+                                                } else {
+                                                %>                         
                                                 <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=email%></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                                  
                                                     <%
@@ -173,8 +173,8 @@
                                         <button type="submit" name="fechaEntrega" value="fechaEntrega" class="boton" >Guardar fecha entrega</button>
                                         <button type="submit" name="fechaDevolucion" value="fechaDevolucion" class="boton" >Guardar fecha devolucion</button>
                                         <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button>
-                                        
-                                       
+
+
                                     </p>
                                 </section>
                             </form>

@@ -107,81 +107,70 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         if ("vaciar".equals(request.getParameter("btnConsultaUsuario"))) {
+        if ("vaciar".equals(request.getParameter("btnConsultaUsuario"))) {
             request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
         } else {
-        
-        
-        String id1 = request.getParameter("R1");
-        String id = id1.substring(0, id1.length());
-        java.util.Date fecha = Calendar.getInstance().getTime();
-        java.sql.Timestamp dato = new Timestamp(fecha.getTime());
-        if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
-            try {
-                String sql = "update reserva set inicio=? where id=?;";
-                set = con.prepareStatement(sql);
-                set.executeUpdate("update reserva set inicio = '" + dato + "' where id='" + id + "';");
-                set.executeUpdate("update reserva set estado = 'En curso' where id='" + id + "';");
-                set.close();
-                //  System.out.println("Fecha de entrega actualizada");
-            } catch (SQLException ex) {
-                Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
-                set = con.createStatement();
-                set.executeUpdate("update reserva set fin='" + dato + "'where id='" + id + "';");
-                set.executeUpdate("update reserva set estado = 'Finalizada' where id='" + id + "';");
-                set.close();
-                // System.out.println("Fecha de devolución actualizada");
-            } catch (SQLException ex) {
-                Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
 
-        try {
-            long minutos;
-            set = con.createStatement();
-            rs = set.executeQuery("select * from reserva where id='" + id + "';");
-            rs.next();
-            if (rs.getTimestamp("inicio") == null || rs.getTimestamp("fin") == null) {
-                rs.close();
-                set.close();
-                request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+            String id1 = request.getParameter("R1");
+            String id = id1.substring(0, id1.length());
+            java.util.Date fecha = Calendar.getInstance().getTime();
+            java.sql.Timestamp dato = new Timestamp(fecha.getTime());
+            if ("fechaEntrega".equals(request.getParameter("fechaEntrega"))) {
+                try {
+                    String sql = "update reserva set inicio=? where id=?;";
+                    set = con.prepareStatement(sql);
+                    set.executeUpdate("update reserva set inicio = '" + dato + "' where id='" + id + "';");
+                    set.executeUpdate("update reserva set estado = 'En curso' where id='" + id + "';");
+                    set.close();
+                    //  System.out.println("Fecha de entrega actualizada");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
-//                while (rs.next()) {
-//                    Timestamp fechaEntrega = rs.getTimestamp("inicio");
+                try {
+                    set = con.createStatement();
+                    set.executeUpdate("update reserva set fin='" + dato + "'where id='" + id + "';");
+                    set.executeUpdate("update reserva set estado = 'Finalizada' where id='" + id + "';");
+                    set.close();
+                    // System.out.println("Fecha de devolución actualizada");
+                } catch (SQLException ex) {
+                    Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            try {
+                long minutos;
+                set = con.createStatement();
+                rs = set.executeQuery("select * from reserva where id='" + id + "';");
+                rs.next();
+                if (rs.getTimestamp("inicio") == null || rs.getTimestamp("fin") == null) {
+                    rs.close();
+                    set.close();
+                    request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+                } else {
+
                     Timestamp fechaFin = rs.getTimestamp("fechafin");
                     Timestamp fechaDevolucion = rs.getTimestamp("fin");
                     long diferencia = fechaDevolucion.getTime() - fechaFin.getTime();
-                    if(diferencia<0){
-                    set.executeUpdate("update reserva set penalizacion= 0 where id= '" + id + "';");
-                    set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
+                    if (diferencia < 0) {
+                        set.executeUpdate("update reserva set penalizacion= 0 where id= '" + id + "';");
+                        set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
+                    } else {
+                       
+                        minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
+
+                        set.executeUpdate("update reserva set penalizacion= 2*'" + minutos + "'where id= '" + id + "';");
+                        set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
+
                     }
-                    else{
-                    minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
-//                    rs.close();
-//                    set.close();
-//                    set = con.createStatement();
-                    set.executeUpdate("update reserva set penalizacion= 2*'" + minutos + "'where id= '" + id + "';");
-                    set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
-//                    rs = set.executeQuery("select * from reserva where id='" + id + "';");
-//                    while (rs.next()) {
-//                        float precio = rs.getFloat("precio");
-//                        float penalizacion = rs.getFloat("penalizacion");
-//                        float total = precio + penalizacion;
-//                        set.executeUpdate("update reserva set total='" + total + "';");
-//                    }
-//                }
-                    }
-                rs.close();
-                set.close();
-                request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+                    rs.close();
+                    set.close();
+                    request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Total.class.getName()).log(Level.SEVERE, null, ex);
         }
-         }
     }
 
     /**

@@ -37,23 +37,23 @@ import utils.BD08;
 @WebServlet(name = "Registro", urlPatterns = {"/Registro"})
 @MultipartConfig
 public class Registro extends HttpServlet {
-    
+
     private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
-    
+
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         ServletContext contexto = cfg.getServletContext();
-        
+
         String IP = contexto.getInitParameter("IP");
         String basedatos = contexto.getInitParameter("BDNombre");
         String URL = "jdbc:mysql://" + IP + "/" + basedatos;
-        
+
         String nombreUsuario = contexto.getInitParameter("usuario");
         String contrasena = contexto.getInitParameter("contrasena");
-        
+
         con = BD08.getConexion(URL, nombreUsuario, contrasena);
     }
 
@@ -95,7 +95,7 @@ public class Registro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -109,48 +109,39 @@ public class Registro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String email = (String) request.getParameter("email");
         String contra = (String) request.getParameter("contrasena");
         String nombre = (String) request.getParameter("nombre");
         String apellido = (String) request.getParameter("apellido");
         String movil = (String) request.getParameter("movil");
-//        String imagen = (String) request.getParameter("imagen");
-//        File imagen = new File("/img");
-//        imagen = (File) request.getAttribute("imagen");
 
         Part part = request.getPart("imagen");
         String fileName = extractFileName(part);
 
-//        String ruta = request.getServletContext().getRealPath("/img") + File.separator + fileName;
         String parte1 = request.getServletContext().getRealPath("/img");
         String parte2 = parte1.substring(0, parte1.indexOf("build"));
-        String ruta= parte2 + "web/img" + File.separator + fileName;
+        String ruta = parte2 + "web/img" + File.separator + fileName;
         System.out.println(ruta);
 
         File fileSaveDir = new File(ruta);
-        
+
         part.write(ruta);
         String imagen = fileName;
-        
-       
 
-// Retrieves <input type="file" name="file">
-//        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-//        InputStream fileContent = filePart.getInputStream();
         try {
             boolean existe;
             set = con.createStatement();
             rs = set.executeQuery("SELECT * from clientes where email LIKE '%" + email + "%'");
-            
+
             if (rs.next()) {
                 existe = true;
-                
+
                 String mensaje = "Email en uso. Seleccione otro.";
                 request.getRequestDispatcher("/registro.jsp?message=" + mensaje).forward(request, response);
                 rs.close();
                 set.close();
-                
+
             } else {
                 existe = false;
                 rs.close();
@@ -159,9 +150,9 @@ public class Registro extends HttpServlet {
                         + ",'" + movil + "','" + imagen + "' )");
                 set.close();
                 request.getRequestDispatcher("inicioSesion.jsp").forward(request, response);
-                
+
             }
-            
+
         } catch (SQLException e) {
             System.out.println("Error" + e);
         }
@@ -187,5 +178,5 @@ public class Registro extends HttpServlet {
         }
         return "";
     }
-    
+
 }

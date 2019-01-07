@@ -29,7 +29,8 @@ import utils.BD08;
  */
 @WebServlet(name = "LoginAdmin", urlPatterns = {"/LoginAdmin"})
 public class LoginAdmin extends HttpServlet {
- private Connection con;
+
+    private Connection con;
     private Statement set;
     private ResultSet rs;
     String cad;
@@ -37,16 +38,17 @@ public class LoginAdmin extends HttpServlet {
     @Override
     public void init(ServletConfig cfg) throws ServletException {
         ServletContext contexto = cfg.getServletContext();
-        
+
         String IP = contexto.getInitParameter("IP");
         String database = contexto.getInitParameter("BDNombre");
-        String URL = "jdbc:mysql://"+ IP + "/" + database;
-    
+        String URL = "jdbc:mysql://" + IP + "/" + database;
+
         String userName = contexto.getInitParameter("usuario");
         String password = contexto.getInitParameter("contrasena");
-        
-        con = BD08.getConexion(URL,userName,password);
+
+        con = BD08.getConexion(URL, userName, password);
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,13 +60,13 @@ public class LoginAdmin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");     
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginAdmin</title>");            
+            out.println("<title>Servlet LoginAdmin</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginAdmin at " + request.getContextPath() + "</h1>");
@@ -99,8 +101,8 @@ public class LoginAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         HttpSession s = request.getSession(true);
+
+        HttpSession s = request.getSession(true);
         String usuario = request.getParameter("usuario");
         String contra = request.getParameter("contrasena");
 

@@ -26,7 +26,7 @@
             </a> 
 
         </header>
-         
+
         <nav id="menupricipal">
             <div>
                 <ul>
@@ -52,7 +52,7 @@
                                 <form action="LoginReserva" name="datos" class="formulario" id="iniciarsesion" method="post">
                                     <label>Debes iniciar sesión para completar la reserva</label>
                                     <br><br>
-                                    
+
                                     <label for="email" class="campo">E-mail: 
                                         <input type="email" name="email" id="email"  pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$" required/>
                                     </label><br />
@@ -60,13 +60,13 @@
                                         <%
                                             if (request.getParameter("message") != null) {
                                         %>
-                                        
-                                            <h3><%=request.getParameter("message")%></h3>
-                                        
+
+                                        <h3><%=request.getParameter("message")%></h3>
+
                                         <% }
                                         %>
                                     </div>
-                                    
+
                                     <label for="contrasena">Contraseña:
                                         <input type="password" name="contrasena" id="contrasena" required/>
                                     </label><br />

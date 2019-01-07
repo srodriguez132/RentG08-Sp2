@@ -109,22 +109,22 @@ and open the template in the editor.
                                     <label for="fecha">Fecha: </label>
                                     <input type="date" name="fecha" id="fechaUsuario"><br />
                                     <button type="submit" name="btnConsultaUsuario" id="botonPost" class="boton" value="buscar">Buscar<br />
-                                         
-                      
+
+
                                 </form>
-                                
-                               
+
+
                             </div>    
-                             <div id="mensajeErrorConsulta">
-                                        <%
-                                            if (request.getParameter("message") != null) {
-                                        %>
+                            <div id="mensajeErrorConsulta">
+                                <%
+                                    if (request.getParameter("message") != null) {
+                                %>
 
-                                        <p><%=request.getParameter("message")%></p>
+                                <p><%=request.getParameter("message")%></p>
 
-                                        <% }
-                                        %>
-                                    </div>
+                                <% }
+                                %>
+                            </div>
                             <form name="cancelarReservas" action="ConsultaUsuario" method="post">
                                 <section id="zonadatos">   
 
@@ -155,7 +155,7 @@ and open the template in the editor.
                                                         int cont = 0;
                                                         while (rs.next()) {
                                                             int id = rs.getInt("id");
-                                                            
+
                                                             matricula = rs.getString("matricula");
                                                             fechainicio = rs.getTimestamp("fechainicio");
                                                             fechafin = rs.getTimestamp("fechafin");
@@ -166,7 +166,7 @@ and open the template in the editor.
                                                             precio = rs.getInt("precio");
                                                             total = rs.getInt("total");
                                                             lugar = rs.getString("lugar");
-                                                            
+
                                                             if (cont % 2 == 0) {
                                                 %>                         
 
@@ -205,16 +205,16 @@ and open the template in the editor.
                                     </div>
                                     <p>
                                         <br> <button type="submit" name="btnConsultaUsuario" class="boton" value="cancelar">Cancelar Reserva</button></br>
-                                        
+
                                         <br> <button  onclick="vaciar()" class="boton" name="btnConsultaUsuario" value="vaciar">Vaciar</button></br>
-                                        </p>
-                                    
+                                    </p>
+
                                 </section>
-                                              
+
                             </form>
-                            
-                                        
-                                        
+
+
+
                             <div id="pieconsulta">Sistema de Consulta</div>                       
                             </section>    
                         </div>

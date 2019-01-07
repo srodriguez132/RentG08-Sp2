@@ -104,7 +104,7 @@
                                                 ArrayList<String> matriculas = new ArrayList<>();
                                                 String coche = "Coche";
                                                 while (i <= num) {
-                                                    
+
                                                     coche = coche + i;
                                                     matriculas.add(session.getAttribute(coche).toString());
                                                     coche = coche.substring(0, 5);
@@ -118,7 +118,7 @@
                                                     co = co + cont;
                                                     String matricula = matriculas.get(cont);
                                                     ResultSet rs = set.executeQuery("SELECT * from coches WHERE matricula = '" + matricula + "'");
-                                                    
+
                                                     while (rs.next()) {
                                                         imagen = rs.getString("imagen");
                                                         marca = rs.getString("marca");

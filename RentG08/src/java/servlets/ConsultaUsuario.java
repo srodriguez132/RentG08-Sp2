@@ -121,7 +121,7 @@ public class ConsultaUsuario extends HttpServlet {
 
                     Date fecha = Calendar.getInstance().getTime();
 
-//                java.sql.Date fechaActual = new java.sql.Date(fecha.getTime());
+
                     java.sql.Timestamp fechaActual = new Timestamp(fecha.getTime());
 
                     String estado = rs.getString("estado");

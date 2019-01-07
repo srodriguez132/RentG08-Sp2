@@ -33,7 +33,6 @@ public class Login extends HttpServlet {
     private Statement set;
     private ResultSet rs;
     String cad;
-    
 
     @Override
     public void init(ServletConfig cfg) throws ServletException {
@@ -108,12 +107,9 @@ public class Login extends HttpServlet {
         String email = request.getParameter("email");
         String contra = request.getParameter("contrasena");
         s.setAttribute("emailUsuario", email);
-        
-        
+
         String datoSesion = (String) s.getAttribute("emailUsuario");
-        
-        
-        
+
         boolean existe = false;
         String pass = null;
         String mensaje = null;
@@ -136,7 +132,7 @@ public class Login extends HttpServlet {
                 s.setAttribute("Email", email);
                 s.setAttribute("Contrasena", contra);
                 request.getRequestDispatcher("/inicioLogueado.jsp").forward(request, response);
-                
+
             } else {
                 mensaje = "La contrasena es incorrecta";
                 request.getRequestDispatcher("/inicioSesion.jsp?message=" + mensaje).forward(request, response);

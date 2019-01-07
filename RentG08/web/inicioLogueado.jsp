@@ -31,48 +31,50 @@
                     <li><a href="inicioSesion.jsp" id="cerrarsesion">Cerrar Sesion</a></li>
                     <li id="pestanaActual"><a id="pestanaActualTexto" href="inicioLogueado.jsp">Búsqueda</a></li>
                     <li><a href="consultaReservaUsuario.jsp">Consultar Reservas</a></li>
-        <%!
-               
-                private Connection con;
-                public void jspInit() {
-                   ServletContext application = getServletContext();
-                   String IP = application.getInitParameter("IP");
-                   String database = application.getInitParameter("BDNombre");
-                   String URL = "jdbc:mysql://"+ IP + "/" + database;
-                   String userName = application.getInitParameter("usuario");
-                   String password = application.getInitParameter("contrasena");
-                   con = BD08.getConexion(URL, userName, password);
-                };  
+                        <%!
+                            private Connection con;
+
+                            public void jspInit() {
+                                ServletContext application = getServletContext();
+                                String IP = application.getInitParameter("IP");
+                                String database = application.getInitParameter("BDNombre");
+                                String URL = "jdbc:mysql://" + IP + "/" + database;
+                                String userName = application.getInitParameter("usuario");
+                                String password = application.getInitParameter("contrasena");
+                                con = BD08.getConexion(URL, userName, password);
+                            }
+
+                            ;  
              
-                %>
-    <%
-                String email = (String) session.getAttribute("emailUsuario");
-                try {
-                    
-                    Statement set = con.createStatement();
-                    
-                    ResultSet rs = set.executeQuery("SELECT * from clientes WHERE email LIKE '%" + email + "%'");
-                    rs.next();
-                    String nombre = rs.getString("nombre");
-                    String imagen = rs.getString("imagen");
-                    
-                    HttpSession s2 = request.getSession();
-                    s2.setAttribute("nombreUsuario", nombre);
-            %>  
-            
-            
+                        %>
+                        <%
+                            String email = (String) session.getAttribute("emailUsuario");
+                            try {
+
+                                Statement set = con.createStatement();
+
+                                ResultSet rs = set.executeQuery("SELECT * from clientes WHERE email LIKE '%" + email + "%'");
+                                rs.next();
+                                String nombre = rs.getString("nombre");
+                                String imagen = rs.getString("imagen");
+
+                                HttpSession s2 = request.getSession();
+                                s2.setAttribute("nombreUsuario", nombre);
+                        %>  
+
+
                     <li><h1>Hola, <%=nombre%></h1> </li>
                     <img id="imgusuario" src="img/<%=imagen%>" alt=""  width="80"/>
-                    
- <%
-                        
-                        rs.close();
-                        set.close();
-                        
-                    } catch (SQLException ex) {
-                        System.out.println("Error en acceso a Clientes" + ex);
-                    }
-                %>
+
+                    <%
+
+                            rs.close();
+                            set.close();
+
+                        } catch (SQLException ex) {
+                            System.out.println("Error en acceso a Clientes" + ex);
+                        }
+                    %>
 
                 </ul>
             </div>
