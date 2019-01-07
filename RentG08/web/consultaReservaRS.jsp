@@ -97,7 +97,7 @@
                                     
                                     <div class="datagrid">
                                         <table>
-                                            <thead><tr><th></th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
+                                            <thead><tr><th></th><th>Email</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Fecha Entrega</th><th>Fecha Devolución</th><th>Matrícula</th><th>Estado</th>
                                                     <th>Precio</th><th>Penalización</th><th>Total</th><th>Lugar</th></tr></thead>
 
 
@@ -107,6 +107,7 @@
                                                 <%                                                 
                                                     try {
                                                         Statement set = con.createStatement();
+                                                        String email;
                                                         String matricula;
                                                         Timestamp fechainicio;
                                                         Timestamp fechafin;
@@ -131,6 +132,7 @@
                                                         int cont = 0;
                                                         while (rs.next()) {
                                                             int id = rs.getInt("id");
+                                                            email = rs.getString("email");
                                                             matricula = rs.getString("matricula");
                                                             fechainicio = rs.getTimestamp("fechainicio");
                                                             fechafin = rs.getTimestamp("fechafin");
@@ -143,14 +145,14 @@
                                                             lugar= rs.getString("lugar");
                                                             if (cont % 2 == 0) {
                                                 %>                         
-                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr> <td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=email%></td> <td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr> 
                                                 
                                                 
                                                     <%
                                                     } else {
                                                     %>                         
-                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
+                                                <tr class="alt"><td><input type="radio" id="seleccionReserva" name="R1" value="<%=id%>" required=""/></td><td><%=email%></td><td><%=fechainicio%></td><td><%=fechafin%></td><td><%=inicio%></td><td><%=fin%></td><td><%=matricula%></td><td><%=estado%></td><td><%=precio%></td>
                                                     <td><%=penalizacion%></td><td><%=total%></td><td><%=lugar%></td></tr>                                                  
                                                     <%
                                                                 }
