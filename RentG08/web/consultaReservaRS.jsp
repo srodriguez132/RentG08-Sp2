@@ -157,7 +157,7 @@
                                                             set.close();
                                                             //con.close();
                                                         } catch (Exception ex) {
-                                                            System.out.println("Error en acceso a BD Jugadores" + ex);
+                                                            System.out.println("Error en acceso a BD RentG08" + ex);
                                                         }
                                                     %>
                                             </tbody>

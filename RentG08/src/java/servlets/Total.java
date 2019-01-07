@@ -107,7 +107,7 @@ public class Total extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         if (request.getParameter("btnConsultaUsuario").equals("vaciar")) {
+         if ("vaciar".equals(request.getParameter("btnConsultaUsuario"))) {
             request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
         } else {
         
@@ -150,9 +150,15 @@ public class Total extends HttpServlet {
                 request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
             } else {
 //                while (rs.next()) {
-                    Timestamp fechaEntrega = rs.getTimestamp("inicio");
+//                    Timestamp fechaEntrega = rs.getTimestamp("inicio");
+                    Timestamp fechaFin = rs.getTimestamp("fechafin");
                     Timestamp fechaDevolucion = rs.getTimestamp("fin");
-                    long diferencia = fechaDevolucion.getTime() - fechaEntrega.getTime();
+                    long diferencia = fechaDevolucion.getTime() - fechaFin.getTime();
+                    if(diferencia<0){
+                    set.executeUpdate("update reserva set penalizacion= 0 where id= '" + id + "';");
+                    set.executeUpdate("update reserva set total= precio + penalizacion where id= '" + id + "';");
+                    }
+                    else{
                     minutos = TimeUnit.MILLISECONDS.toMinutes(diferencia);
 //                    rs.close();
 //                    set.close();
@@ -167,7 +173,7 @@ public class Total extends HttpServlet {
 //                        set.executeUpdate("update reserva set total='" + total + "';");
 //                    }
 //                }
-               
+                    }
                 rs.close();
                 set.close();
                 request.getRequestDispatcher("consultaReservaRS.jsp").forward(request, response);
